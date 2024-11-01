@@ -1,46 +1,46 @@
 import React, { useState, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-  useLocation,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate, useLocation } from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
 import Donation from "./pages/Donation";
 import Login from "./pages/Login";
-import Dashboard from "./pages/Charity/Dashboard";
+import CharityDashboard from "./pages/Charity/Dashboard";
 import Beneficiaries from "./pages/Charity/Beneficiaries";
-import Donations from "./pages/Charity/Donations";
-import Settings from "./pages/Charity/Settings";
-import Sidebar from "./components/Charity/Sidebar";
-import StoryMngt from "./pages/StoryMngt";
+import History from "./pages/Charity/History";
+import CharitySettings from "./pages/Charity/Settings";
+import CharitySidebar from "./components/Charity/Sidebar";
 import Footer from "./components/Footer";
 import FAQ from "./pages/FAQ";
-import SideBar from './components/donor/SideBar';
+import DonorSidebar from './components/donor/SideBar';
 import DonorDashboard from "./pages/donor/Dashboard";
 import DonationHistory from "./pages/donor/DonationHistory";
-// import MainLayout from "./pages/donor/MainLayout";
 import ManageProfile from "./pages/donor/ManageProfile";
 import DonorSettings from "./pages/donor/Settings";
-import BeneficiaryPage from "./pages/donor/BeneficiaryPage";
-import DonationPage from "./pages/donor/DonationPage";
-import "./App.css";
+import BeneficiaryPage from "./pages/BeneficiaryPage";
+import Impact from "./pages/donor/Impact";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
-// import AdminSidebar from "./components/Admin/AdminSidebar";
-// import AOS from 'aos';
-// import 'aos/dist/aos.css'; // import AOS styles
+import Loading from "./pages/Loading";
+import AdminSidebar from "./components/Admin/AdminSidebar";
+import AdminCharity from "./pages/Admin/Charities";
+import Donators from "./pages/Admin/Donators";
+import AdminSettings from "./components/Admin/Settings"; 
+import AddCharity from "./pages/Charity/AddCharity";
+import "./App.css";
+import AddDonation from "./pages/donor/AddDonation";
+import GetCharity from "./pages/Admin/GetCharity";
 
-// AOS.init();
+interface User {
+  role: 'charity' | 'donor' | 'admin';
+  // Add any other relevant fields
+}
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    // This is a mock authentication. In a real app, you'd check for an actual logged-in user.
+    // Simulate authentication
     const authenticatedUser = localStorage.getItem("user");
     if (authenticatedUser) {
       setUser(JSON.parse(authenticatedUser));
@@ -49,36 +49,32 @@ function App() {
 
   const ProtectedRoute = ({
     children,
-    role,
+    requiredRole,
   }: {
     children: React.ReactNode;
-    role: string;
+    requiredRole: 'charity' | 'donor' | 'admin';
   }) => {
-    // Comment out the authentication logic for now
-    // if (!user) {
-    //   return <Navigate to="/login" />;
-    // }
+    if (!user) {
+      return <Navigate to="/login" />;
+    }
 
-    // if (user.role !== role) {
-    //   return user.role === 'charity' ? <Navigate to="/charity/dashboard" /> : <Navigate to="/donor/home" />;
-    // }
+    if (user.role !== requiredRole) {
+      // Redirect to respective dashboard based on user role
+      const roleRedirect = {
+        charity: "/charity/dashboard",
+        donor: "/donor/dashboard",
+        admin: "/admin/admin-dashboard"
+      };
+      return <Navigate to={roleRedirect[user.role]} />;
+    }
 
     return <>{children}</>;
   };
 
-  // Move the Router inside the component where useLocation is used
   function LayoutWrapper({ children }: { children: React.ReactNode }) {
-    const location = useLocation(); // Now useLocation is within the Router context
-
-    // Determine if the current route is public
-    const isPublicRoute = [
-      "/",
-      "/contact",
-      "/about",
-      "/donation",
-      "/login",
-      "/FAQ",
-    ].includes(location.pathname);
+    const location = useLocation();
+    const publicRoutes = ["/", "/beneficiary", "/contact", "/about", "/donation", "/FAQ"];
+    const isPublicRoute = publicRoutes.includes(location.pathname);
 
     return (
       <div className="flex flex-col min-h-screen">
@@ -88,6 +84,16 @@ function App() {
       </div>
     );
   }
+
+  const handleLogout = () => {
+    // Clear user data and tokens
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+
+    // Update user state
+    setUser(null);
+  };
+  
 
   return (
     <Router>
@@ -99,25 +105,24 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/donation" element={<Donation />} />
           <Route path="/FAQ" element={<FAQ />} />
+          <Route path="/loading" element={<Loading />} />
+          <Route path="/beneficiary" element={<BeneficiaryPage />} />
           <Route path="/login" element={<Login setUser={setUser} />} />
 
           {/* Protected Charity Routes */}
           <Route
             path="/charity/*"
             element={
-              <ProtectedRoute role="charity">
-                <div className="flex ">
-                  <Sidebar />
-                  <div className="ml-60 flex-1 p-4  shadow-lg">
+              <ProtectedRoute requiredRole="charity">
+                <div className="flex">
+                  <CharitySidebar  onLogout={handleLogout} />
+                  <div className="flex-1 p-4 ">
                     <Routes>
-                      <Route path="/dashboard" element={<Dashboard />} />
-                      <Route
-                        path="/beneficiaries"
-                        element={<Beneficiaries />}
-                      />
-                      <Route path="/donations" element={<Donations />} />
-                      <Route path="/settings" element={<Settings />} />
-                      <Route path="/story-management" element={<StoryMngt />} />
+                      <Route path="dashboard" element={<CharityDashboard />} />
+                      <Route path="beneficiaries" element={<Beneficiaries />} />
+                      <Route path="history" element={<History />} />
+                      <Route path="add-charity" element={<AddCharity />} />
+                      <Route path="settings" element={<CharitySettings />} />
                     </Routes>
                   </div>
                 </div>
@@ -125,43 +130,46 @@ function App() {
             }
           />
 
-           {/* Protected Donor Routes */}
-           <Route
+                  {/* Protected Donor Routes */}
+                  <Route
             path="/donor/*"
             element={
-              <ProtectedRoute role="donor">
-                <div className="flex ">
-                  <SideBar />
-                  <div className="ml-60 flex-1 p-4  shadow-lg">
+              <ProtectedRoute requiredRole="donor">
+              <div className="flex">
+                <DonorSidebar onLogout={handleLogout} />
+                <div className="flex-1 p-4 ">
                   <Routes>
                     <Route path="dashboard" element={<DonorDashboard />} />
                     <Route path="donation-history" element={<DonationHistory />} />
+                    <Route path="add-donation" element={<AddDonation />} />
                     <Route path="manage-profile" element={<ManageProfile />} />
                     <Route path="settings" element={<DonorSettings />} />
-                    <Route path="beneficiary" element={<BeneficiaryPage />} />
-                    <Route path="donation-page" element={<DonationPage />} />
-                  </Routes>
-                  </div>
-                  </div>
-                {/* </MainLayout> */}
-              </ProtectedRoute>
-            }
-          />
-
-             {/* Protected Admin Routes */}
-             <Route
-            path="/admin/*"
-            element={
-              <ProtectedRoute role="admin">
-              <div className="flex">
-                {/* <AdminSidebar /> */}
-                <div className="main-content shadow-lg">
-                  <Routes>
-                    <Route path="admin-dashboard" element={<AdminDashboard />} />
+                    <Route path="impact" element={<Impact />} />
                   </Routes>
                 </div>
               </div>
             </ProtectedRoute>
+          }
+        />
+
+          {/* Protected Admin Routes */}
+          <Route
+            path="/admin/*"
+            element={
+              <ProtectedRoute requiredRole="admin">
+                <div className="flex">
+                  <AdminSidebar onLogout={handleLogout} />
+                  <div className="flex-1 p-4 ">
+                    <Routes>
+                      <Route path="admin-dashboard" element={<AdminDashboard />} />
+                      <Route path="charities" element={<AdminCharity />} />
+                      <Route path="donators" element={<Donators />} />
+                      <Route path="get-charity" element={<GetCharity />} />
+                      <Route path="settings" element={<AdminSettings />} />
+                    </Routes>
+                  </div>
+                </div>
+              </ProtectedRoute>
             }
           />
 

@@ -1,4 +1,3 @@
-import React from 'react'
 import { RiNotification2Line } from 'react-icons/ri'
 
 type DashnavProps = {
@@ -7,9 +6,9 @@ type DashnavProps = {
   
   export default function Dashnav({ title }: DashnavProps) {
     return (
-      <nav className="w-full bg-secondary py-4 px-6 flex justify-between items-center rounded-md">
-        <h1 className="text-xl font-bold">{title}</h1>
-        <RiNotification2Line className="text-gray-100 text-2xl" />
+      <nav className="w-[1080px] ml-4  bg-secondary py-4 px-6 flex justify-between items-center rounded-lg border">
+        <h1 className="text-3xl ml-2 font-bold">{title}</h1>
+        <RiNotification2Line className="text-gray-100 text-3xl" />
       </nav> 
     ) 
   }

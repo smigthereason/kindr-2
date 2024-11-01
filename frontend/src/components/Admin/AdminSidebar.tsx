@@ -1,93 +1,81 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import {
-  FaTachometerAlt,
-  FaUsers,
-  FaMoneyBillWave,
-  FaFileAlt,
-  FaHandHoldingHeart,
-  FaCog,
-  FaUser,
-  FaSignOutAlt,
-} from "react-icons/fa";
-import logo from "../../assets/kindr-logo-white 1.png";
+import React, { useState } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import kindrLogo from '../../assets/kindr-logo-white 1.png';
+import { RiDashboardFill, RiGroupFill, RiHandHeartFill, RiSettings4Fill } from "react-icons/ri";
+import profileImage from '../../assets/man.png';
+import '../../styles/donor/Sidebar.css';
 
-const AdminSidebar: React.FC = () => {
+
+interface SideBarProps {
+  onLogout: () => void;
+}
+
+const AdminSidebar: React.FC<SideBarProps> = ({ onLogout }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+
+  const handleLogout = () => {
+    onLogout();
+    navigate('/');
+  };
+
+  const getActiveClass = (path: string) => {
+    return location.pathname === path ? 'active' : '';
+  };
+
 
   return (
-    <div className="w-64 bg-[#4C3E34] p-4 flex flex-col text-white">
-      <div className="flex items-center mb-8">
-        <img src={logo} alt="logo" className="h-10 w-30 mt-2" />
-      </div>
-      <nav className="flex-1">
-        <ul className="text-white">
-          <li className="mb-2">
-            <Link
-              to="#"
-              className="flex items-center py-2 px-4 rounded text-white bg-[#3F2E1F] hover:text-white"
-            >
-              <FaTachometerAlt className="mr-2" />
-              Dashboard
-            </Link>
-          </li>
+    <div className="dashboard-container">
+      <div className="sidebar">
+        <img src={kindrLogo} alt="Kindr Logo" className="kindr-logo" />
+        <div className="logo-divider"></div>
 
-          <li className="mb-2">
-            <Link
-              to="#"
-              className="flex items-center py-2 px-4 rounded text-white hover:bg-[#3F2E1F] hover:text-white"
-            >
-              <FaMoneyBillWave className="mr-2" />
-              Donations
-            </Link>
-          </li>
-          <li className="mb-2">
-            <Link
-              to="#"
-              className="flex items-center py-2 px-4 rounded text-white hover:bg-[#3F2E1F] hover:text-white"
-            >
-              <FaHandHoldingHeart className="mr-2" />
-              Charities
-            </Link>
-          </li>
-          <li className="mb-2">
-            <Link
-              to="#"
-              className="flex items-center py-2 px-4 rounded text-white hover:bg-[#3F2E1F] hover:text-white"
-            >
-              <FaCog className="mr-2" />
-              Settings
-            </Link>
-          </li>
-        </ul>
-      </nav>
-      <div className="absolute bottom-4 left-4">
-        <span className="text-sm">Jane Smith</span>
-        <button onClick={toggleDropdown} className="ml-2 text-gray-300">
-          <FaUser />
-        </button>
-        {isDropdownOpen && (
-          <div className="absolute bottom-4 left-16 bg-[#3F2E1F] p-2 rounded shadow-lg">
-            <ul>
-              <li className="py-1 px-2 hover:bg-[#4C3E34] rounded">
-                <a href="#manage-account" className="flex items-center">
-                  <FaUser className="mr-2" />
-                  Manage Account
-                </a>
-              </li>
-              <li className="py-1 px-2 hover:bg-[#4C3E1F] rounded">
-                <a href="#logout" className="flex items-center">
-                  <FaSignOutAlt className="mr-2" />
-                  Logout
-                </a>
-              </li>
-            </ul>
+        <nav className="sidebar-nav">
+          <Link to="/admin/admin-dashboard" className={`sidebar-item ${getActiveClass('/admin/admin-dashboard')}`}>
+            <RiDashboardFill className="sidebar-icon" />
+            <span>Dashboard</span>
+          </Link>
+          <Link to="/admin/charities" className={`sidebar-item ${getActiveClass('/admin/charities')}`}>
+            <RiGroupFill className="sidebar-icon" />
+            <span>Charities</span>
+          </Link>
+          <Link to="/admin/donators" className={`sidebar-item ${getActiveClass('/admin/donators')}`}>
+            <RiHandHeartFill className="sidebar-icon" />
+            <span>Donators</span>
+          </Link>
+          <Link to="/admin/settings" className={`sidebar-item ${getActiveClass('/admin/settings')}`}>
+            <RiSettings4Fill className="sidebar-icon" />
+            <span>Settings</span>
+          </Link>
+        </nav>
+
+        {/* Profile Section */}
+        <div className="profile-section">
+          <img src={profileImage} alt="Profile" className="profile-photo" />
+          <div className="profile-details">
+            <p className="profile-name">Admin One</p>
           </div>
-        )}
+          <div className="profile-controls">
+            <button className="arrow-button" onClick={toggleDropdown}>▲</button>
+            {isDropdownOpen && (
+              <div className="profile-dropdown">
+                <div className="dropdown-item" onClick={handleLogout}>Log Out</div>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
-    </div>
+      </div>
   );
 };
 
 export default AdminSidebar;
+
+
+

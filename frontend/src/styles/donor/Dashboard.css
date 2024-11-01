@@ -1,12 +1,12 @@
 .dashboard {
   background-color: #29221D; 
-  color: #fff;
+  color: #ffffff;
   padding: 20px;
   display: flex;
-  width: 95%;
+  width: 80%;
   flex-direction: column;
   align-items: center;
-  margin-left: 50px;
+  margin-left: 260px;
   margin-top: 20px;
   border-radius: 1%;
 }

@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import '../../styles/donor/Settings.css'; 
 import Account from '../../components/donor/Account'; 
-import Password from '../../components/donor/Password'; 
+import Password from '../../components/donor/Password';
+import worldImage from "../../assets/world2.jpg";
+
 
 const Settings: React.FC = () => {
   const [activeSection, setActiveSection] = useState<string>('account');
 
   return (
-    <div className="settings-container">
+    <div className="settings-container"
+    style={{ backgroundImage: `url(${worldImage})` }}>
       
         <div className="settings-nav">
           <button 
@@ -27,6 +30,7 @@ const Settings: React.FC = () => {
         <div className="settings-content">
           {activeSection === 'account' && (
             <div className="settings-section">
+              
               <h2>Account Settings</h2>
               <Account />
             </div>
@@ -34,7 +38,7 @@ const Settings: React.FC = () => {
           
           {activeSection === 'password' && (
             <div className="settings-section">
-              <h2>Password</h2>
+              <h3>Password</h3>
               <Password />
             </div>
           )}

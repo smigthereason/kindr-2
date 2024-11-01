@@ -118,3 +118,7 @@ body {
   place-items: unset; 
 }
 
+html {
+  scroll-behavior: smooth;
+}
+

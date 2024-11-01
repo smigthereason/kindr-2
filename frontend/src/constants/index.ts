@@ -38,9 +38,9 @@ export const footerLinks = [
 
 export const charities = [
   {
-    img: "../src/assets/images/char1.png",
+    img: "https://images.unsplash.com/photo-1617056239820-8ce90ba48193?q=80&w=1476&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     title: "Help Azar to continue his study",
-    categeory: "Education",
+    category: "Education",
     color: "text-emerald-200",
     goal: 1500,
     collected: 800,
@@ -49,9 +49,9 @@ export const charities = [
     href: "",
   },
   {
-    img: "../src/assets/images/char2.png",
-    title: "Save Peter's life",
-    categeory: "Health",
+    img: "https://images.unsplash.com/photo-1578496781985-452d4a934d50?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    title: "Save Diana's life",
+    category: "Health",
     color: "text-purple-300",
     goal: 2000,
     collected: 1200,
@@ -60,9 +60,9 @@ export const charities = [
     href: "",
   },
   {
-    img: "../src/assets/images/char3.png",
+    img: "https://images.unsplash.com/photo-1529390079861-591de354faf5?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     title: "Build School for poor students",
-    categeory: "School Construction",
+    category: "School Construction",
     color: "text-yellow-200",
     goal: 3000,
     collected: 2500,

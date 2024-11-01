@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import worldImage from "../../assets/world2.jpg";
 
 const Beneficiaries: React.FC = () => {
   const [title, setTitle] = useState('');
@@ -30,11 +31,14 @@ const Beneficiaries: React.FC = () => {
   };
 
   return (
-    <div className="beneficiaries-page">
-      <h2 className="text-2xl font-bold mb-4">Add Beneficiary Story</h2>
+    
+    <div className="beneficiaries-page relative min-h-screen mt-8 w-4/6 ml-[350px] "
+    style={{ backgroundImage: `url(${worldImage}` }}>
+    
+      <h2 className="text-4xl font-bold mb-4">Add Beneficiary Story</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="title" className="block font-semibold">Title</label>
+          <label htmlFor="title" className="block font-semibold text-2xl">Title</label>
           <input
             type="text"
             id="title"
@@ -46,7 +50,7 @@ const Beneficiaries: React.FC = () => {
           />
         </div>
         <div>
-          <label htmlFor="story" className="block font-semibold">Story</label>
+          <label htmlFor="story" className="block font-semibold text-2xl">Story</label>
           <textarea
             id="story"
             value={story}
@@ -58,7 +62,7 @@ const Beneficiaries: React.FC = () => {
           />
         </div>
         <div>
-          <label htmlFor="image" className="block font-semibold">Upload Image</label>
+          <label htmlFor="image" className="block font-semibold text-2xl">Upload Image</label>
           <input
             type="file"
             id="image"

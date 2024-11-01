@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../../styles/donor/ManageProfile.css';
 import defaultAvatar from '../../assets/man.png';
+import worldImage from "../../assets/world2.jpg";
 
 const ManageProfile: React.FC = () => {
   const [profileImage, setProfileImage] = useState<string | ArrayBuffer | null>(null);
@@ -23,7 +24,8 @@ const ManageProfile: React.FC = () => {
   };
 
   return (
-    <div className="manage-profile-container">
+    <div className="manage-profile-container"
+    style={{ backgroundImage: `url(${worldImage})` }}>
       <div className='profile-place'>
         <h2>Manage Profile</h2>
 

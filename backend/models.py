@@ -86,10 +86,9 @@ class User(db.Model):
     username = db.Column(db.String(120), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
-    phonenumber = db.Column(db.Integer, nullable=True)
+    user_type = db.Column(db.String(50), nullable=False)  # Added user_type field
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-
 
     @validates('username')
     def validate_username(self, key, username):
@@ -97,21 +96,27 @@ class User(db.Model):
             raise ValueError('Username must be at least 5 characters')
         return username
 
-@validates('email')
-def validate_email(self, key, email):
-    if '@' not in email:
-        raise ValueError('Invalid email format. Must contain "@"')
-    return email
+    @validates('email')
+    def validate_email(self, key, email):
+        if '@' not in email:
+            raise ValueError('Invalid email format. Must contain "@"')
+        return email
 
-@validates('password')
-def validate_password(self, key, password):
-    if not any(char.isdigit() for char in password):
-        raise ValueError('Password must contain at least one digit')
-    if not any(char.isupper() for char in password):
-        raise ValueError('Password must contain at least one uppercase letter')
-    if not any(char.islower() for char in password):
-        raise ValueError('Password must contain at least one lowercase letter')
-    return password
+    @validates('password')
+    def validate_password(self, key, password):
+        if not any(char.isdigit() for char in password):
+            raise ValueError('Password must contain at least one digit')
+        if not any(char.isupper() for char in password):
+            raise ValueError('Password must contain at least one uppercase letter')
+        if not any(char.islower() for char in password):
+            raise ValueError('Password must contain at least one lowercase letter')
+        return password
+
+    @validates('user_type')
+    def validate_user_type(self, key, user_type):
+        if user_type not in ['donor', 'admin', 'charity']:
+            raise ValueError('Invalid user type. Must be one of: donor, admin, charity')
+        return user_type
 
 class Donation(db.Model):
     id = db.Column(db.Integer, primary_key=True)

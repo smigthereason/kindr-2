@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import kindrLogo from '../../assets/kindr-logo-white 1.png';
-import pieChartImage from '../../assets/pie-chart.png';
-import barGraphImage from '../../assets/graph-bar.png';
-import settingsImage from '../../assets/gear.png';
+import { RiDashboardFill, RiGroupFill, RiHandHeartFill, RiSettings4Fill } from "react-icons/ri";
 import profileImage from '../../assets/man.png';
 import '../../styles/donor/Sidebar.css';
 
-const SideBar: React.FC = () => {
+interface SideBarProps {
+  onLogout: () => void;
+}
+
+const SideBar: React.FC<SideBarProps> = ({ onLogout }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -17,13 +19,19 @@ const SideBar: React.FC = () => {
   };
 
   const handleManageProfile = () => {
-    navigate('/donor/manage-profile'); // Updated route to match donor route
+    navigate('/donor/manage-profile');
     setIsDropdownOpen(false);
+  };
+
+  const handleLogout = () => {
+    onLogout();
+    navigate('/');
   };
 
   const getActiveClass = (path: string) => {
     return location.pathname === path ? 'active' : '';
   };
+
 
   return (
     <div className="dashboard-container">
@@ -33,24 +41,24 @@ const SideBar: React.FC = () => {
 
         <nav className="sidebar-nav">
           <Link to="/donor/dashboard" className={`sidebar-item ${getActiveClass('/donor/dashboard')}`}>
-            <img src={pieChartImage} alt="Dashboard" className="sidebar-icon" />
+            <RiDashboardFill className="sidebar-icon" />
             <span>Dashboard</span>
           </Link>
           <Link to="/donor/donation-history" className={`sidebar-item ${getActiveClass('/donor/donation-history')}`}>
-            <img src={barGraphImage} alt="Donations" className="sidebar-icon" />
-            <span>Donation History</span>
+            <RiGroupFill className="sidebar-icon" />
+            <span>History</span>
+          </Link>
+          <Link to="/donor/add-donation" className={`sidebar-item ${getActiveClass('/donor/add-donation')}`}>
+            <RiHandHeartFill className="sidebar-icon" />
+            <span>Donate</span>
+          </Link>
+          <Link to="/donor/impact" className={`sidebar-item ${getActiveClass('/donor/impact')}`}>
+            <RiHandHeartFill className="sidebar-icon" />
+            <span>Donation Pages</span>
           </Link>
           <Link to="/donor/settings" className={`sidebar-item ${getActiveClass('/donor/settings')}`}>
-            <img src={settingsImage} alt="Settings" className="sidebar-icon" />
+            <RiSettings4Fill className="sidebar-icon" />
             <span>Settings</span>
-          </Link>
-          <Link to="/donor/beneficiary" className={`sidebar-item ${getActiveClass('/donor/beneficiary')}`}>
-            <img src={settingsImage} alt="Beneficiary" className="sidebar-icon" />
-            <span>Beneficiary</span>
-          </Link>
-          <Link to="/donor/donation-page" className={`sidebar-item ${getActiveClass('/donor/donation-page')}`}>
-            <img src={settingsImage} alt="Donation Page" className="sidebar-icon" />
-            <span>Donation Page</span>
           </Link>
         </nav>
 
@@ -65,14 +73,15 @@ const SideBar: React.FC = () => {
             {isDropdownOpen && (
               <div className="profile-dropdown">
                 <div className="dropdown-item" onClick={handleManageProfile}>Manage Profile</div>
-                <div className="dropdown-item">Log Out</div>
+                <div className="dropdown-item" onClick={handleLogout}>Log Out</div>
               </div>
             )}
           </div>
         </div>
       </div>
-    </div>
+      </div>
   );
 };
 
 export default SideBar;
+

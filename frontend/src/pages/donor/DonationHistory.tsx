@@ -2,6 +2,8 @@ import React from "react";
 import image1 from "../../assets/Group 3.jpg";
 import image2 from "../../assets/Group 3 (1).jpg";
 import "../../styles/donor/DonationHistory.css";
+import worldImage from "../../assets/world2.jpg";
+
 
 const donationData = [
   {
@@ -35,7 +37,8 @@ const donationData = [
 
 const DonationHistory: React.FC = () => {
   return (
-    <div className="donation-history-container">
+    <div className="donation-history-container"
+    style={{ backgroundImage: `url(${worldImage})` }}>
       <div className="content">
         <h2>Donations History</h2>
         <table>

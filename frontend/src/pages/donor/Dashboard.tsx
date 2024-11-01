@@ -3,6 +3,8 @@ import profileImage from '../../assets/man.png';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import '../../styles/donor/Dashboard.css'; 
+import '../../App.css'
+import worldImage from "../../assets/world2.jpg";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -42,17 +44,14 @@ const donationData = {
 };
 
 const Dashboard: React.FC = () => {
-  const [contactInfo, setContactInfo] = useState(donorData.contactInfo);
-  const [isEditing, setIsEditing] = useState(false);
+  const [] = useState(donorData.contactInfo);
+  const [] = useState(false);
 
-  const handleEditToggle = () => setIsEditing(!isEditing);
 
-  const handleContactChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setContactInfo(prevInfo => ({ ...prevInfo, [name]: value }));
-  };
 
   return (
+    <div 
+    style={{ backgroundImage: `url(${worldImage})` }}>
     <div className="dashboard">
       {/* Dashboard Title */}
       <header className="dashboard-header">
@@ -65,16 +64,7 @@ const Dashboard: React.FC = () => {
 
       {/* Overview Cards */}
       <div className="card-row">
-        {/* Total Donations */}
-        <div className="card overview-card total-donations-card">
-          <h2>Total Donations</h2>
-          <p className="amount">${donorData.totalDonations.toLocaleString()}</p>
-          <div className="trend">
-            <span className="trend-icon">📈</span>
-            <span className="trend-percentage">+6.9%</span>
-          </div>
-          <Line data={donationData} />
-        </div>
+        
 
         {/* This Month */}
         <div className="card overview-card this-month-card">
@@ -98,6 +88,18 @@ const Dashboard: React.FC = () => {
             </div>
             <Line data={donationData} />
           </div>
+    
+        </div>
+
+        {/* Total Donations */}
+        <div className="card overview-card total-donations-card">
+          <h2>Total Donations</h2>
+          <p className="amount">${donorData.totalDonations.toLocaleString()}</p>
+          <div className="trend">
+            <span className="trend-icon">📈</span>
+            <span className="trend-percentage">+6.9%</span>
+          </div>
+          <Line data={donationData} />
         </div>
       </div>
 
@@ -112,6 +114,7 @@ const Dashboard: React.FC = () => {
           ))}
         </ul>
       </div>
+    </div>
     </div>
   );
 };

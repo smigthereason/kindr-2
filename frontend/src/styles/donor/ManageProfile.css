@@ -1,17 +1,13 @@
-/* ManageProfile.css */
 
-.manage-profile-container {
-    width: 1550px;
-  }
   .profile-place{
     background-color: #29221D;
     padding: 2rem;
     border-radius: 8px;
     position: relative;
-    left: 150px;
+    left: 350px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     color: #fff;
-    width: 900px;
+    width: 70%;
 
   }
   .manage-profile-container h2 {

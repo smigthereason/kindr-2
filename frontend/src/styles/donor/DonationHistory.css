@@ -6,8 +6,8 @@
   padding: 20px;
   border-radius: 20px;
   margin-top: 25px;
-  margin-left: 50px;
-  width: 95%;
+  margin-left: 260px;
+  width: 80%;
   box-shadow: 0 0 1px rgba(176, 189, 5, 0.342);
 }
 
@@ -20,9 +20,9 @@
   font-size: 2rem;
   color: #fff;
   position: relative;
-  right: 450px;
+  right: 390px;
   bottom: 30px;
-  /* margin-left: 20px; */
+
 }
 
 table {

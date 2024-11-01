@@ -28,7 +28,7 @@ const MobileNav = () => {
   const location = useLocation();
   return (
     <Sheet>
-      <SheetTrigger className="flex justify-center items-center">
+      <SheetTrigger className="flex justify-end items-start">
         <CiMenuFries className="text-[40px] text-accent" />
       </SheetTrigger>
       <SheetContent className="flex flex-col bg-black/70">
@@ -38,7 +38,7 @@ const MobileNav = () => {
           <img
             src={logo}
             alt="kindr logo"
-            className="h-8 object-cover ml-0 mt-0"
+            className="h-8 object-cover ml-0 my-2 mt-0"
           />
         </Link>
         </div>

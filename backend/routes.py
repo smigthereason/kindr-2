@@ -1,10 +1,42 @@
-from flask import request, jsonify
+from flask import request, jsonify,url_for
 from models import User, Testimonial, AidDistribution, Donation,Contact, Charity,Payment # Import Donation model
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from app import app, db  # Ensure these imports are after app.py is set up
+from paypalrestsdk import Payment as PayPalPayment
+import paypalrestsdk
+import time
+import logging
+from flask_mail import Mail, Message
+from flask import render_template
+from app import app, mail 
+from models import User  # Import your User model
+from werkzeug.utils import secure_filename
+import os
+
+
 
 jwt = JWTManager(app)
+# Configure PayPal SDK
+paypalrestsdk.configure({
+    "mode": "sandbox",
+    "client_id": "YOUR_CLIENT_ID",
+    "client_secret": "YOUR_CLIENT_SECRET",
+    "http_timeout": 30  # Set a higher timeout in seconds
+})
+
+mail = Mail(app)
+
+logging.basicConfig(level=logging.INFO)
+
+# Set up allowed extensions and upload folder
+ALLOWED_IMAGE_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+ALLOWED_DOCUMENT_EXTENSIONS = {'pdf', 'doc', 'docx'}
+UPLOAD_FOLDER = 'uploads'
+
+# Ensure upload folders exist
+os.makedirs(os.path.join(UPLOAD_FOLDER, 'images'), exist_ok=True)
+os.makedirs(os.path.join(UPLOAD_FOLDER, 'documents'), exist_ok=True)
 
 @app.route('/')
 def home():
@@ -15,28 +47,41 @@ def home():
 def get_all_users():
     users = User.query.all()
     serialized_users = [{'id': user.id, 'username': user.username, 'email': user.email,
-                         'password': user.password, 'phonenumber': user.phonenumber} for user in users]
+                         'password': user.password, 'user_type': user.user_type} for user in users]
     return jsonify({'users': serialized_users})
+
+
+
 
 @app.route('/users', methods=['POST'])
 def create_user():
     user_data = request.get_json()
-    if 'username' not in user_data or 'email' not in user_data or 'password' not in user_data:
-        return jsonify({'message': 'Username, email, and password are required'}), 400
+
+    # Print user_data to debug the incoming request
+    print('Received user data:', user_data)
+
+    required_fields = ['username', 'email', 'password', 'user_type']
+    for field in required_fields:
+        if field not in user_data:
+            return jsonify({'message': f'{field.replace("_", " ").capitalize()} is required'}), 400
+
     existing_user = User.query.filter_by(email=user_data['email']).first()
     if existing_user:
         return jsonify({'message': 'User with this email already exists'}), 400
+
     hashed_password = generate_password_hash(user_data['password'], method='pbkdf2:sha256', salt_length=16)
 
     new_user = User(
         username=user_data['username'],
         email=user_data['email'],
         password=hashed_password,
-        phonenumber=user_data.get('phonenumber')
+        user_type=user_data['user_type']  # Ensure this field matches your model
     )
     db.session.add(new_user)
     db.session.commit()
-    return jsonify({'message': 'User signed successfully', 'user_id': new_user.id}), 201
+    
+    return jsonify({'message': 'User signed up successfully', 'user_id': new_user.id}), 201
+
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -52,9 +97,13 @@ def login():
         return jsonify({'message': 'Password must be a string'}), 400
 
     user = User.query.filter_by(email=email).first()
+
     if user and check_password_hash(user.password, password):
         access_token = create_access_token(identity=user.id)
-        return jsonify(access_token=access_token), 200
+        return jsonify({
+            'access_token': access_token,
+            'user_type': user.user_type  # Assuming you have a 'user_type' field
+        }), 200
 
     return jsonify({'message': 'Invalid credentials'}), 401
 
@@ -63,32 +112,19 @@ def login():
 def validate_token():
     current_user_id = get_jwt_identity()
     user = User.query.get(current_user_id)
-    
+
     if user:
-        return jsonify({'message': 'Token is valid', 'user': {'id': user.id, 'username': user.username, 'email': user.email}}), 200
+        return jsonify({
+            'message': 'Token is valid',
+            'user': {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email,
+                'user_type': user.user_type  # Include user_type if needed
+            }
+        }), 200
     else:
         return jsonify({'message': 'User not found'}), 404
-
-# @app.route('/login', methods=['POST'])
-# def login():
-#     user_data = request.get_json()
-#     user = User.query.filter_by(email=user_data['email']).first()
-#     if user and check_password_hash(user.password, user_data['password']):
-#         access_token = create_access_token(identity=user.id)
-#         return jsonify(access_token=access_token), 200
-#     return jsonify({'message': 'Invalid credentials'}), 401
-
-# @app.route('/login', methods=['GET'])
-# @jwt_required()
-# def validate_token():
-#     current_user_id = get_jwt_identity()
-#     user = User.query.get(current_user_id)
-    
-#     if user:
-#         return jsonify({'message': 'Token is valid', 'user': {'id': user.id, 'username': user.username, 'email': user.email}}), 200
-#     else:
-#         return jsonify({'message': 'User not found'}), 404
-
 @app.route('/donate', methods=['POST'])
 def donate():
     data = request.json
@@ -194,19 +230,43 @@ def get_contacts():
     return jsonify({'contacts': serialized_contacts}), 200
 
 # User Admin
+def allowed_file(filename, allowed_extensions):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions
+
 @app.route('/charity', methods=['POST'])
 def add_charity():
-    data = request.json
+    data = request.form
+
+    # Handle image file upload
+    image_file = request.files.get('image')
+    if image_file and allowed_file(image_file.filename, ALLOWED_IMAGE_EXTENSIONS):
+        image_filename = secure_filename(image_file.filename)
+        image_path = os.path.join(UPLOAD_FOLDER, 'images', image_filename)
+        image_file.save(image_path)
+    else:
+        return jsonify({"message": "Invalid image format"}), 400
+
+    # Handle document file upload
+    document_file = request.files.get('document')
+    if document_file and allowed_file(document_file.filename, ALLOWED_DOCUMENT_EXTENSIONS):
+        document_filename = secure_filename(document_file.filename)
+        document_path = os.path.join(UPLOAD_FOLDER, 'documents', document_filename)
+        document_file.save(document_path)
+    else:
+        return jsonify({"message": "Invalid document format"}), 400
+
+    # Create a new Charity record in the database
     new_charity = Charity(
-        first_name=data['first_name'],
-        last_name=data['last_name'],
-        image=data['image'],
+        first_name=data.get('first_name'),
+        last_name=data.get('last_name'),
+        image=image_path,  # Store the image file path
         amount=data.get('amount'),
-        email=data['email'],
-        document=data['document']
+        email=data.get('email'),
+        document=document_path  # Store the document file path
     )
     db.session.add(new_charity)
     db.session.commit()
+
     return jsonify({"message": "Charity added successfully"}), 201
 
 @app.route('/charity', methods=['GET'])
@@ -268,3 +328,88 @@ def get_payment():
         for payment in payment
     ]
     return jsonify({'charity': serialized_payment}), 200
+@app.route('/contact', methods=['POST'])
+def submit_contact():
+    data = request.get_json()
+
+    # Create a new Contact record in the database
+    new_contact = Contact(
+        first_name=data.get('firstName'),
+        last_name=data.get('lastName'),
+        email=data.get('email'),
+        phonenumber=data.get('phone'),
+        description=data.get('message')
+    )
+    
+    db.session.add(new_contact)
+    db.session.commit()
+
+    # Send an email notification
+    msg = Message(
+        'New Contact Message',
+        sender=app.config['MAIL_DEFAULT_SENDER'],
+        recipients=['prodbysmig@gmail.com']
+    )
+    msg.body = f"""
+    New message from {data.get('firstName')} {data.get('lastName')}:
+    
+    Email: {data.get('email')}
+    Phone: {data.get('phone')}
+    
+    Message:
+    {data.get('message')}
+    """
+    
+    try:
+        mail.send(msg)
+        return jsonify({'message': 'Message sent successfully'}), 201
+    except Exception as e:
+        print(f'Error: {e}')  # Print the error message for debugging
+        return jsonify({'message': 'Failed to send email. Please try again later.'}), 500
+
+@app.route('/api/contact', methods=['POST'])
+def contact():
+    data = request.json
+    print(data)  # Add this line for debugging
+    try:
+        msg = Message(
+            subject='Contact Form Submission',
+            recipients=['prodbysmig@gmail.com'],
+            body=f"""
+            From: {data['firstName']} {data['lastName']}
+            Email: {data['email']}
+            Phone: {data['phone']}
+
+            Message:
+            {data['message']}
+            """,
+            sender=app.config['MAIL_DEFAULT_SENDER']  # Use default sender
+        )
+        mail.send(msg)
+        return jsonify({'message': 'Email sent successfully!'}), 200
+    except Exception as e:
+        print(f'Error: {e}')  # Print the error message for debugging
+        return jsonify({'message': 'Failed to send email. Please try again later.'}), 500
+
+@app.route('/test-email', methods=['POST'])
+def test_email():
+    try:
+        msg = Message(
+            subject='Test Email',
+            recipients=['prodbysmig@gmail.com'],
+            body='This is a test email.',
+            sender='your-email@gmail.com'
+        )
+        mail.send(msg)
+        return jsonify({'message': 'Test email sent successfully!'}), 200
+    except Exception as e:
+        print(f'Error: {e}')
+        return jsonify({'message': 'Failed to send test email.'}), 500
+    
+@app.route('/login', methods=['OPTIONS'])
+def options():
+    response = flask.make_response()
+    response.headers['Access-Control-Allow-Origin'] = 'http://localhost:5173'
+    response.headers['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+    return response

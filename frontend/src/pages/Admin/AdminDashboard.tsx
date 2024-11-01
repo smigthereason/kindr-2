@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { FaSearch, FaUser } from "react-icons/fa";
 import worldImage from '../../assets/world2.jpg';
-import AdminSidebar from "../../components/Admin/AdminSidebar";
 
 const AdminDashboard: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -62,9 +61,7 @@ const AdminDashboard: React.FC = () => {
   );
 
   return (
-    <div className="flex w-screen">
-      {/* Sidebar */}
-      <AdminSidebar />
+    <div className="flex ml-60 w-[1080px]">
 
       {/* Main Content */}
       <div className="w-[1280px] p-6 bg-black text-gray-300 bg-cover bg-center"

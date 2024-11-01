@@ -2,7 +2,8 @@
     display: flex;
     margin-top: 20px;
     margin-bottom: 20px;
-    margin-left: 40px;
+    margin-left: 290px;
+    
 }
 
 .settings-nav-button {
@@ -27,6 +28,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    width: 1280px;
 }
 
 .settings-section {
@@ -34,9 +36,9 @@
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 3px 8px rgba(235, 231, 231, 0.295);
-    width: 97%;
+    width: 80%;
     height: 50px;
-    margin-left: 40px;
+    margin-left: 285px;
 }
 
 .settings-section h2 {
@@ -44,6 +46,15 @@
     color: #fff;
     position: relative;
     bottom: 10px;
+    position:relative;
+    right: 40px;   
+}
+.settings-section h3 {
+    font-size: 1.5em;
+    color: #fff;
+    position: relative;
+    bottom: 10px;
+      
 }
 
 .settings-section p {

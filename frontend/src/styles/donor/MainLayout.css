@@ -7,7 +7,7 @@
   flex-grow: 1;
   flex-basis: 82%; /* Main content takes up 82% of the container's width */
   padding: 2rem;
-  background-image: url('../../assets/kindr.jpeg');
+  background-image: url('../../');
   background-size: cover; /* Ensure image covers entire element */
   background-position: center; /* Center image */
   background-repeat: no-repeat; /* Prevent repeating */

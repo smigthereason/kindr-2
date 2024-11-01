@@ -1,5 +1,3 @@
-// src/pages/Donation.tsx
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -22,7 +20,7 @@ const Donation: React.FC = () => {
         .then(response => {
           setCharities(response.data);
         })
-        .catch(error => {
+        .catch(() => {
           setError('Failed to fetch charities');
         })
         .finally(() => {

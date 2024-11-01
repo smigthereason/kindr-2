@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 //components
 import Nav from "./Nav";
 import MobileNav from "./MobileNav";
-import logo from "../assets/images/kindr-logo-white.png";
+import logo from "../assets/logo.png";
 
 const Header = () => {
   return (
