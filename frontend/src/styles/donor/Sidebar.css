@@ -1,0 +1,140 @@
+.sidebar {
+    width: 18%;
+    background-color: #29221D;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    color: #fff;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    overflow-y: auto;
+    font-size: 20px;
+  }
+  
+  .kindr-logo {
+    width: 100%;
+    max-width: 150px;
+    margin: 40px auto 1rem;
+    margin-left: 20px;
+  }
+  
+  .logo-divider {
+    width: 100%;
+    height: 1px;
+    background-color: #444;
+    margin-bottom: 2rem;
+  }
+  
+  .sidebar-nav {
+    flex-grow: 1;
+  }
+  
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    color: #ddd;
+    text-decoration: none;
+    margin-bottom: 1rem;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 8px;
+  }
+  
+  .sidebar-item.active {
+    color: #ff6633;
+    background-color: transparent; /* Ensure background stays transparent */
+  }
+  
+  /* Remove hover color for active item */
+  .sidebar-item.active:hover {
+    background-color: transparent;
+    color: #ff6633;
+  }
+  
+  .sidebar-icon {
+    margin-right: 2rem;
+    width: 30px;
+    height: 30px;
+  }
+  
+  .profile-section {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border-top: 1px solid #444242;
+    position: relative;
+  }
+  
+  .profile-photo {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 15px;
+    border: 2px solid #E6E7E9;
+  }
+  
+  .profile-details {
+    flex: 1;
+  }
+  
+  .profile-name {
+    font-size: 1.1rem;
+    color: #fff;
+  }
+  
+  .profile-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .arrow-button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  
+  .arrow-button:hover {
+    color: #ff6633;
+  }
+  
+  .profile-dropdown {
+    position: absolute;
+    bottom: 100%;
+    right: 50%;
+    transform: translateX(50%);
+    background-color: #aa9f9f;
+    border: 1px solid #E6E7E9;
+    border-radius: 8px;
+    padding: 0.5rem 0;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    min-width: 180px;
+    margin-bottom: 10px;
+  }
+  
+  .dropdown-item {
+    background-color: #aa9f9f;
+    padding: 0.75rem 1.5rem;
+    color: #3d3535;
+    font-size: 0.9rem;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .linebetween {
+    height: 1px;
+    background-color: #857d7d;
+  }
+  
+  .dropdown-item:hover {
+    background-color: #444;
+    color: #ff6633;
+  }

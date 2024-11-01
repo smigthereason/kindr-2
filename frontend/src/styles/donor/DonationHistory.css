@@ -1,0 +1,100 @@
+/* DonationHistory.css */
+
+.donation-history-container {
+  display: flex;
+  background-color: #29221D;
+  padding: 20px;
+  border-radius: 20px;
+  margin-top: 25px;
+  margin-left: 50px;
+  width: 95%;
+  box-shadow: 0 0 1px rgba(176, 189, 5, 0.342);
+}
+
+.content {
+  flex: 1;
+  margin-top: 30px;
+}
+
+.content h2 {
+  font-size: 2rem;
+  color: #fff;
+  position: relative;
+  right: 450px;
+  bottom: 30px;
+  /* margin-left: 20px; */
+}
+
+table {
+  border: none;
+  border-collapse: collapse;
+  width: 100%;
+  color: #fff;
+  text-align: left;
+}
+
+/* th {
+  width:100px;
+} */
+
+td {
+  padding: 20px;
+  text-align: left;
+  font-size: 1.5rem;
+}
+
+th {
+  background-color: #29221D;
+  font-weight: bold;
+  color: #b6b4b4;
+  font-size: 1.5rem;
+  padding: 20px;
+}
+/* tr {
+  width: 90%;
+} */
+
+tbody tr {
+  background-color: #29221D;
+}
+
+tbody td {
+  color: #ffffff;
+}
+
+/* Divider below the table headers */
+.header-divider {
+  width: 100%;
+  height: 1px;
+  background-color: #444242; /* Match with table header background */
+  margin: 0; /* Remove margins for seamless alignment */
+}
+
+.transaction-image {
+  width: 39.49px;
+  height: 32px;
+  margin-right: 15px;
+  vertical-align: middle;
+}
+
+.active {
+  color: #FF6633;
+}
+
+.inactive {
+  color: #b6b4b4;
+}
+
+.donation-button {
+  background-color: #FF6633;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-top: 12px;
+  cursor: pointer;
+  border: none;
+}
+
+.donation-button:hover {
+  background-color: #ff5422;
+}
