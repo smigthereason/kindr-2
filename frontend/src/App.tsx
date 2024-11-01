@@ -1,25 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate, useLocation } from "react-router-dom";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
 import Donation from "./pages/Donation";
 import Volunteer from "./pages/Volunteer";
 import Login from "./pages/Login";
+import FAQ from "./pages/FAQ";
+import BeneficiaryPage from "./pages/BeneficiaryPage";
+import Partner from "./pages/Partner";
+import Policies from "./pages/Policies";
 import CharityDashboard from "./pages/Charity/Dashboard";
 import Beneficiaries from "./pages/Charity/Beneficiaries";
 import History from "./pages/Charity/History";
 import CharitySettings from "./pages/Charity/Settings";
 import CharitySidebar from "./components/Charity/Sidebar";
-import Footer from "./components/Footer";
-import FAQ from "./pages/FAQ";
 import DonorSidebar from './components/donor/SideBar';
 import DonorDashboard from "./pages/donor/Dashboard";
 import DonationHistory from "./pages/donor/DonationHistory";
 import ManageProfile from "./pages/donor/ManageProfile";
 import DonorSettings from "./pages/donor/Settings";
-import BeneficiaryPage from "./pages/BeneficiaryPage";
 import Impact from "./pages/donor/Impact";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import Loading from "./pages/Loading";
@@ -74,7 +76,7 @@ function App() {
 
   function LayoutWrapper({ children }: { children: React.ReactNode }) {
     const location = useLocation();
-    const publicRoutes = ["/", "/beneficiary", "/contact", "/about", "/donation", "/FAQ", "/volunteer"];
+    const publicRoutes = ["/", "/beneficiary", "/contact", "/about", "/donation", "/FAQ", "/volunteer", "/partner", "/policies"];
     const isPublicRoute = publicRoutes.includes(location.pathname);
 
     return (
@@ -109,6 +111,8 @@ function App() {
           <Route path="/loading" element={<Loading />} />
           <Route path="/beneficiary" element={<BeneficiaryPage />} />
           <Route path="/volunteer" element={<Volunteer />} />
+          <Route path="/partner" element={<Partner />} />
+          <Route path="/policies" element={<Policies/>} />
           <Route path="/login" element={<Login setUser={setUser} />} />
 
           {/* Protected Charity Routes */}

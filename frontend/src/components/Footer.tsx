@@ -4,7 +4,7 @@ import { HashLink as Link } from 'react-router-hash-link';
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-black shadow-md z-50 w-full text-white relative text-4xl overflow-x-hidden">
+    <footer className="bg-black sm:bg-transparent shadow-md z-50 w-full text-white relative text-4xl overflow-x-hidden p-4">
       <div className="w-full px-4 py-10">
         <div className="flex flex-col md:flex-row md:justify-between items-start">
           {/* Logo and tagline */}
@@ -63,7 +63,7 @@ const Footer: React.FC = () => {
               </li>
               <li>
                 <Link
-                  to="/partner"
+                  to="/partner#partner"
                   className="text-white no-underline hover:text-[#ff6633]"
                 >
                   Partner
@@ -86,7 +86,7 @@ const Footer: React.FC = () => {
             <ul className="text-xl space-y-1 text-center md:text-left">
               <li>
                 <Link
-                  to="/feedback"
+                  to="/contact"
                   className="text-white no-underline hover:text-[#ff6633]"
                 >
                   Feedback
@@ -94,10 +94,10 @@ const Footer: React.FC = () => {
               </li>
               <li>
                 <Link
-                  to="/referrals"
+                  to="/policies"
                   className="text-white no-underline hover:text-[#ff6633]"
                 >
-                  Referrals
+                  Policies
                 </Link>
               </li>
               <li>

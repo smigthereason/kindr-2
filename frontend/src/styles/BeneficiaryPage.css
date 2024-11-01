@@ -97,13 +97,15 @@ body {
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width:55vw;
-  /* max-width: 750px; */
+  height: 42vh;
   margin: 0 0 20px 0;
   font-size: 1.5vw;
 }
 
 .testimonial-navigation {
-  margin-top: 15px;
+  position: absolute;
+  top: 35vh;
+  left: 23vw;
   display: flex;
   justify-content: center;
 }
@@ -113,9 +115,9 @@ body {
   border: none;
   color: #ff6633;
   padding: 10px;
-  border-radius: 50%;
+  border-radius: 40%;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 20px;
   margin: 0 10px;
   transition: background 0.3s ease;
 }
@@ -283,7 +285,13 @@ h4 {
   .donate-button-container{
     left: 30vw;
   }
+  .testimonial-card {
+    width: 70vw;
+    font-size: 2vh;
+    left: 8vw;
+  }
 }
+
 @media (min-width:1600px) {
   .testimonial-card {
     left: 20vw;

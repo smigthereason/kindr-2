@@ -80,9 +80,10 @@ const Contact: React.FC = () => {
       className="bg-black text-white p-8 flex flex-col md:flex-row justify-between bg-cover bg-center"
       style={{ backgroundImage: `url(${worldImage})` }}
     >
+      <div className="absolute inset-0 bg-black/50 sm:bg-gray-950 opacity-50"></div>
       <div className="relative top-32 left-10 w-4/5 md:w-2/3 pr-8 mb-32">
         <h1 className="text-3xl font-bold mb-6">Get In Touch</h1>
-        <h2 className="text-4xl font-bold mb-8">Send Me A Message</h2>
+        <h2 className="text-4xl font-bold mb-8">We would love to hear from you.</h2>
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <input

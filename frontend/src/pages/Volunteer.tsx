@@ -2,6 +2,8 @@ import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+// import worldImage from "../assets/world2.jpg";
+
 
 // Define types for the form data
 type VolunteerFormInputs = {
@@ -34,7 +36,10 @@ const Volunteer: React.FC = () => {
   };
 
   return (
-    <div className="volunteer-page relative top-32 mb-40 p-8 max-w-2xl mx-auto bg-white/20 shadow-lg rounded-md">
+    <div
+    className=" p-8 flex flex-col md:flex-row justify-between bg-cover bg-center">
+        <div className="absolute z-[0] w-[50%] h-[50%] right-20 bottom-40 pink__gradient" />
+    <div className="volunteer-page relative top-32 mb-40 p-8 max-w-2xl mx-auto bg-black/90 border shadow-lg rounded-md">
       <h2 className="text-3xl font-semibold text-center mb-6">Volunteer Registration</h2>
       <p className="text-center mb-8 text-gray-200">
         Register to volunteer your services and make a difference in relief areas and support the less fortunate.
@@ -134,6 +139,7 @@ const Volunteer: React.FC = () => {
           Submit
         </button>
       </form>
+    </div>
     </div>
   );
 };

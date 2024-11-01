@@ -88,8 +88,8 @@ const About = () => {
 
             <div className="absolute z-[0] w-[80%] h-[80%] rounded-full bottom-40 white__gradient" />
           </div>
-          <div className="flex flex-col xl:flex-row justify-center items-center mt-40 ml-40 relative">
-            <div className="relative">
+          <div className="flex flex-col xl:flex-row justify-center items-center mt-40 mr-14 relative">
+            <div className="hidden xl:flex relative top-20 right-40 ">
               <img
                 src="https://images.unsplash.com/photo-1567057419565-4349c49d8a04?q=80&w=1472&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 alt=""
@@ -107,7 +107,7 @@ const About = () => {
               </h1>
               <div className="flex items-center self-start flex-col ">
                 {/* dot */}
-                <p className="flex items-center  gap-4 relative right-[5.9rem]">
+                <p className="flex items-center  gap-4 relative right-10">
                   <RiCheckFill className="bg-white rounded-full text-xl text-accent" />
                   <h2 className="text-white/80 h3">Accredited Causes</h2>
                 </p>
@@ -120,7 +120,7 @@ const About = () => {
               </div>
               <div className="flex items-center self-start flex-col ">
                 {/* dot */}
-                <p className="flex items-center gap-4 relative right-[6.5rem]">
+                <p className="flex items-center gap-4 relative right-10">
                   <RiCheckFill className="bg-white rounded-full text-xl text-accent" />
                   <h2 className="text-white/80 h3">Focused Support</h2>
                 </p>
@@ -133,7 +133,7 @@ const About = () => {
               </div>
               <div className="flex text-start items-center  self-start flex-col ">
                 {/* dot */}
-                <p className="flex items-center text-start gap-4 relative right-32">
+                <p className="flex items-center text-start gap-4 relative right-14">
                   <RiCheckFill className="bg-white rounded-full text-xl text-accent" />
                   <h2 className="text-white/80 h3">Data Driven</h2>
                 </p>
@@ -148,10 +148,10 @@ const About = () => {
 
             <div className="absolute z-[0] w-[50%] h-[50%] left-20 bottom-40 blue__gradient" />
           </div>
-          <div className="relative mt-20 xl:mt-0">
+          <div className="relative mt-20 xl:mt-40">
             <div className="mb-10 flex flex-col items-center justify-center">
               <h1 className="h2 text-center mb-5">Want to get Involved ?</h1>
-              <p className="text-sm text-white/50 text-center max-w-[600px]">
+              <p className="text-xl text-white/50 text-center max-w-[600px]">
                 Your involvement can make a significant difference in the lives
                 of countless girls across sub-Saharan Africa. By supporting our
                 cause, you're not just providing sanitary supplies - you're
@@ -166,7 +166,7 @@ const About = () => {
               </p>
             </div>
             <div className="flex flex-col xl:flex-row items-center justify-around gap- xl:gap-0 ">
-              <div className="bg-stone-700 py-8 px-10 rounded-lg flex flex-col items-center justify-center h-[300px] w-[350px] z-10">
+              <div className="bg-stone-700 py-8 px-10 rounded-lg flex flex-col items-center justify-center h-[300px] w-[350px] z-10 mb-8">
                 <h2 className="text-4xl mb-7 text-center text-white/80">
                   Create <br />
                   Your Cause
