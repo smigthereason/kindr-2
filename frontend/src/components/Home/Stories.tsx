@@ -14,7 +14,7 @@ const Stories = () => {
           </p>
         </div>
         <div className="bg-white/20 xl:col-span-3 xl:row-span-4 relative bg-story1 bg-cover mask-image">
-          <div className="absolute bottom-2 left-5 z-10 z-10">
+          <div className="absolute bottom-2 left-5  z-10">
             <h1 className=" leading-loose">Amina's Dream Realized
             </h1>
             <p className="text-sm text-white/50 mb-2">Regular supplies keep Amina in school daily. Now top of her class, she aspires to become a doctor.</p>

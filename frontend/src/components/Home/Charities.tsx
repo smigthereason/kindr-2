@@ -16,19 +16,20 @@ const Charities = () => {
               Your Help Is Needed
             </h2>
             <ScrollArea className="w-[95vh] xl:w-full whitespace-nowrap rounded-md z-10">
-              <div className="flex relative gap-6 mt-20">
+              <div className="flex flex-col sm:flex-row relative gap-6 mt-20">
                 {charities.map((charity, index) => {
                   return (
                     <div
                       key={index}
-                      className=" w-1/3 shadow rounded-lg overflow-hidden"
+                      className="w-full sm:w-1/3 shadow rounded-lg overflow-hidden"
                     >
                       <img
                         src={charity.img}
-                        className="object-cover h-52 w-full z-0"
+                        className="object-cover h-40 sm:h-52 w-1/2  sm:w-full z-0"
                         alt=""
                       />
-                      <div className="relative -top-5 p-4 mx-3 bg-secondary z-10 border-white/50 border-2">
+
+                      <div className="relative -top-5 p-2 pt-2 mt-2  bg-secondary z-10 border-white/50 border-2 ml-4 w-2/5 sm:w-11/12">
                         <span
                           className={`${charity.color} w-fit bg-white/20 rounded-md px-2 py-1 font-semibold text-sm`}
                         >

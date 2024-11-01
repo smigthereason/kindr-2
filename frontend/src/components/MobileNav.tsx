@@ -29,21 +29,21 @@ const MobileNav = () => {
   return (
     <Sheet>
       <SheetTrigger className="flex justify-center items-center">
-        <CiMenuFries className="text-[32px] text-accent" />
+        <CiMenuFries className="text-[40px] text-accent" />
       </SheetTrigger>
-      <SheetContent className="flex flex-col">
+      <SheetContent className="flex flex-col bg-black/70">
         {/* logo */}
-        <div className="mt-32 mb-32 text-center text-2xl">
+        <div className="mt-14 mb-12 text-left text-2xl">
         <Link to="/">
           <img
             src={logo}
             alt="kindr logo"
-            className="h-9 object-cover mx-auto my-2"
+            className="h-8 object-cover ml-0 mt-0"
           />
         </Link>
         </div>
         {/* nav */}
-        <nav className="flex flex-col justify-center items-center gap-8">
+        <nav className="flex flex-col justify-start items-start gap-8">
           {links.map((link, index) => {
             return (
               <Link
@@ -52,7 +52,7 @@ const MobileNav = () => {
                 className={`${
                   link.path === location.pathname &&
                   "text-accent border-b-2 border-accent"
-                } text-xl capitalize hover:text-accent transition-all`}
+                } text-3xl capitalize hover:text-accent transition-all`}
               >
                 {link.name}
               </Link>

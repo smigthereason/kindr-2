@@ -120,7 +120,7 @@ Join us in breaking the cycle of missed school days and limited opportunities. T
                   Get Accredited
                 </Button>
               </div>
-              <div className="bg-stone-700 rounded-lg pb-6 px-6 flex flex-col justify-center items-center h-[300px] w-[350px] z-10">
+              <div className="bg-stone-700 rounded-lg pb-6 px-6 flex flex-col justify-center items-center h-[300px] w-[350px] z-10 ">
                 <h2 className="text-3xl mb-5 text-center text-white/80">
                   The Long Journey
                   <br /> to End Poverty <br />

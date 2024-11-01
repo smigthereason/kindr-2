@@ -37,11 +37,11 @@ const Hero = () => {
         </div>
 
         {/* hero image */}
-        <div className="hidden xl:inline relative w-full h-[600px] z-20">
+        <div className="hidden  xl:inline relative h-[600px] z-20 left-52 sm:w-9/12">
           <img
             src={hero}
             alt="hero"
-            className="relative scale-[1.0] left-48 top-2 h-[630px] hero_image "
+            className="relative scale-[0.5]  sm:scale-[1.0] left-20 lg:left-48 sm:top-2  h-[400px]  lg:h-[630px] hero_image"
           />
 
           <svg
