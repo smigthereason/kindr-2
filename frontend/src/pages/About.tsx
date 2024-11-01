@@ -1,6 +1,9 @@
 import { Button } from "@/components/ui/button";
+import { useEffect } from "react";
 import { RiCheckFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
+
 
 
 const About = () => {
@@ -10,17 +13,30 @@ const About = () => {
     navigate("/loading");
   };
 
+  
+  const { hash } = useLocation();
+  
+    useEffect(() => {
+      if (hash) {
+        const element = document.getElementById(hash.replace('#', ''));
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    }, [hash]);
+
   return (
     <section className="h-full pt-24 xl:pt-20">
-      <div className="bg-about img-bg min-h-[30vh] xl:min-h-[400px] bg-cover bg-no-repeat bg-center flex justify-center items-center">
-        <h1 className="h2">About Us</h1>
+      <div className="bg-about img-bg min-h-[20vh] xl:min-h-[200px] bg-cover bg-no-repeat bg-center flex justify-center items-center">
+        <h1 id="goal" className="h2">About Us</h1>
       </div>
-      <div className="container mx-auto mt-40">
+      <div  className="container mx-auto mt-40">
         <div className="flex flex-col">
           <div className="relative flex flex-col items-center xl:items-start xl:flex-row gap-10">
             <div className="xl:min-w-[500px] z-10 ">
-              <h1 id="mission" className="h2 font-semibold mb-8">Where it all Began</h1>
-              <p className="h3 mb-6">Who Are We?</p>
+              <h1 className="h2 font-semibold mb-8">Where it all Began</h1>
+              <p  className="h3 mb-6">Who Are We?</p>
+
               <img
                 src="https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 alt=""

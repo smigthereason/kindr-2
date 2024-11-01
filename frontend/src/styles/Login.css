@@ -1,6 +1,6 @@
 .login-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: row; /* Default for larger screens */
   width: 100%;
   height: 100vh; 
   background-image: url("../assets/world2.jpg");
@@ -9,7 +9,6 @@
   color: white;
   overflow: hidden;
 }
-
 .left-section1 {
   flex: 2;
   display: flex;
@@ -220,4 +219,45 @@
 
 .signup-content button[type="submit"]:hover {
   background-color: #8d8184;
+}
+
+@media (max-width: 768px) { /* You can adjust the breakpoint as needed */
+  .login-container {
+    flex-direction: column; /* Change to column on mobile screens */
+    height: 100vh; /* Allow height to adjust based on content */
+    background-size: cover;
+    background-position:inherit;
+  }
+
+  .left-section1, 
+  .right-section1 {
+    flex: none; /* Remove flex properties for child sections */
+    width: 100%; /* Ensure they take the full width */
+    display: flex; /* Keep the flex properties for internal alignment */
+    justify-content: center; /* Center items */
+  }
+
+  .left-section1 img {
+    position: relative;
+    top: 5vh;
+    left: 0; 
+    bottom: 0; 
+    width: 80vw;
+  
+  }
+
+  .form-holder {
+    width: 90%; /* Adjust width for mobile */
+    max-width: none; /* Remove max-width constraint */
+    position: relative;
+    top: 15%;
+    margin: 0 auto; /* Center the form-holder */
+  }
+
+  .form-container button {
+    width: 100%; /* Make button full width on mobile */
+    left: 0; /* Reset positioning for mobile */
+  }
+
+
 }

@@ -1,285 +1,291 @@
 body {
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-    background-color: #000000;
-    color: #fff;
-  }
-  
-  .beneficiary-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    min-height: 100vh;
-    padding: 20px;
-    box-sizing: border-box;
-  }
-  .beneficiary-page h3{
-    color: #FF6633;
-  
-  }
-  
-  .text-place {
-    text-align: justify;
-    padding: 20px;
-    max-width: 800px;
-    width: 100%;
-    box-sizing: border-box;
-    margin: 20px auto;
-  }
-  
-  .header {
-    background-color: #000000;
-    padding: 20px;
-    text-align: center;
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-    box-sizing: border-box;
-  }
-  
-  .header-image {
-    width: 100%;
-    max-width: 600px;
-    height: auto;
-    margin: 0 auto 20px;
-    border-radius: 10px;
-  }
-  
-  .header h3 {
-    font-size: 2.3rem;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  .donate-button {
-    background-color: #FF6633;
-    color: #fff;
-    padding: 10px 37px;
-    border: solid 0.5px #000000;
-    cursor: pointer;
-    font-size: 1rem;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: block;
-  }
-  .donate-button-container {
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    padding-left: 569px; 
-    margin-bottom: 60px;
-  }
-  
-  .donate-button:hover {
-    background-color: #f57c00;
-  }
-  
-  .testimonials-section {
-    padding: 20px;
-    text-align: center;
-    width: 100%;
-    max-width: 800px;
-    margin: 20px auto;
-    background-color: #000000;
-  }
-  
-  .testimonial-card {
-    background: #888888;
-    border-radius: 12px;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 650px;
-    margin: 0 auto;
-  }
-  
-  .testimonial-navigation {
-    margin-top: 15px;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .nav-button {
-    background: #000000;
-    border: none;
-    color: #FF6633;
-    padding: 10px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 18px;
-    margin: 0 10px;
-    transition: background 0.3s ease;
-  }
-  
-  .nav-button:hover {
-    background: #d8d8d8;
-  }
-  
-  h4 {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #FF6633;
-  }
-  
-  .statistics-section {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    padding: 20px;
-    width: 100%;
-    box-sizing: border-box;
-    margin-left: 120px;
-  }
-  
-  .statistic {
-    text-align: center;
-    background-color: #000000;
-    border-radius: 10px;
-    padding: 10px;
-    width: 100%;
-    max-width: 350px;
-    border: 1px solid #FF6633;
-  }
-  
-  .statistic .value {
-    font-size: 45px;
-    font-weight: bold;
-    color: #FF6633;
-  }
-  
-  .statistic .label {
-    font-size: 20px;
-    color: #ffffff;
-  }
-  
-  .statistic p {
-    font-size: 23px;
-    color: #aaa;
-    margin-top: 20px;
-  }
-  
-  .impact-stories-section {
-    padding: 20px;
-    text-align: center;
-    width: 100%;
-    background-color: #000000;
-    margin-bottom: 20px;
-    margin-left: 90px;
-  }
-  
-  .impact-stories-section h2 {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background-color: #00000042;
+  color: #fff;
+  font-size: 2vh;
+}
+
+.beneficiary-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+.beneficiary-page h3 {
+  color: #ff6633;
+}
+
+.text-place {
+  text-align: justify;
+  padding: 20px;
+  max-width: 800px;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 20px auto;
+}
+
+.header {
+  background-color: #000000a4;
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.header-image {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  margin: 0 auto 20px;
+  border-radius: 10px;
+}
+
+.header h3 {
+  font-size: 2.3rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.donate-button {
+  background-color: #ff6633;
+  color: #fff;
+  padding: 10px 37px;
+  border: solid 0.5px #000000;
+  cursor: pointer;
+  font-size: 3vh;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: block;
+}
+.donate-button-container {
+  width: 100%;
+  display: flex;
+  position: relative;
+  left: 42.5vw;
+  margin-bottom: 5vw;
+}
+
+.donate-button:hover {
+  background-color: #f57c00;
+}
+
+.testimonials-section {
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+  margin: 10px auto;
+  background-color: #00000000;
+}
+.testimony{
+  font-size: 5vh
+}
+.testimonial-card {
+  position: relative;
+  left: 20vw;
+  background: #88888898;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width:55vw;
+  /* max-width: 750px; */
+  margin: 0 0 20px 0;
+  font-size: 1.5vw;
+}
+
+.testimonial-navigation {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-button {
+  background: #000000;
+  border: none;
+  color: #ff6633;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  margin: 0 10px;
+  transition: background 0.3s ease;
+}
+
+.nav-button:hover {
+  background: #ff6633;
+  color: #000000;
+}
+
+h4 {
+  font-size: 20vh;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #ff6633;
+}
+
+.statistics-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-left: 120px;
+}
+
+.statistic {
+  text-align: center;
+  background-color: #000000;
+  border-radius: 10px;
+  padding: 10px;
+  width: 100%;
+  max-width: 350px;
+  border: 1px solid #ff6633;
+}
+
+.statistic .value {
+  font-size: 45px;
+  font-weight: bold;
+  color: #ff6633;
+}
+
+.statistic .label {
+  font-size: 20px;
+  color: #ffffff;
+}
+
+.statistic p {
+  font-size: 23px;
+  color: #aaa;
+  margin-top: 20px;
+}
+
+.impact-stories-section {
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+  background-color: #000000;
+  margin-bottom: 20px;
+  margin-left: 90px;
+}
+
+.impact-stories-section h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.stories {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto; /* Enable scrolling if necessary */
+  box-sizing: border-box;
+  padding: 0 20px; /* Prevent content from touching the screen edges */
+}
+
+.story {
+  background-color: #202020;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 440px;
+  text-align: center;
+  flex: 0 0 auto;
+  margin-bottom: 100px;
+}
+
+.story img {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.story h3 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.story p {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.read-more-button {
+  background-color: #000000;
+  color: #fff;
+  padding: 10px 20px;
+  border: solid 0.5px #ff6633;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.read-more-button:hover {
+  background-color: #6e6e6e88;
+}
+
+.donate-buttonx {
+  background-color: #ff6633;
+  color: #fff;
+  padding: 10px 27px;
+  border: solid 0.5px #000000;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-right: 5px;
+}
+
+
+.impact-stories-section h2 {
+  color: #ff6633;
+  margin-top: 50px;
+  margin-bottom: 3%;
+}
+@media (max-width: 768px) {
   .stories {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: center;
-    gap: 20px;
-    width: 100%;
-    max-width: 100%;
-    overflow-x: auto; /* Enable scrolling if necessary */
-    box-sizing: border-box;
-    padding: 0 20px; /* Prevent content from touching the screen edges */
+    flex-direction: column;
   }
-  
+
   .story {
-    background-color: #202020;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 440px;
-    text-align: center;
-    flex: 0 0 auto;
   }
-  
-  .story img {
-    width: 100%;
-    height: 320px;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 10px;
+  .statistic{
+    position: relative;
+    right: 15vw;
   }
-  
-  .story h3 {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 5px;
+  .impact-stories-section {
+    position: relative;
+    right: 10vw;
   }
-  
-  .story p {
-    font-size: 1rem;
-    line-height: 1.5;
-    margin-bottom: 10px;
+  .donate-button-container{
+    left: 30vw;
   }
-  
-  .read-more-button {
-    background-color: #000000;
-    color: #fff;
-    padding: 10px 20px;
-    border: solid 0.5px #FF6633;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+@media (min-width:1600px) {
+  .testimonial-card {
+    left: 20vw;
   }
-  
-  .read-more-button:hover {
-    background-color: #45a049;
-  }
-  
-  .donate-buttonx {
-    background-color: #FF6633;
-    color: #fff;
-    padding: 10px 27px;
-    border: solid 0.5px #000000;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-right: 5px;
-  }
-  
-  .footer {
-    background-color: #000000;
-    padding: 20px;
-    text-align: center;
-    margin-top: 20px;
-    height: 600px;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  
-  .footer p {
-    font-size: 0.8rem;
-    color: #777;
-    align-items: center;
-  }
-  .impact-stories-section h2{
-    color: #FF6633;
-    margin-top: 50px;
-    margin-bottom: 3%;
-  
-  }
-  @media (max-width: 768px) {
-    .stories {
-        flex-direction: column;
-    }
-  
-    .story {
-        width: 100%;
-    }
-  }
-  
+}

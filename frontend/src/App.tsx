@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
 import Donation from "./pages/Donation";
+import Volunteer from "./pages/Volunteer";
 import Login from "./pages/Login";
 import CharityDashboard from "./pages/Charity/Dashboard";
 import Beneficiaries from "./pages/Charity/Beneficiaries";
@@ -73,7 +74,7 @@ function App() {
 
   function LayoutWrapper({ children }: { children: React.ReactNode }) {
     const location = useLocation();
-    const publicRoutes = ["/", "/beneficiary", "/contact", "/about", "/donation", "/FAQ"];
+    const publicRoutes = ["/", "/beneficiary", "/contact", "/about", "/donation", "/FAQ", "/volunteer"];
     const isPublicRoute = publicRoutes.includes(location.pathname);
 
     return (
@@ -107,6 +108,7 @@ function App() {
           <Route path="/FAQ" element={<FAQ />} />
           <Route path="/loading" element={<Loading />} />
           <Route path="/beneficiary" element={<BeneficiaryPage />} />
+          <Route path="/volunteer" element={<Volunteer />} />
           <Route path="/login" element={<Login setUser={setUser} />} />
 
           {/* Protected Charity Routes */}
