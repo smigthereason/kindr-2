@@ -29,7 +29,7 @@ const links = [
     icon: <RiGroupFill />,
   },
   {
-    name: "Donate",
+    name: "Donate to Kindr",
     path: "/donor/add-donation",
     icon: <RiHandHeartFill />,
   },

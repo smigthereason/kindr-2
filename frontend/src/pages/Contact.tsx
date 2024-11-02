@@ -77,7 +77,7 @@ const Contact: React.FC = () => {
 
   return (
     <div
-      className="bg-black text-white p-8 flex flex-col md:flex-row justify-between bg-cover bg-center"
+      className="bg-black text-white p-8 flex flex-col md:flex-row justify-between bg-cover bg-center "
       style={{ backgroundImage: `url(${worldImage})` }}
     >
       <div className="absolute inset-0 bg-black/50 sm:bg-gray-950 opacity-50"></div>

@@ -50,7 +50,7 @@ const SideBar: React.FC<SideBarProps> = ({ onLogout }) => {
           </Link>
           <Link to="/donor/add-donation" className={`sidebar-item ${getActiveClass('/donor/add-donation')}`}>
             <RiHandHeartFill className="sidebar-icon" />
-            <span>Donate</span>
+            <span>Donate to Kindr</span>
           </Link>
           <Link to="/donor/impact" className={`sidebar-item ${getActiveClass('/donor/impact')}`}>
             <RiHandHeartFill className="sidebar-icon" />
@@ -72,7 +72,7 @@ const SideBar: React.FC<SideBarProps> = ({ onLogout }) => {
             <button className="arrow-button" onClick={toggleDropdown}>▲</button>
             {isDropdownOpen && (
               <div className="profile-dropdown">
-                <div className="dropdown-item" onClick={handleManageProfile}>Manage Profile</div>
+                <div className="dropdown-item" ><Link to="/donor/settings">Manage Profile</Link></div>
                 <div className="dropdown-item" onClick={handleLogout}>Log Out</div>
               </div>
             )}
