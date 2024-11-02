@@ -29,16 +29,14 @@ const Settings: React.FC = () => {
         
         <div className="settings-content">
           {activeSection === 'account' && (
-            <div className="settings-section">
+            <div className="set-sections">
               
-              <h2>Account Settings</h2>
               <Account />
             </div>
           )}
           
           {activeSection === 'password' && (
-            <div className="settings-section">
-              <h3>Password</h3>
+            <div className="set-sections">
               <Password />
             </div>
           )}

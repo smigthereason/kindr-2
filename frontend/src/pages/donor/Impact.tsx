@@ -99,7 +99,7 @@ const Impact: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black ml-40 md:ml-40 xl:ml-80 w-5/6 text-white">
+    <div className="min-h-screen bg-black ml-0 md:ml-40 lg:ml-60 xl:ml-80 w-5/6 text-white">
       <main className="p-8">
         <h1 className="text-2xl sm:text-4xl mb-2 relative top-10 sm:top-0 right-44 sm:right-20 ">Empowering Lives Through Generosity</h1>
         <h2 className="text-xl sm:text-2xl mb-8 relative top-10 sm:top-0 right-44 sm:right-20  text-orange-500">Kindr Donation Platform</h2>

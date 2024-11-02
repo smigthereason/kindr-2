@@ -1,3 +1,8 @@
+.settings-container{
+    min-height: 1200px;
+    position: relative;
+    left: 2vw;
+}
 .settings-nav {
     display: flex;
     margin-top: 20px;
@@ -28,15 +33,12 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    width: 1280px;
 }
 
-.settings-section {
-    background-color: #29221D;
+.set-sections {
     padding: 30px;
     border-radius: 8px;
-    box-shadow: 0 3px 8px rgba(235, 231, 231, 0.295);
-    width: 80%;
+    width: 70vw;
     height: 50px;
     margin-left: 285px;
 }
@@ -121,4 +123,70 @@
 
 .save-button:hover {
     background-color: #e55b29;
+}
+/* Existing styles here... */
+
+/* Mobile styles */
+@media (max-width: 767px) {
+    .settings-container {
+        /* Adjusting left margin or positioning */
+        left: 0; /* Resetting left positioning */
+        padding: 0 10px; /* Optional: Adding some padding */
+        height: 100vh;
+    }
+
+    .settings-nav {
+        position: relative;
+        top: 5vh;
+        margin-bottom: 2vh;
+        flex-direction: column; /* Stack navigation buttons vertically */
+        margin-left: 0; /* Resetting margin-left for mobile */
+        align-items: flex-start; /* Align items to the start */
+    }
+
+    .settings-nav-button {
+        margin: 5px 0; /* Adding margin for spacing between buttons */
+        font-size: 1.5em; /* Optionally reduce font size for mobile */
+    }
+
+    .settings-content {
+        flex-direction: column; /* Stack content vertically */
+        padding: 20px; /* Optional: Adding padding to content */
+    }
+
+    .set-sections {
+        width: 100%; /* Make sections take full width */
+        margin-left: 0; /* Reset margin for mobile */
+    }
+
+    .account-container {
+        width: 100%; /* Make account container full width */
+        padding: 10px; /* Adjust padding for mobile */
+    }
+
+    .input-group {
+        /* No need to adjust input-group unless specific changes are needed */
+    }
+
+    .input-label,
+    .input,
+    .select,
+    .textarea {
+        /* Adjust font sizes for readability on mobile */
+        font-size: 0.9rem; /* Slightly reduce font size */
+    }
+
+    .save-button {
+        /* Adjust button size for mobile */
+        width: 100%; /* Make button full width */
+        padding: 0.5rem; /* Adjust padding for mobile */
+        font-size: 1em; /* Ensure font size is readable */
+    }
+}
+
+/* Media query for larger screens */
+@media (min-width: 1600px) {
+    .settings-container {
+        left: 5vw; /* Adjust left positioning for larger screens */
+    }
 }

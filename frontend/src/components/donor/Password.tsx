@@ -23,7 +23,7 @@ const Password: React.FC = () => {
   return (
     <div className="password-container">
       <div className="password-inner">
-        <h2 className="title">Account Settings</h2>
+        <h2 className="title">Password Settings</h2>
         <form className="form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label className="label" htmlFor="email">Email Address</label>

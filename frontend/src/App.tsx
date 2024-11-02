@@ -141,7 +141,7 @@ function App() {
             path="/donor/*"
             element={
               <ProtectedRoute requiredRole="donor">
-              <div className="flex">
+              <div className="flex bg-black">
                 <DonorHeader  />
                 <div className="flex-1 p-4 ">
                   <Routes>

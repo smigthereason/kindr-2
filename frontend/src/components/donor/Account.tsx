@@ -12,16 +12,21 @@ const Account: React.FC = () => {
             <div className="select-container">
               <select className="select" id="country" required>
                 <option>Choose...</option>
-                <option>USA</option>
-                <option>France</option>
-                <option>Spain</option>
-                <option>UK</option>
+                <option>Kenya</option>
+                <option>Tanzania</option>
+                <option>Uganda</option>
+                <option>Ethiopia</option>
+                <option>Rwanda</option>
+                <option>Burundi</option>
+                <option>South Africa</option>
+                <option>Nigeria</option>
+                <option>Other</option> 
               </select>
               
             </div>
           </div>
           <div className="form-group">
-            <label className="label" htmlFor="language">Favorite Language</label>
+            <label className="label" htmlFor="language">Preferred Language</label>
             <div className="select-container">
               <select className="select" id="language" required>
                 <option>Choose...</option>
