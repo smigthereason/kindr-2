@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import backgroundImage from "../assets/faq.jpg"; // Use a similar background image or a different one
+
 
 const PlatformPolicies: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);

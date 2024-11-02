@@ -37,7 +37,7 @@ const SideBar: React.FC<SideBarProps> = ({ onLogout }) => {
     <div className="dashboard-container">
       <div className="sidebar">
         <img src={kindrLogo} alt="Kindr Logo" className="kindr-logo" />
-        <div className="logo-divider"></div>
+        <div className="logo-divider bg-transparent"></div>
 
         <nav className="sidebar-nav">
           <Link to="/donor/dashboard" className={`sidebar-item ${getActiveClass('/donor/dashboard')}`}>
@@ -84,4 +84,3 @@ const SideBar: React.FC<SideBarProps> = ({ onLogout }) => {
 };
 
 export default SideBar;
-

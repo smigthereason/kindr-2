@@ -4,7 +4,6 @@ import image2 from "../../assets/Group 3 (1).jpg";
 import "../../styles/donor/DonationHistory.css";
 import worldImage from "../../assets/world2.jpg";
 
-
 const donationData = [
   {
     id: 1,
@@ -37,44 +36,27 @@ const donationData = [
 
 const DonationHistory: React.FC = () => {
   return (
-    <div className="donation-history-container"
-    style={{ backgroundImage: `url(${worldImage})` }}>
+    <div className="donation-history-container" style={{ backgroundImage: `url(${worldImage})` }}>
       <div className="content">
         <h2>Donations History</h2>
-        <table>
-          <thead className="table-header">
-            <tr>
-              <th>Transactions</th>
-              <th>Amount</th>
-              <th>Total</th>
-              <th>Status</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-        </table>
-        <div className="header-divider"></div>
-        <table>
-          <tbody>
-            {donationData.map((donation) => (
-              <tr key={donation.id}>
-                <td>{donation.charity}</td>
-                <td>
-                  <img
-                    src={donation.imageUrl}
-                    alt={donation.charity}
-                    className="transaction-image"
-                  />
-                </td>
-                <td>{donation.amount}</td>
-                <td>{donation.total}</td>
-                <td className={donation.status.toLowerCase()}>
-                  {donation.status}
-                </td>
-                <td>{donation.date}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="transaction-list">
+          {donationData.map((donation) => (
+            <div key={donation.id} className="transaction-item">
+              <img
+                src={donation.imageUrl}
+                alt={donation.charity}
+                className="transaction-image"
+              />
+              <div className="transaction-details">
+                <h4>{donation.charity}</h4>
+                <p><strong>Amount:</strong> {donation.amount}</p>
+                <p><strong>Total:</strong> {donation.total}</p>
+                <p className={donation.status.toLowerCase()}><strong>Status:</strong> {donation.status}</p>
+                <p><strong>Date:</strong> {donation.date}</p>
+              </div>
+            </div>
+          ))}
+        </div>
         <button className="donation-button">See More</button>
       </div>
     </div>

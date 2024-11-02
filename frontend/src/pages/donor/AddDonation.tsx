@@ -29,6 +29,7 @@ const AddDonation: React.FC = () => {
       setSubmissionMessage(
         `Thank you for your generosity! Your donation of $${donationAmount} has been successfully made.`
       );
+
       // Clear form fields
       setFirstName("");
       setLastName("");
@@ -47,11 +48,11 @@ const AddDonation: React.FC = () => {
 
   return (
     <div
-      className="add-donation-page relative min-h-screen mt-8 w-4/6 ml-[350px]"
+      className="add-donation-page relative min-h-screen mt-8 w-full lg:ml-10 xl:ml-40"
       style={{ backgroundImage: `url(${worldImage})` }}
     >
       <h2 className="text-4xl font-bold mb-4">Make a Donation</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4 w-full max-w-md mx-auto">
         <div>
           <label htmlFor="firstName" className="block font-semibold text-2xl">
             First Name
@@ -104,10 +105,7 @@ const AddDonation: React.FC = () => {
           />
         </div>
         <div>
-          <label
-            htmlFor="donationAmount"
-            className="block font-semibold text-2xl"
-          >
+          <label htmlFor="donationAmount" className="block font-semibold text-2xl">
             Donation Amount
           </label>
           <input
@@ -161,3 +159,4 @@ const AddDonation: React.FC = () => {
 };
 
 export default AddDonation;
+

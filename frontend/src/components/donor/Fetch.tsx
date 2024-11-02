@@ -40,18 +40,18 @@ const Fetch: React.FC = () => {
       <div className="relative flex min-h-screen flex-col justify-center overflow-hidden py-6 sm:py-12">
         <div className="min-h-28 z-10">
           <div className="max-w-screen-lg mx-auto py-4">
-            <h2 className="h2 text-center text-white font-display mb-8">
+            <h2 className="h2 relative right-44 sm:right-0 bottom-40 text-center text-white font-display mb-8">
               More Charities
             </h2>
             {error && (
               <div className="text-red-500 text-center mb-4">{error}</div>
             )}
             <ScrollArea className="w-[95vh] xl:w-full whitespace-nowrap rounded-md z-10">
-              <div className="flex relative gap-6">
+              <div className="flex flex-col sm:flex-row relative gap-6"> {/* Flex direction adjusted here */}
                 {charities.map((charity) => (
                   <div
                     key={charity.id}
-                    className="w-1/3 shadow rounded-lg overflow-hidden"
+                    className="w-full sm:w-1/3 shadow rounded-lg overflow-hidden mb-4 sm:mb-0" // Adjust width for smaller screens
                   >
                     <img
                       src={`http://localhost:5000/${charity.image}`}

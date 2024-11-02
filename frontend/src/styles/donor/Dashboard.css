@@ -1,9 +1,11 @@
 .dashboard {
   background-color: #29221D; 
+  position: relative;
+  right: 1.5vw;
   color: #ffffff;
   padding: 20px;
   display: flex;
-  width: 80%;
+  width: 78vw;
   flex-direction: column;
   align-items: center;
   margin-left: 260px;
@@ -83,7 +85,7 @@
   background: #382f29;
   border-radius: 8px;
   padding: 20px;
-  width: 100%;
+  width: 100vw;
   max-width: 600px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
@@ -99,4 +101,59 @@
   padding: 10px;
   margin-bottom: 5px;
   border-radius: 4px;
+}
+
+/* Media Query for mobile styles */
+@media (max-width: 768px) {
+  .dashboard {
+    flex-direction: column; /* Stack elements vertically */
+    margin-left: 0; /* Remove left margin for smaller screens */
+    width: 100vw; /* Full width on smaller screens */
+    background-color: transparent;
+  }
+
+  .dashboard-header {
+    flex-direction: column; /* Stack header elements */
+    align-items: flex-start; 
+  }
+  .dashboard-header h1{
+    position: relative;
+    top: 4vh;
+  }
+
+  .header-icons {
+    justify-content: flex-end; /* Align icons to the right */
+    width: 100%; /* Full width for header icons */
+  }
+
+  .card-row {
+    flex-direction: column; /* Stack cards vertically */
+    align-items: center; /* Center cards */
+  }
+
+  .card {
+    width: 90%; /* Take 90% width for cards */
+    max-width: none; /* Remove max-width to allow full usage of space */
+  }
+
+  .recent-transactions-card {
+    width: 90%; /* Full width for recent transactions card */
+    max-width: none; /* Allow card to take full width */
+  }
+}
+
+@media (min-width:1920px) {
+  .dashboard {
+    position: relative;
+    left: 5vw;;
+    height: 100vh;
+    padding: 20px;
+    display: flex;
+    width: 78vw;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 260px;
+    margin-top: 20px;
+    border-radius: 1%;
+  }
 }

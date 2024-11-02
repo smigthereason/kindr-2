@@ -17,7 +17,7 @@ import Beneficiaries from "./pages/Charity/Beneficiaries";
 import History from "./pages/Charity/History";
 import CharitySettings from "./pages/Charity/Settings";
 import CharitySidebar from "./components/Charity/Sidebar";
-import DonorSidebar from './components/donor/SideBar';
+import DonorHeader from './components/donor/DonorHeader';
 import DonorDashboard from "./pages/donor/Dashboard";
 import DonationHistory from "./pages/donor/DonationHistory";
 import ManageProfile from "./pages/donor/ManageProfile";
@@ -142,7 +142,7 @@ function App() {
             element={
               <ProtectedRoute requiredRole="donor">
               <div className="flex">
-                <DonorSidebar onLogout={handleLogout} />
+                <DonorHeader  />
                 <div className="flex-1 p-4 ">
                   <Routes>
                     <Route path="dashboard" element={<DonorDashboard />} />
