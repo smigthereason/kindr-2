@@ -20,7 +20,8 @@ const Password: React.FC = () => {
     <div className="bg-[#29221D]  p-6 rounded shadow-md relative right-8 xl:right-0">
       <h2 className="text-xl font-semibold mb-4">Change Password</h2>
       
-      <form onSubmit={handlePasswordUpdate}> <div className="mb-4">
+      <form onSubmit={handlePasswordUpdate}>
+         <div className="mb-4">
           <span className="block text-sm font-medium mb-2">Email</span>
           <input
             type="email"

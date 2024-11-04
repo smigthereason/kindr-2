@@ -1,43 +1,13 @@
 import React, { useEffect, useState } from "react";
-import image1 from "../../assets/Group 3.jpg";
-import image2 from "../../assets/Group 3 (1).jpg";
 import "../../styles/donor/DonationHistory.css";
 import worldImage from "../../assets/world2.jpg";
 
-// const donationData = [
-//   {
-//     id: 1,
-//     charity: "Child",
-//     amount: "$1000000000",
-//     total: "$10.00",
-//     status: "Inactive",
-//     date: "02/21/2021",
-//     imageUrl: image1,
-//   },
-//   {
-//     id: 2,
-//     charity: "School",
-//     amount: "$250",
-//     total: "$10.00",
-//     status: "Active",
-//     date: "02/14/2021",
-//     imageUrl: image2,
-//   },
-//   {
-//     id: 3,
-//     charity: "Food",
-//     amount: "$300",
-//     total: "$10.00",
-//     status: "Active",
-//     date: "02/14/2021",
-//     imageUrl: image2,
-//   },
-// ];
+
 
 const DonationHistory: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [donationData, setDonationData] = useState([]);
-  const [token, setToken] = useState<string | null>(
+  const [token] = useState<string | null>(
     localStorage.getItem("token")
   );
   useEffect(() => {

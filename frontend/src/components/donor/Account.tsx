@@ -1,20 +1,10 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import "../../styles/donor/Account.css";
-import defaultAvatar from '../../assets/man.png';
+import defaultAvatar from "../../assets/man.png";
 
 const Account: React.FC = () => {
-  const [profileImage, setProfileImage] = useState<string | ArrayBuffer | null>(null);
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfileImage(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  const [profileImage] = useState<string | ArrayBuffer | null>(null);
+  const [email, setEmail] = useState("");
 
   // const handleSaveChanges = () => {
   //   // Implement save logic here
@@ -25,7 +15,7 @@ const Account: React.FC = () => {
       <div className="account-inner">
         <h2 className="title">Account Settings</h2>
         <form className="form">
-          <div className="form-group">
+          {/* <div className="form-group">
             <label className="label" htmlFor="country">
               Pick Your Country
             </label>
@@ -43,7 +33,7 @@ const Account: React.FC = () => {
                 <option>Other</option>
               </select>
             </div>
-          </div>
+          </div> */}
           {/* <div className="form-group">
             <label className="label" htmlFor="language">
               Preferred Language
@@ -57,7 +47,7 @@ const Account: React.FC = () => {
               </select>
             </div>
           </div> */}
-          <div className="line"></div>
+          {/* <div className="line"></div> */}
           <div className="personal-info">
             <h2 className="section-title">Personal Info:</h2>
             <div className="profile-photo-section">
@@ -67,31 +57,29 @@ const Account: React.FC = () => {
                   alt="Current Profile"
                 />
               </div>
-              <input
+              {/* <input
                 type="file"
                 accept="image/*"
                 onChange={handleImageChange}
-              />
+              /> */}
             </div>
-            <div className="flex-container">
-              <div className="form-group half-width">
-                <label className="label" htmlFor="first-name">
-                  First Name
-                </label>
-                <input className="input" id="first-name" type="text" required />
-              </div>
-              <div className="form-group half-width">
-                <label className="label" htmlFor="last-name">
-                  Last Name
-                </label>
-                <input className="input" id="last-name" type="text" required />
-              </div>
-            </div>
+
             <div className="form-group">
               <label className="label" htmlFor="username">
                 Username
               </label>
               <input className="input" id="username" type="text" required />
+            </div>
+
+            <div className="mb-4">
+              <span className="block text-sm font-medium mb-2">Email</span>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full p-2 border rounded"
+                required
+              />
             </div>
 
             <div className="actions">
