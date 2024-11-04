@@ -12,12 +12,13 @@ from flask import render_template
 from app import app, mail 
 from models import User  # Import your User model
 from werkzeug.utils import secure_filename
+from flask_bcrypt import Bcrypt
 import os
 from datetime import datetime
 
 
 
-
+bcrypt = Bcrypt(app)
 jwt = JWTManager(app)
 # Configure PayPal SDK
 paypalrestsdk.configure({
@@ -44,6 +45,13 @@ os.makedirs(os.path.join(UPLOAD_FOLDER, 'documents'), exist_ok=True)
 def home():
     return jsonify({'message': 'Hello, World!'})
 
+@app.route('/current_user', methods=['GET'])
+@jwt_required()
+def get_current_user():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+    return jsonify(user.to_dict()), 200
+
 @app.route('/users', methods=['GET'])
 @jwt_required()
 def get_all_users():
@@ -53,61 +61,51 @@ def get_all_users():
     return jsonify({'users': serialized_users})
 
 
+@app.route('/login', methods=['POST'])
+def login_user():
+    data = request.get_json()
+    user = User.query.filter_by(email=data['email']).first()
+    
+    if user is None:
+        return jsonify({"message": "User not found"}), 404
+    
+    logging.info(f"User found: {user.username}, Hashed Password: {user.password}")
+    
+    try:
+        if bcrypt.check_password_hash(user.password, data['password']):
+            access_token = create_access_token(identity=user.id)
+            return jsonify({"access_token": access_token, "user_type": user.user_type}), 200
+    except Exception as e:
+        logging.error(f"Error checking password: {e}")
+    
+    return jsonify({"message": "Invalid email or password"}), 401
+
+
 
 
 @app.route('/users', methods=['POST'])
-def create_user():
-    user_data = request.get_json()
+def register_user():
+    data = request.get_json()
 
-    # Print user_data to debug the incoming request
-    print('Received user data:', user_data)
+    # Check if the user already exists
+    if User.query.filter_by(email=data['email']).first():
+        return jsonify({"message": "User with this email already exists"}), 400
 
-    required_fields = ['username', 'email', 'password', 'user_type']
-    for field in required_fields:
-        if field not in user_data:
-            return jsonify({'message': f'{field.replace("_", " ").capitalize()} is required'}), 400
-
-    existing_user = User.query.filter_by(email=user_data['email']).first()
-    if existing_user:
-        return jsonify({'message': 'User with this email already exists'}), 400
-
-    hashed_password = generate_password_hash(user_data['password'], method='pbkdf2:sha256', salt_length=16)
-
+    # Create a new user
     new_user = User(
-        username=user_data['username'],
-        email=user_data['email'],
-        password=hashed_password,
-        user_type=user_data['user_type']  # Ensure this field matches your model
+        username=data['username'],
+        email=data['email'],
+        password=bcrypt.generate_password_hash(data['password']).decode('utf-8'),
+        user_type=data['user_type']  # Ensure you handle the user_type appropriately
     )
+
+    # Add the new user to the session and commit
     db.session.add(new_user)
     db.session.commit()
-    
-    return jsonify({'message': 'User signed up successfully', 'user_id': new_user.id}), 201
 
-
-@app.route('/login', methods=['POST'])
-def login():
-    user_data = request.get_json()
-
-    if not user_data:
-        return jsonify({'message': 'No data provided'}), 400
-
-    email = user_data.get('email')
-    password = user_data.get('password')
-
-    if not isinstance(password, str):
-        return jsonify({'message': 'Password must be a string'}), 400
-
-    user = User.query.filter_by(email=email).first()
-
-    if user and check_password_hash(user.password, password):
-        access_token = create_access_token(identity=user.id)
-        return jsonify({
-            'access_token': access_token,
-            'user_type': user.user_type  # Assuming you have a 'user_type' field
-        }), 200
-
-    return jsonify({'message': 'Invalid credentials'}), 401
+    # Create an access token
+    access_token = create_access_token(identity=new_user.id)
+    return jsonify({"user_id": new_user.id, "token": access_token}), 201
 
 @app.route('/login', methods=['GET'])
 @jwt_required()
@@ -127,22 +125,31 @@ def validate_token():
         }), 200
     else:
         return jsonify({'message': 'User not found'}), 404
+
 @app.route('/donate', methods=['POST'])
+@jwt_required()  # Require the user to be logged in
 def donate():
     data = request.json
+
+    # Get the user ID from the JWT token
+    user_id = get_jwt_identity()
+    if user_id is None:
+        return jsonify({"error": "User ID is missing"}), 400
+
     new_donation = Donation(
         first_name=data['first_name'],
         last_name=data['last_name'],
         email=data['email'],
+        user_id=user_id,  # Set user_id from JWT
+        donation_amount=data['donation_amount'],
         comment=data.get('comment'),
         agree_to_terms=data['agree_to_terms'],
-        subscribe_monthly=data['subscribe_monthly'],
-        donation_amount=data['donation_amount']
+        subscribe_monthly=data['subscribe_monthly']
     )
     db.session.add(new_donation)
     db.session.commit()
-    return jsonify({"message": "Donation successful"}), 201
 
+    return jsonify({"message": "Donation successful"}), 201
 @app.route('/donors', methods=['GET'])
 def get_donors():
     donations = Donation.query.all()
@@ -161,7 +168,7 @@ def get_donors():
     ]
     return jsonify({'donors': serialized_donors})
 
-@app.route('/donor/<int:user_id>/donations', methods=['GET'])
+@app.route('/donor/<int:user_id>', methods=['GET'])
 @jwt_required()
 def get_donations_by_donor(user_id):
     # Verify the donor's identity using the JWT
@@ -319,7 +326,15 @@ def get_charity():
             'last_name': charity.last_name,
             'image': charity.image,
             'amount': charity.amount,
-            'document': charity.document
+            'title': charity.title,  
+            'email': charity.email,
+            'document': charity.document,
+            'category': charity.category,
+            'description': charity.description,
+            'created_at': charity.created_at,
+            'updated_at': charity.updated_at,
+            'user_id': charity.user_id  # Include the user ID in the response          
+ # Include the user ID in the response
         }
         for charity in charity
     ]

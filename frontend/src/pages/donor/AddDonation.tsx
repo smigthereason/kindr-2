@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import worldImage from "../../assets/world2.jpg";
 
@@ -11,21 +11,67 @@ const AddDonation: React.FC = () => {
   const [subscribeMonthly, setSubscribeMonthly] = useState(false);
   const [donationAmount, setDonationAmount] = useState("");
   const [submissionMessage, setSubmissionMessage] = useState("");
+  const [user, setUser] = useState("");
+
+  useEffect(() => {
+    async function fetchCurrentUser() {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          throw new Error("No token found in local storage");
+        }
+
+        const response = await fetch("http://localhost:5000/current_user", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(`Failed to fetch user data: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        console.log("User data fetched successfully:", data);
+        setUser(data);
+        setEmail(data.email);
+        setFirstName(data.username);
+        // Set additional user properties if needed
+      } catch (error) {
+        console.error("Error fetching current user:", error);
+      }
+    }
+
+    fetchCurrentUser();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const response = await axios.post("https://backend-kindr.onrender.com/donate", {
-        first_name: firstName,
-        last_name: lastName,
-        email,
-        comment,
-        agree_to_terms: agreeToTerms,
-        subscribe_monthly: subscribeMonthly,
-        donation_amount: parseFloat(donationAmount),
-      });
-      console.log(response.data);
 
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:5000/donate",
+        {
+          first_name: firstName,
+          last_name: lastName,
+          email,
+          user_id: user.id,
+          comment,
+          agree_to_terms: agreeToTerms,
+          subscribe_monthly: subscribeMonthly,
+          donation_amount: parseFloat(donationAmount),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`, // JWT token in Authorization header
+          },
+        }
+      );
+
+      console.log(response.data);
       setSubmissionMessage(
         `Thank you for your generosity! Your donation of $${donationAmount} has been successfully made.`
       );
@@ -52,7 +98,10 @@ const AddDonation: React.FC = () => {
       style={{ backgroundImage: `url(${worldImage})` }}
     >
       <h2 className="text-4xl font-bold mb-4">Make a Donation</h2>
-      <form onSubmit={handleSubmit} className="space-y-4 w-full max-w-md mx-auto">
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-4 w-full max-w-md mx-auto"
+      >
         <div>
           <label htmlFor="firstName" className="block font-semibold text-2xl">
             First Name
@@ -100,12 +149,15 @@ const AddDonation: React.FC = () => {
             id="comment"
             value={comment}
             onChange={(e) => setComment(e.target.value)}
-            className="w-full border p-2 rounded"
+            className="w-full border p-2 rounded bg-inherit"
             rows={4}
           />
         </div>
         <div>
-          <label htmlFor="donationAmount" className="block font-semibold text-2xl">
+          <label
+            htmlFor="donationAmount"
+            className="block font-semibold text-2xl"
+          >
             Donation Amount
           </label>
           <input
@@ -159,4 +211,3 @@ const AddDonation: React.FC = () => {
 };
 
 export default AddDonation;
-

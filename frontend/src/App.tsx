@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes, Navigate, useLocation } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+  useLocation,
+} from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
@@ -17,7 +23,7 @@ import Beneficiaries from "./pages/Charity/Beneficiaries";
 import History from "./pages/Charity/History";
 import CharitySettings from "./pages/Charity/Settings";
 import CharitySidebar from "./components/Charity/Sidebar";
-import DonorHeader from './components/donor/DonorHeader';
+import DonorHeader from "./components/donor/DonorHeader";
 import DonorDashboard from "./pages/donor/Dashboard";
 import DonationHistory from "./pages/donor/DonationHistory";
 import ManageProfile from "./pages/donor/ManageProfile";
@@ -28,14 +34,14 @@ import Loading from "./pages/Loading";
 import AdminSidebar from "./components/Admin/AdminSidebar";
 import AdminCharity from "./pages/Admin/Charities";
 import Donators from "./pages/Admin/Donators";
-import AdminSettings from "./components/Admin/Settings"; 
+import AdminSettings from "./components/Admin/Settings";
 import AddCharity from "./pages/Charity/AddCharity";
 import "./App.css";
 import AddDonation from "./pages/donor/AddDonation";
 import GetCharity from "./pages/Admin/GetCharity";
-
+import { UserProvider } from "./UserContext";
 interface User {
-  role: 'charity' | 'donor' | 'admin';
+  role: "charity" | "donor" | "admin";
   // Add any other relevant fields
 }
 
@@ -55,7 +61,7 @@ function App() {
     requiredRole,
   }: {
     children: React.ReactNode;
-    requiredRole: 'charity' | 'donor' | 'admin';
+    requiredRole: "charity" | "donor" | "admin";
   }) => {
     if (!user) {
       return <Navigate to="/login" />;
@@ -66,7 +72,7 @@ function App() {
       const roleRedirect = {
         charity: "/charity/dashboard",
         donor: "/donor/dashboard",
-        admin: "/admin/admin-dashboard"
+        admin: "/admin/admin-dashboard",
       };
       return <Navigate to={roleRedirect[user.role]} />;
     }
@@ -76,7 +82,17 @@ function App() {
 
   function LayoutWrapper({ children }: { children: React.ReactNode }) {
     const location = useLocation();
-    const publicRoutes = ["/", "/beneficiary", "/contact", "/about", "/donation", "/FAQ", "/volunteer", "/partner", "/policies"];
+    const publicRoutes = [
+      "/",
+      "/beneficiary",
+      "/contact",
+      "/about",
+      "/donation",
+      "/FAQ",
+      "/volunteer",
+      "/partner",
+      "/policies",
+    ];
     const isPublicRoute = publicRoutes.includes(location.pathname);
 
     return (
@@ -96,7 +112,6 @@ function App() {
     // Update user state
     setUser(null);
   };
-  
 
   return (
     <Router>
@@ -112,7 +127,7 @@ function App() {
           <Route path="/beneficiary" element={<BeneficiaryPage />} />
           <Route path="/volunteer" element={<Volunteer />} />
           <Route path="/partner" element={<Partner />} />
-          <Route path="/policies" element={<Policies/>} />
+          <Route path="/policies" element={<Policies />} />
           <Route path="/login" element={<Login setUser={setUser} />} />
 
           {/* Protected Charity Routes */}
@@ -121,7 +136,7 @@ function App() {
             element={
               <ProtectedRoute requiredRole="charity">
                 <div className="flex">
-                  <CharitySidebar  onLogout={handleLogout} />
+                  <CharitySidebar onLogout={handleLogout} />
                   <div className="flex-1 p-4 ">
                     <Routes>
                       <Route path="dashboard" element={<CharityDashboard />} />
@@ -136,27 +151,33 @@ function App() {
             }
           />
 
-                  {/* Protected Donor Routes */}
-                  <Route
+          {/* Protected Donor Routes */}
+          <Route
             path="/donor/*"
             element={
               <ProtectedRoute requiredRole="donor">
-              <div className="flex bg-black">
-                <DonorHeader  />
-                <div className="flex-1 p-4 ">
-                  <Routes>
-                    <Route path="dashboard" element={<DonorDashboard />} />
-                    <Route path="donation-history" element={<DonationHistory />} />
-                    <Route path="add-donation" element={<AddDonation />} />
-                    <Route path="manage-profile" element={<ManageProfile />} />
-                    <Route path="settings" element={<DonorSettings />} />
-                    <Route path="impact" element={<Impact />} />
-                  </Routes>
+                <div className="flex bg-black">
+                  <DonorHeader />
+                  <div className="flex-1 p-4 ">
+                    <Routes>
+                      <Route path="dashboard" element={<DonorDashboard />} />
+                      <Route
+                        path="donation-history"
+                        element={<DonationHistory />}
+                      />
+                      <Route path="add-donation" element={<AddDonation />} />
+                      <Route
+                        path="manage-profile"
+                        element={<ManageProfile />}
+                      />
+                      <Route path="settings" element={<DonorSettings />} />
+                      <Route path="impact" element={<Impact />} />
+                    </Routes>
+                  </div>
                 </div>
-              </div>
-            </ProtectedRoute>
-          }
-        />
+              </ProtectedRoute>
+            }
+          />
 
           {/* Protected Admin Routes */}
           <Route
@@ -167,7 +188,10 @@ function App() {
                   <AdminSidebar onLogout={handleLogout} />
                   <div className="flex-1 p-4 ">
                     <Routes>
-                      <Route path="admin-dashboard" element={<AdminDashboard />} />
+                      <Route
+                        path="admin-dashboard"
+                        element={<AdminDashboard />}
+                      />
                       <Route path="charities" element={<AdminCharity />} />
                       <Route path="donators" element={<Donators />} />
                       <Route path="get-charity" element={<GetCharity />} />

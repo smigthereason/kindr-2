@@ -16,6 +16,13 @@ class User(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     donations = db.relationship('Donation', backref='donor', lazy=True)
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "username": self.username,
+            "email": self.email,
+            "user_type": self.user_type
+        }
 
     @validates('username')
     def validate_username(self, key, username):
@@ -95,6 +102,7 @@ class Charity(db.Model):
     email = db.Column(db.String(120), nullable=False)  # Changed to String(120) for consistency
     document = db.Column(db.Text, nullable=False)
     category = db.Column(db.String(50), nullable=False)
+    title=db.Column(db.String(50), nullable=False)
     description = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
