@@ -43,14 +43,14 @@ const Hero = () => {
           <img
             src={hero}
             alt="hero"
-            className="relative scale-[1.2] left-14 top-20 h-[600px]  hero_image "
+            className="relative scale-[1.8] left-28 top-48 h-[420px]  hero_image "
           />
 
           <svg
             width="670"
             height="900"
             xmlns="http://www.w3.org/2000/svg"
-            className="absolute top-[4.2rem] -right-[6rem] " // Ensure it positions correctly
+            className="absolute top-[4.2rem] -right-[20rem] " // Ensure it positions correctly
           >
             <rect
               width="1000"

@@ -44,17 +44,60 @@ const BeneficiaryPage: React.FC = () => {
   const donationPercentage = Math.round((donatedAmount / goalAmount) * 100);
 
   return (
-    <div id="ben-page" className="beneficiary-page relative top-32 mt-8"  style={{ backgroundImage: `url(${worldImage})` }}>
-      <header className="header">
+    <div id="ben-page" className="beneficiary-page relative top-20 "  >
+       <section className="statistics-section">
+        <div className="statistic">
+          <span className="value">
+            <CountUp end={0} start={13} duration={7} suffix="%" />
+          </span>
+          <div className="label">Platform charge</div>
+          <p>
+            We charge zero fees, ensuring that all your donations go directly to
+            those in need.
+          </p>
+        </div>
+        <div className="statistic">
+          <span className="value">
+            <CountUp end={12} start={30} duration={2} suffix="+" />
+          </span>
+          <div className="label">Donations Given</div>
+          <p>
+            Over 12 donations have been generously provided, changing countless
+            lives.
+          </p>
+        </div>
+        <div className="statistic">
+          <span className="value">
+            <CountUp end={16} start={0} duration={5} suffix="+" />
+          </span>
+          <div className="label">Active Donors</div>
+          <p>
+            We are supported by more than 16 active donors who continuously
+            contribute.
+          </p>
+        </div>
+        <div className="statistic">
+          <span className="value">
+            <CountUp end={2000} start={1800} duration={6} suffix="+" />
+          </span>
+          <div className="label">Success Stories</div>
+          <p>
+            Over 2000 success stories have emerged from our programs, creating a
+            lasting impact.
+          </p>
+        </div>
+      </section>
+
+      <div className="header">
         <img src={headerImage} alt="Beneficiaries" className="header-image" />
         <h3>Education Needs For Change The World.</h3>
-      </header>
+      </div>
       <ProgressBar
         percentage={donationPercentage}
         donated={donatedAmount}
         goal={goalAmount}
       />
-      <section className="text-place">
+      <div className="text-place text-xl">
         <p>
           Education for Change is a forward-thinking organization dedicated to
           transforming education in underserved communities. By leveraging
@@ -88,13 +131,13 @@ const BeneficiaryPage: React.FC = () => {
           are building a world where every child has the opportunity to learn,
           grow, and thrive.
         </p>
-      </section>
+      </div>
       <section className="donate-button-container ">
         <button className="donate-button">Donate</button>
       </section>
 
-      <section className="testimonials-section">
-        <h4 className="testimony">What People Say About Us</h4>
+      <section className="testimonials-section" style={{ backgroundImage: `url(${worldImage})` }}>
+        <h4 className="testimony mt-4 mb-8">What People Say About Us</h4>
         <div className="testimonial-card">
           <p>"{testimonials[currentIndex].text}"</p>
           <p>—{testimonials[currentIndex].author}</p>
@@ -109,48 +152,7 @@ const BeneficiaryPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="statistics-section">
-        <div className="statistic">
-          <span className="value">
-            <CountUp end={0} start={13} duration={7} suffix="%" />
-          </span>
-          <div className="label">Platform charge</div>
-          <p>
-            We charge zero fees, ensuring that all your donations go directly to
-            those in need.
-          </p>
-        </div>
-        <div className="statistic">
-          <span className="value">
-            <CountUp end={0} start={30} duration={2} suffix="+" />
-          </span>
-          <div className="label">Donations Given</div>
-          <p>
-            Over 12 donations have been generously provided, changing countless
-            lives.
-          </p>
-        </div>
-        <div className="statistic">
-          <span className="value">
-            <CountUp end={16} start={0} duration={5} suffix="+" />
-          </span>
-          <div className="label">Active Donors</div>
-          <p>
-            We are supported by more than 16 active donors who continuously
-            contribute.
-          </p>
-        </div>
-        <div className="statistic">
-          <span className="value">
-            <CountUp end={2000} start={1800} duration={6} suffix="+" />
-          </span>
-          <div className="label">Success Stories</div>
-          <p>
-            Over 2000 success stories have emerged from our programs, creating a
-            lasting impact.
-          </p>
-        </div>
-      </section>
+     
 
       <section className="impact-stories-section">
         <h2>Look at our other stories</h2>

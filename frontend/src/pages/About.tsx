@@ -44,7 +44,7 @@ const About = () => {
               />
             </div>
             <div className="xl:self-end max-w-[90vw] flex flex-col justify-between gap-6 z-10">
-              <p className="pl-4 border-l-2 border-accent text-white/60 ">
+              <p className="text-xl pl-4 border-l-2 border-accent text-white/60 ">
                 We are a dedicated organization committed to addressing the
                 critical issue of menstrual health and education in sub-Saharan
                 Africa. Founded in response to alarming statistics about girls
@@ -54,34 +54,21 @@ const About = () => {
               </p>
               <p className="text-sm text-white/40"></p>
               <div className="flex flex-col xl:flex-row gap-4">
-                <div className="p-4 flex flex-col justify-center items-center bg-stone-700 xl:min-h-[300px] xl:p-8 xl:justify-around rounded-md">
+                <div className="p-4 flex flex-col justify-center items-center bg-stone-700  xl:min-h-[300px] xl:p-8 xl:justify-around rounded-md">
                   <h1 className="text-xl mb-5 xl:text-2xl">Our Mission</h1>
                   <p className="text-white/50">
                     Our mission is to provide a platform for people to help
                     others in need.
                   </p>
-                  <p className="text-sm text-white/50 mt-9">
-                    Our mission is to empower girls through education by
-                    eliminating barriers caused by inadequate menstrual health
-                    resources. We strive to create an environment where every
-                    girl can attend school with dignity, confidence, and the
-                    tools she needs to succeed.
-                  </p>
+                 
                 </div>
                 <div className="p-4 flex flex-col justify-center items-center bg-stone-700 xl:min-h-[300px] xl:p-8 xl:justify-around rounded-md">
-                  <h1 className="text-xl mb-5 xl:text-2xl">Our Visson</h1>
+                  <h1 className="text-xl mb-5 xl:text-2xl">Our Vision</h1>
                   <p className="text-white/50">
-                    Our mission is to provide a platform for people to help
+                    Our vision is to provide a platform for people to help
                     others in need.
                   </p>
-                  <p className="text-sm text-white/50 mt-9">
-                    We envision a world where menstrual health is no longer an
-                    obstacle to education and opportunity. We aim to foster
-                    communities where both girls and boys understand and support
-                    menstrual health, leading to improved school attendance,
-                    gender equality, and ultimately, stronger, more prosperous
-                    societies.
-                  </p>
+                  
                 </div>
               </div>
             </div>
@@ -101,11 +88,11 @@ const About = () => {
                 className="h-[250px] sm:h-[300px] xl:h-[360px] w-[250px] sm:w-[300px] xl:w-[360px] object-cover relative -inset-20 xl:-inset-40 rounded-md z-10"
               />
             </div>
-            <div className="ml-20 flex flex-col gap-12 z-10">
+            <div className="ml-20 flex flex-col gap-12 z-10 text-xl">
               <h1 className="h2 text-center mb-5">
                 <span className="border-b-2 border-accent">Our </span>Values
               </h1>
-              <div className="flex items-center self-start flex-col ">
+              <div className="flex items-center self-start flex-col  ">
                 {/* dot */}
                 <p className="flex items-center  gap-4 relative right-10">
                   <RiCheckFill className="bg-white rounded-full text-xl text-accent" />
@@ -166,7 +153,7 @@ const About = () => {
               </p>
             </div>
             <div className="flex flex-col xl:flex-row items-center justify-around gap- xl:gap-0 ">
-              <div className="bg-stone-700 py-8 px-10 rounded-lg flex flex-col items-center justify-center h-[300px] w-[350px] z-10 mb-8">
+              <div className="bg-stone-700 py-8 px-10 rounded-lg flex flex-col items-center justify-center h-[300px] w-[350px] z-10 mb-8 mt-8">
                 <h2 className="text-4xl mb-7 text-center text-white/80">
                   Create <br />
                   Your Cause
@@ -198,7 +185,7 @@ const About = () => {
               Our Team
             </h1>
             <p className="h3 mb-6">A Strong and Devoted Team</p>
-            <p className="text-center text-white/60 xl:max-w-[500px] ">
+            <p className="text-xl text-center text-white/60 xl:max-w-[500px] ">
               We are a diverse group of passionate individuals united by a
               common goal: to improve girls' education through better menstrual
               health management. Our team combines expertise in education,
