@@ -39,7 +39,7 @@ import AddCharity from "./pages/Charity/AddCharity";
 import "./App.css";
 import AddDonation from "./pages/donor/AddDonation";
 import GetCharity from "./pages/Admin/GetCharity";
-// import { UserProvider } from "./UserContext";
+
 interface User {
   role: "charity" | "donor" | "admin";
   // Add any other relevant fields
@@ -152,6 +152,7 @@ function App() {
           />
 
           {/* Protected Donor Routes */}
+
           <Route
             path="/donor/*"
             element={

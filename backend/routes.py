@@ -142,7 +142,7 @@ def donate():
         email=data['email'],
         user_id=user_id,  # Set user_id from JWT
         donation_amount=data['donation_amount'],
-        comment=data.get('comment'),
+        cause_id=data.get('cause_id'),
         agree_to_terms=data['agree_to_terms'],
         subscribe_monthly=data['subscribe_monthly']
     )
@@ -158,7 +158,7 @@ def get_donors():
             'first_name': donation.first_name,
             'last_name': donation.last_name,
             'email': donation.email,
-            'comment': donation.comment,
+            'cause_id': donation.cause_id,
             'agree_to_terms': donation.agree_to_terms,
             'subscribe_monthly': donation.subscribe_monthly,
             'donation_amount': donation.donation_amount,
@@ -168,7 +168,7 @@ def get_donors():
     ]
     return jsonify({'donors': serialized_donors})
 
-@app.route('/donor/<int:user_id>', methods=['GET'])
+@app.route('/donor/<int:user_id>/donations', methods=['GET'])
 @jwt_required()
 def get_donations_by_donor(user_id):
     # Verify the donor's identity using the JWT
@@ -184,7 +184,7 @@ def get_donations_by_donor(user_id):
             'first_name': donation.first_name,
             'last_name': donation.last_name,
             'email': donation.email,
-            'comment': donation.comment,
+            'cause_id': donation.cause_id,
             'agree_to_terms': donation.agree_to_terms,
             'subscribe_monthly': donation.subscribe_monthly,
             'donation_amount': donation.donation_amount,

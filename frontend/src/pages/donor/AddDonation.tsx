@@ -14,7 +14,6 @@ const causes = [
   {
     name: "Healthcare & Medical",
     id: 1,
-    
   },
   {
     name: "Educational & Tutoring",
@@ -49,7 +48,6 @@ const causes = [
     id: 9,
   },
 ];
-
 
 const AddDonation: React.FC = () => {
   const [firstName, setFirstName] = useState("");
@@ -93,10 +91,7 @@ const AddDonation: React.FC = () => {
       }
     }
 
-   
-
     fetchCurrentUser();
-    
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -132,9 +127,8 @@ const AddDonation: React.FC = () => {
       );
 
       // Clear form fields
-      setFirstName("");
+
       setLastName("");
-      setEmail("");
       setSelectedCause(""); // Clear selected cause
       setAgreeToTerms(false);
       setSubscribeMonthly(false);
@@ -209,7 +203,7 @@ const AddDonation: React.FC = () => {
           >
             <option value="">Select a cause</option>
             {causes.map((cause) => (
-              <option key={cause.id} value={cause.id}>
+              <option key={cause.id} value={cause.name}>
                 {cause.name}
               </option>
             ))}

@@ -61,7 +61,7 @@ class Donation(db.Model):
     email = db.Column(db.String(120), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     donation_amount = db.Column(db.Float, nullable=False)
-    comment = db.Column(db.String(255))
+    cause_id = db.Column(db.String(255))
     agree_to_terms = db.Column(db.Boolean, default=False)
     subscribe_monthly = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
