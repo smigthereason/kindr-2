@@ -13,6 +13,8 @@ from app import app, mail
 from models import User  # Import your User model
 from werkzeug.utils import secure_filename
 import os
+from datetime import datetime
+
 
 
 
@@ -159,6 +161,34 @@ def get_donors():
     ]
     return jsonify({'donors': serialized_donors})
 
+@app.route('/donor/<int:user_id>/donations', methods=['GET'])
+@jwt_required()
+def get_donations_by_donor(user_id):
+    # Verify the donor's identity using the JWT
+    current_user_id = get_jwt_identity()
+    if current_user_id != user_id:
+        return jsonify({"message": "Unauthorized"}), 403
+
+    # Retrieve donations for the specified donor
+    donations = Donation.query.filter_by(user_id=user_id).all()
+    serialized_donations = [
+        {
+            'id': donation.id,
+            'first_name': donation.first_name,
+            'last_name': donation.last_name,
+            'email': donation.email,
+            'comment': donation.comment,
+            'agree_to_terms': donation.agree_to_terms,
+            'subscribe_monthly': donation.subscribe_monthly,
+            'donation_amount': donation.donation_amount,
+            'created_at': donation.created_at
+        }
+        for donation in donations
+    ]
+    
+    return jsonify({'donations': serialized_donations}), 200
+
+
 @app.route('/testimonials', methods=['POST'])
 def add_testimonial():
     data = request.json
@@ -235,7 +265,7 @@ def allowed_file(filename, allowed_extensions):
 
 @app.route('/charity', methods=['POST'])
 def add_charity():
-    data = request.form
+    data = request.form.to_dict()
 
     # Handle image file upload
     image_file = request.files.get('image')
@@ -255,14 +285,24 @@ def add_charity():
     else:
         return jsonify({"message": "Invalid document format"}), 400
 
+    user_id = data.get('user_id')
+    if not user_id:
+        return jsonify({'error': 'User ID is required'}), 400
+
     # Create a new Charity record in the database
     new_charity = Charity(
         first_name=data.get('first_name'),
         last_name=data.get('last_name'),
+        category=data.get('category'),
+        title=data.get('title'),
+        description=data.get('description'),
         image=image_path,  # Store the image file path
         amount=data.get('amount'),
         email=data.get('email'),
-        document=document_path  # Store the document file path
+        created_at=datetime.utcnow(),
+        updated_at=datetime.utcnow(),
+        user_id=user_id, 
+        document=document_path # Store the document file path
     )
     db.session.add(new_charity)
     db.session.commit()
