@@ -71,7 +71,7 @@ const Footer: React.FC = () => {
               </li>
               <li>
                 <Link
-                  to="/volunteer"
+                  to="/volunteer#volunteer"
                   className="text-white no-underline hover:text-[#ff6633]"
                 >
                   Volunteer
@@ -86,7 +86,7 @@ const Footer: React.FC = () => {
             <ul className="text-xl space-y-1 text-center md:text-left">
               <li>
                 <Link
-                  to="/contact"
+                  to="/contact#contact"
                   className="text-white no-underline hover:text-[#ff6633]"
                 >
                   Feedback
@@ -94,7 +94,7 @@ const Footer: React.FC = () => {
               </li>
               <li>
                 <Link
-                  to="/policies"
+                  to="/policies#policy"
                   className="text-white no-underline hover:text-[#ff6633]"
                 >
                   Policies
@@ -102,7 +102,7 @@ const Footer: React.FC = () => {
               </li>
               <li>
                 <Link
-                  to="/FAQ"
+                  to="/FAQ#faq"
                   className="text-white no-underline hover:text-[#ff6633]"
                 >
                   F.A.Q

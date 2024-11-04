@@ -18,10 +18,6 @@ const SideBar: React.FC<SideBarProps> = ({ onLogout }) => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const handleManageProfile = () => {
-    navigate('/donor/manage-profile');
-    setIsDropdownOpen(false);
-  };
 
   const handleLogout = () => {
     onLogout();

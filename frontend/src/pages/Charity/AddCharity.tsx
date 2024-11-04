@@ -130,7 +130,7 @@ const AddCharity: React.FC = () => {
 
   return (
     <div
-      className="charity-form-page relative min-h-screen mt-8 w-4/6 ml-[350px]"
+      className="charity-form-page relative min-h-screen mt-8 w-4/6 ml-12 xl:ml-[350px]"
       style={{ backgroundImage: `url(${worldImage})` }}
     >
       <h2 className="text-4xl font-bold mb-4">Add Charity</h2>

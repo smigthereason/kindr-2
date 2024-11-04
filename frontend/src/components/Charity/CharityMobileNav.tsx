@@ -13,6 +13,7 @@ import {
   RiSettings4Fill,
 } from "react-icons/ri";
 
+
 interface DonorMobileNavProps {
   onLogout: () => void;
 }
@@ -20,32 +21,28 @@ interface DonorMobileNavProps {
 const links = [
   {
     name: "Dashboard",
-    path: "/donor/dashboard",
+    path: "/charity/dashboard",
     icon: <RiDashboardFill />,
   },
   {
-    name: "History",
-    path: "/donor/donation-history",
+    name: "Beneficiaries",
+    path: "/charity/beneficiaries",
     icon: <RiGroupFill />,
   },
   {
-    name: "Donate to Kindr",
-    path: "/donor/add-donation",
-    icon: <RiHandHeartFill />,
-  },
-  {
-    name: "Donation Pages",
-    path: "/donor/impact",
+    name: "Donation Page",
+    path: "/charity/history",
     icon: <RiHandHeartFill />,
   },
   {
     name: "Settings",
-    path: "/donor/settings",
+    path: "/charity/settings",
     icon: <RiSettings4Fill />,
   },
+  
 ];
 
-const DonorMobileNav: React.FC<DonorMobileNavProps> = ({ onLogout }) => {
+const CharityMobileNav: React.FC<DonorMobileNavProps> = ({ onLogout }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -54,10 +51,7 @@ const DonorMobileNav: React.FC<DonorMobileNavProps> = ({ onLogout }) => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const handleManageProfile = () => {
-    navigate('/donor/manage-profile');
-    setIsDropdownOpen(false);
-  };
+ 
 
   const handleLogout = () => {
     onLogout();
@@ -101,16 +95,15 @@ const DonorMobileNav: React.FC<DonorMobileNavProps> = ({ onLogout }) => {
         </nav>
 
         {/* Profile Section */}
-        <div className="profile-section relative top-20 mt-2">
+        <div className="profile-section relative top-32 mt-8">
           <img src={profileImage} alt="Profile" className="profile-photo w-12 h-12 rounded-full" />
           <div className="profile-details mt-2">
-            <p className="profile-name text-lg text-white">John Doe</p>
+            <p className="profile-name text-lg text-white">Charity One</p>
           </div>
           <div className="profile-controls mt-4">
             <button className="arrow-button text-white" onClick={toggleDropdown}>▼</button>
             {isDropdownOpen && (
               <div className="profile-dropdown mt-2 bg-gray-800 rounded-lg shadow-lg">
-                <div className="dropdown-item p-2 text-white cursor-pointer" onClick={handleManageProfile}>Manage Profile</div>
                 <div className="dropdown-item p-2 text-white cursor-pointer" onClick={handleLogout}>Log Out</div>
               </div>
             )}
@@ -121,4 +114,4 @@ const DonorMobileNav: React.FC<DonorMobileNavProps> = ({ onLogout }) => {
   );
 };
 
-export default DonorMobileNav;
+export default CharityMobileNav;

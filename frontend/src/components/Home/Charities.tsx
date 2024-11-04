@@ -17,10 +17,10 @@ const Charities = () => {
       <div className="relative flex min-h-screen flex-col justify-center overflow-hidden py-6 sm:py-12">
         <div className="min-h-28 z-10">
           <div className="max-w-screen-lg mx-auto py-4">
-            <h2 className="text-3xl sm:text-5xl mb-2 relative top-10 sm:top-0 right-44 sm:right-20 text-center text-white font-display">
+            <h2 className="hidden xl:inline text-3xl  sm:text-5xl mb-2 relative top-10 sm:top-0  text-center text-white font-display">
               Your Help Is Needed
             </h2>
-            <ScrollArea className="w-[35vh] relative left-4 xl:left-0 xl:w-full whitespace-nowrap rounded-md z-10">
+            <ScrollArea className="w-[80vw] relative xl:w-full whitespace-nowrap rounded-md z-10">
               <div className="flex flex-col sm:flex-row relative gap-6 mt-20">
                 {charities.map((charity, index) => {
                   return (

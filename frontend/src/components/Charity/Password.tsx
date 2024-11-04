@@ -1,33 +1,74 @@
+import React, { useState } from "react";
 
-const Password = () => {
+const Password: React.FC = () => {
+  const [email, setEmail] = useState('');
+  const [currentPassword, setCurrentPassword] = useState<string>("");
+  const [newPassword, setNewPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+
+  const handlePasswordUpdate = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (newPassword === confirmPassword) {
+      // Call API to update the password
+      console.log("Password updated successfully");
+    } else {
+      console.log("Passwords do not match");
+    }
+  };
+
   return (
-    <div className="bg-secondary rounded-lg min-h-screen pt-2 font-mono my-16">
-        <div className="container mx-auto">
-            <div className="inputs w-full max-w-2xl p-6 mx-auto">
-                <h2 className="text-2xl text-gray-50">Account Setting</h2>
-                <form className="mt-6 border-t border-gray-400 pt-4">
-                    <div className='flex flex-wrap -mx-3 mb-6'>
-                        <div className='w-full md:w-full px-3 mb-6'>
-                            <label className='block uppercase tracking-wide text-gray-400 text-xs font-bold mb-2' htmlFor='grid-text-1'>email address</label>
-                            <input className='appearance-none block w-full text-gray-200 border focus:border-gray-900 bg-black shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none' id='grid-text-1' type='text' placeholder='Enter email'  required/>
-                        </div>
-                        <div className='w-full md:w-full px-3 mb-6 '>
-                            <span className='block uppercase tracking-wide text-gray-400 text-xs font-bold mb-2'>password</span>
-                            <button className="appearance-none bg-accent text-gray-50 px-2 py-1 shadow-sm rounded-md ">change your password</button>
-                        </div>
-                        <div className='w-full md:w-full px-3 mb-6'>
-                            
-                        
-                            <div className="flex justify-end mt-10">
-                                <button className="appearance-none bg-accent text-gray-50 px-2 py-1 shadow-sm border border-gray-400 rounded-md mr-3" type="submit">save changes</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
+    <div className="bg-[#29221D]  p-6 rounded shadow-md relative top-20 xl:top-2 right-60 xl:right-0 w-[300px] xl:w-full">
+      <h2 className="text-xl font-semibold mb-4">Change Password</h2>
+      
+      <form onSubmit={handlePasswordUpdate}> <div className="mb-4">
+          <span className="block text-sm font-medium mb-2">Email</span>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full p-2 border rounded"
+            required
+          />
         </div>
+        <div className="mb-4">
+          <span className="block text-sm font-medium mb-2">Current Password</span>
+          <input
+            type="password"
+            value={currentPassword}
+            onChange={(e) => setCurrentPassword(e.target.value)}
+            className="w-full p-2 border rounded"
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <span className="block text-sm font-medium mb-2">New Password</span>
+          <input
+            type="password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            className="w-full p-2 border rounded"
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <span className="block text-sm font-medium mb-2">Confirm New Password</span>
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            className="w-full p-2 border rounded"
+            required
+          />
+        </div>
+        <button
+          type="submit"
+          className="bg-[#ff6633] text-white py-2 px-4 rounded hover:bg-[#e55c2e]"
+        >
+          Update Password
+        </button>
+      </form>
     </div>
-  )
-}
+  );
+};
 
-export default Password
+export default Password;

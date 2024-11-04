@@ -28,7 +28,7 @@ const PlatformPolicies: React.FC = () => {
   ];
 
   return (
-    <PoliciesContainer>
+    <PoliciesContainer id="policy">
       <PoliciesBackground />
       <PoliciesContent>
         <PoliciesTitle>Platform Policies</PoliciesTitle>

@@ -76,7 +76,7 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <div
+    <div id="contact"
       className="bg-black text-white p-8 flex flex-col md:flex-row justify-between bg-cover bg-center "
       style={{ backgroundImage: `url(${worldImage})` }}
     >

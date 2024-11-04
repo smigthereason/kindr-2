@@ -22,7 +22,7 @@ import CharityDashboard from "./pages/Charity/Dashboard";
 import Beneficiaries from "./pages/Charity/Beneficiaries";
 import History from "./pages/Charity/History";
 import CharitySettings from "./pages/Charity/Settings";
-import CharitySidebar from "./components/Charity/Sidebar";
+import CharityHeader from "./components/Charity/CharityHeader";
 import DonorHeader from "./components/donor/DonorHeader";
 import DonorDashboard from "./pages/donor/Dashboard";
 import DonationHistory from "./pages/donor/DonationHistory";
@@ -39,7 +39,7 @@ import AddCharity from "./pages/Charity/AddCharity";
 import "./App.css";
 import AddDonation from "./pages/donor/AddDonation";
 import GetCharity from "./pages/Admin/GetCharity";
-import { UserProvider } from "./UserContext";
+// import { UserProvider } from "./UserContext";
 interface User {
   role: "charity" | "donor" | "admin";
   // Add any other relevant fields
@@ -136,7 +136,7 @@ function App() {
             element={
               <ProtectedRoute requiredRole="charity">
                 <div className="flex">
-                  <CharitySidebar onLogout={handleLogout} />
+                  <CharityHeader />
                   <div className="flex-1 p-4 ">
                     <Routes>
                       <Route path="dashboard" element={<CharityDashboard />} />

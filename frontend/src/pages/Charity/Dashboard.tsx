@@ -1,13 +1,7 @@
-
 import Dashnav from "../../components/Charity/Dashnav";
-import Sidebar from "../../components/Charity/Sidebar";  // Import the Sidebar
 import world from "../../assets/world2.jpg";
 
 const Dashboard = () => {
-  function handleLogout(): void {
-    throw new Error("Function not implemented.");
-  }
-
   return (
     <div className="relative min-h-screen w-5/6 ml-56 flex">
       {/* Background Image */}
@@ -17,21 +11,18 @@ const Dashboard = () => {
         className="fixed top-0 left-0 w-full h-full object-cover z-0"
       />
 
-      {/* Sidebar */}
-      <div className="relative z-10">
-      <Sidebar onLogout={handleLogout} />
-      </div>
-
       {/* Main Content */}
       <div className="flex-1 relative z-10">
         <Dashnav title="Dashboard" />
         <main className="">
-          <div className="grid mb-4 mt-6 pb-10 px-8 mx-4 rounded-3xl bg-secondary border border-stone-400">
+          <div className="grid mb-4 mt-6 pb-8 px-8 mx-4 relative right-60 xl:right-0 rounded-3xl bg-secondary border border-stone-400 w-[320px] xl:w-[1020px]">
             <div className="grid grid-cols-12 gap-6">
               <div className="grid grid-cols-12 col-span-12 gap-6 xxl:col-span-9">
                 <div className="col-span-12 mt-8">
                   <div className="flex items-center h-10 intro-y">
-                    <h2 className="mr-5 text-2xl font-medium truncate">Dashboard</h2>
+                    <h2 className="mr-5 text-2xl font-medium truncate">
+                      Dashboard
+                    </h2>
                   </div>
                   <div className="grid grid-cols-12 gap-6 mt-5">
                     <a
@@ -40,7 +31,9 @@ const Dashboard = () => {
                     >
                       <div className="p-5">
                         <div className="flex justify-between">
-                          <h1 className="text-lg text-white font-bold">Total Donations</h1>
+                          <h1 className="text-lg text-white font-bold">
+                            Total Donations
+                          </h1>
                           <div className="bg-green-500 rounded-full h-6 px-2 flex justify-items-center text-white font-semibold text-sm">
                             <span className="flex items-center">6.9%</span>
                           </div>
@@ -60,7 +53,9 @@ const Dashboard = () => {
                     >
                       <div className="p-5">
                         <div className="flex justify-between">
-                          <h1 className="text-lg text-white font-bold">This month</h1>
+                          <h1 className="text-lg text-white font-bold">
+                            This month
+                          </h1>
                           <div className="bg-red-500 rounded-full h-6 px-2 flex justify-items-center text-white font-semibold text-sm">
                             <span className="flex items-center">30%</span>
                           </div>
@@ -80,7 +75,9 @@ const Dashboard = () => {
                     >
                       <div className="p-5">
                         <div className="flex justify-between">
-                          <h1 className="text-lg text-white font-bold">This year</h1>
+                          <h1 className="text-lg text-white font-bold">
+                            This year
+                          </h1>
                           <div className="bg-blue-500 rounded-full h-6 px-2 flex justify-items-center text-white font-semibold text-sm">
                             <span className="flex items-center">30%</span>
                           </div>
@@ -96,12 +93,12 @@ const Dashboard = () => {
                     </a>
                   </div>
                 </div>
-                <div className="col-span-12 mt-5">
-                  <div className="grid gap-2 grid-cols-1 lg:grid-cols-1">
+                <div className="col-span-12 mt-5 relative left-16 xl:left-0">
+                  <div className="grid gap-2 grid-cols-2 xl:grid-cols-1">
                     <div className="bg-secondary p-4 shadow-lg rounded-lg">
                       <h1 className="font-bold text-base">Recent Activities</h1>
                       <div className="mt-4">
-                        <div className="flex flex-col">
+                        <div className="flex flex-col w-[100px] xl:w-full">
                           <div className="-my-2 overflow-x-auto">
                             <div className="py-2 align-middle inline-block min-w-full">
                               <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg bg-secondary">
@@ -131,17 +128,17 @@ const Dashboard = () => {
                                     </tr>
                                   </thead>
                                   <tbody className="bg-stone-700 divide-y divide-gray-400">
-                                    <tr>
-                                      <td className="pr-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                    <tr className="sm:table-row flex flex-col sm:flex-row">
+                                      <td className="pr-6 py-4 whitespace-no-wrap text-sm leading-5 sm:px-6">
                                         <p>John Doe</p>
                                         <p className="text-xs text-gray-400">
                                           Donor
                                         </p>
                                       </td>
-                                      <td className="px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                      <td className="px-6 py-4 whitespace-no-wrap text-sm leading-5 sm:px-6">
                                         <p>$250</p>
                                       </td>
-                                      <td className="px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                      <td className="px-6 py-4 whitespace-no-wrap text-sm leading-5 sm:px-6">
                                         <div className="flex text-green-500">
                                           <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -151,16 +148,16 @@ const Dashboard = () => {
                                             stroke="currentColor"
                                           >
                                             <path
-                                              stroke-linecap="round"
-                                              stroke-linejoin="round"
-                                              stroke-width="2"
+                                              strokeLinecap="round"
+                                              strokeLinejoin="round"
+                                              strokeWidth="2"
                                               d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                                             />
                                           </svg>
                                           <p>Active</p>
                                         </div>
                                       </td>
-                                      <td className="px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                      <td className="px-6 py-4 whitespace-no-wrap text-sm leading-5 sm:px-6">
                                         <div className="flex space-x-4">
                                           <p>2023-12-23</p>
                                         </div>

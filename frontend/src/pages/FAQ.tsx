@@ -66,7 +66,7 @@ const FAQ: React.FC = () => {
 
   return (
     
-    <FAQContainer>
+    <FAQContainer id="faq">
       <FAQBackground />
       <FAQContent>
         <FAQTitle>Frequently Asked Questions</FAQTitle>

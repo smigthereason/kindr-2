@@ -57,7 +57,7 @@ const History: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen ml-72 w-[1000px] p-8 text-white"
+    <div className="min-h-screen ml-0 xl:ml-72 w-[360px] xl:w-[1000px] p-8 text-white"
       style={{ backgroundImage: `url(${worldImage})` }}>
       <h1 className="text-4xl mb-4">Charity Donation History</h1>
       {/* Button */}

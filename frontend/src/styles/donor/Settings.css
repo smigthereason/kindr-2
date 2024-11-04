@@ -130,8 +130,7 @@
 @media (max-width: 767px) {
     .settings-container {
         /* Adjusting left margin or positioning */
-        left: 0; /* Resetting left positioning */
-        padding: 0 10px; /* Optional: Adding some padding */
+        padding: 0 15px; 
         height: 100vh;
     }
 
@@ -152,6 +151,9 @@
     .settings-content {
         flex-direction: column; /* Stack content vertically */
         padding: 20px; /* Optional: Adding padding to content */
+        position: relative;
+        width: 100vw;
+        /* right: 10px; */
     }
 
     .set-sections {
@@ -164,9 +166,8 @@
         padding: 10px; /* Adjust padding for mobile */
     }
 
-    .input-group {
-        /* No need to adjust input-group unless specific changes are needed */
-    }
+    /* No need to adjust input-group unless specific changes are needed */
+    
 
     .input-label,
     .input,

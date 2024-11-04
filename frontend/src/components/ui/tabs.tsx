@@ -1,9 +1,9 @@
-import * as React from "react"
-import * as TabsPrimitive from "@radix-ui/react-tabs"
+import * as React from "react";
+import * as TabsPrimitive from "@radix-ui/react-tabs";
 
-import { cn } from "@/components/lib/utils"
+import { cn } from "@/components/lib/utils";
 
-const Tabs = TabsPrimitive.Root
+const Tabs = TabsPrimitive.Root;
 
 const TabsList = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.List>,
@@ -12,13 +12,14 @@ const TabsList = React.forwardRef<
   <TabsPrimitive.List
     ref={ref}
     className={cn(
-      "inline-flex h-10 items-center justify-center rounded-md bg-secondary p-1 text-slate-500 dark:bg-slate-800 dark:text-slate-400",
+      // Added gap-2 to apply spacing between tabs
+      "flex h-10 items-center justify-center rounded-md p-1 text-slate-500 dark:bg-slate-800 dark:text-slate-400 sm:inline-flex sm:flex-row flex-col gap-2 relative right-52 sm:right-0 w-[240px]",
       className
     )}
     {...props}
   />
-))
-TabsList.displayName = TabsPrimitive.List.displayName
+));
+TabsList.displayName = TabsPrimitive.List.displayName;
 
 const TabsTrigger = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Trigger>,
@@ -27,13 +28,13 @@ const TabsTrigger = React.forwardRef<
   <TabsPrimitive.Trigger
     ref={ref}
     className={cn(
-      "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-10 py-1.5 text-xl font-medium transition-all  bg-secondary disabled:pointer-events-none disabled:opacity-50 border-b-2 text-slate-400 border-slate-400 data-[state=active]:border-b-2 border-x-0 border-t-0 hover:text-orange-300 hover:border-orange-300 focus-visible:ring-0 data-[state=active]:border-accent data-[state=active]:text-accent data-[state=active]:shadow-sm ",
+      "flex items-center justify-center whitespace-nowrap rounded-sm px-4 py-1.5 text-xl font-medium transition-all bg-secondary disabled:pointer-events-none disabled:opacity-50 border-b-2 text-slate-400 border-slate-400 sm:px-10 sm:text-xl sm:py-1.5 sm:inline-flex hover:text-orange-300 hover:border-orange-300 focus-visible:ring-0 data-[state=active]:border-accent data-[state=active]:text-accent data-[state=active]:shadow-sm",
       className
     )}
     {...props}
   />
-))
-TabsTrigger.displayName = TabsPrimitive.Trigger.displayName
+));
+TabsTrigger.displayName = TabsPrimitive.Trigger.displayName;
 
 const TabsContent = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Content>,
@@ -47,7 +48,7 @@ const TabsContent = React.forwardRef<
     )}
     {...props}
   />
-))
-TabsContent.displayName = TabsPrimitive.Content.displayName
+));
+TabsContent.displayName = TabsPrimitive.Content.displayName;
 
-export { Tabs, TabsList, TabsTrigger, TabsContent }
+export { Tabs, TabsList, TabsTrigger, TabsContent };

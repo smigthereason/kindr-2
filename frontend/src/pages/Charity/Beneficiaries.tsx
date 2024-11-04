@@ -32,7 +32,7 @@ const Beneficiaries: React.FC = () => {
 
   return (
     
-    <div className="beneficiaries-page relative min-h-screen mt-8 w-4/6 ml-[350px] "
+    <div className="beneficiaries-page relative min-h-screen mt-8 w-4/6 ml-16 xl:ml-[350px] "
     style={{ backgroundImage: `url(${worldImage}` }}>
     
       <h2 className="text-4xl font-bold mb-4">Add Beneficiary Story</h2>
