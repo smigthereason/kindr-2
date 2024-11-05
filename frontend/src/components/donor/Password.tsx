@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
 
+
+interface User {
+  email: string;
+  // Define other user properties if there are more fields in the response
+}
+
 const Password: React.FC = () => {
   const [email, setEmail] = useState("");
   const [currentPassword, setCurrentPassword] = useState<string>("");
   const [newPassword, setNewPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [message, setMessage] = useState<string>("");
-  const [user, setUser] = useState<User | null>(null);
+  const [, setUser] = useState<User | null>(null);
 
   const [token] = useState<string | null>(localStorage.getItem("token"));
   useEffect(() => {

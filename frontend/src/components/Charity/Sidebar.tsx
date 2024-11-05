@@ -5,19 +5,25 @@ import { RiDashboardFill, RiGroupFill, RiHandHeartFill, RiSettings4Fill } from "
 import profileImage from '../../assets/man.png';
 import '../../styles/donor/Sidebar.css';
 
-interface SideBarProps {
+interface SidebarProps {
   onLogout: () => void;
 }
 
-const Sidebar: React.FC<SideBarProps> = ({ onLogout }) => {
+interface User {
+  username: string;
+  // Add any other properties of the user here
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ onLogout }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const [user, setUser] = useState<User | null>(null);
+  const [token] = useState<string | null>(localStorage.getItem("token"));
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
-
 
   const handleLogout = () => {
     onLogout();
@@ -28,11 +34,8 @@ const Sidebar: React.FC<SideBarProps> = ({ onLogout }) => {
     return location.pathname === path ? 'active' : '';
   };
 
-  const [user, setUser] = useState<User | null>(null);
-  const [token] = useState<string | null>(localStorage.getItem("token"));
-
   useEffect(() => {
-    async function fetchCurrentUser() {
+    const fetchCurrentUser = async () => {
       try {
         if (!token) throw new Error("No token found in local storage");
 
@@ -44,8 +47,7 @@ const Sidebar: React.FC<SideBarProps> = ({ onLogout }) => {
           },
         });
 
-        if (!response.ok)
-          throw new Error(`Failed to fetch user data: ${response.statusText}`);
+        if (!response.ok) throw new Error(`Failed to fetch user data: ${response.statusText}`);
 
         const data: User = await response.json();
         console.log("User data fetched successfully:", data);
@@ -53,11 +55,10 @@ const Sidebar: React.FC<SideBarProps> = ({ onLogout }) => {
       } catch (error) {
         console.error("Error fetching current user:", error);
       }
-    }
+    };
 
     fetchCurrentUser();
   }, [token]);
-
 
   return (
     <div className="dashboard-container">
@@ -88,7 +89,7 @@ const Sidebar: React.FC<SideBarProps> = ({ onLogout }) => {
         <div className="profile-section">
           <img src={profileImage} alt="Profile" className="profile-photo" />
           <div className="profile-details">
-            <p className="profile-name">{user?.username}</p>
+            <p className="profile-name">{user?.username || 'User'}</p>
           </div>
           <div className="profile-controls">
             <button className="arrow-button" onClick={toggleDropdown}>▲</button>
@@ -100,9 +101,8 @@ const Sidebar: React.FC<SideBarProps> = ({ onLogout }) => {
           </div>
         </div>
       </div>
-      </div>
+    </div>
   );
 };
 
 export default Sidebar;
-

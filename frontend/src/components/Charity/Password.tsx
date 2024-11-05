@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 
+interface User {
+  email: string;
+  // Define other user properties if there are more fields in the response
+}
+
 const Password: React.FC = () => {
   const [email, setEmail] = useState("");
   const [currentPassword, setCurrentPassword] = useState<string>("");
   const [newPassword, setNewPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [message, setMessage] = useState<string>("");
-  const [user, setUser] = useState("");
+  const [,setUser] = useState<User | null>(null); // Specify type as User or null
 
   const [token] = useState<string | null>(localStorage.getItem("token"));
   useEffect(() => {
@@ -44,26 +49,18 @@ const Password: React.FC = () => {
     setConfirmPassword("");
     setCurrentPassword("");
 
-    // Clear any previous messages
-
-    console.log("Current Password:", currentPassword); // Debugging
-    console.log("New Password:", newPassword); // Debugging
-    console.log("Confirm Password:", confirmPassword); // Debugging
-
     if (newPassword !== confirmPassword) {
       setMessage("Passwords do not match");
-      console.log("Password mismatch error"); // Debugging
       return;
     }
 
     try {
-      const token = localStorage.getItem("token"); // Retrieve JWT token from local storage
-      console.log("Token retrieved:", token); // Debugging
+      const token = localStorage.getItem("token");
       const response = await fetch("http://127.0.0.1:5000/update-password", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // Attach token for authentication
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           currentPassword,
@@ -72,12 +69,10 @@ const Password: React.FC = () => {
       });
 
       const data = await response.json();
-      console.log("Response data:", data); // Debugging
       if (response.ok) {
         setMessage("Password updated successfully");
       } else {
         setMessage(data.error || "An error occurred");
-        console.log("API error:", data.error); // Debugging
       }
     } catch (error) {
       console.error("Error updating password:", error);
