@@ -181,11 +181,11 @@ const AddCharity: React.FC = () => {
           />
         </div>
         <div>
-          <label className="label" htmlFor="category">
+          <label className="label font-semibold text-2xl text-white" htmlFor="category">
             Pick Your Category
           </label>
           <div className="select-container">
-          <select name="category" value={formData.category} onChange={handleChange} required>
+          <select name="category" className="border h-10" value={formData.category} onChange={handleChange} required>
               <option>Choose...</option>
               <option>Education</option>
               <option>Health</option>
@@ -237,7 +237,7 @@ const AddCharity: React.FC = () => {
             Amount:
           </label>
           <input
-            type="text"
+            type="number"
             id="amount"
             name="amount"
             value={formData.amount}

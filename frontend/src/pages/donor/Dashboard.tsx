@@ -1,251 +1,189 @@
-import React, { useState } from 'react';
-import profileImage from '../../assets/man.png'; 
+import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-import '../../styles/donor/Dashboard.css'; 
-import '../../App.css'
+import '../../styles/donor/Dashboard.css';
+import '../../App.css';
 import worldImage from "../../assets/world2.jpg";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-// Sample donor data
-const donorData = {
-  profileImageUrl: profileImage,
-  donorName: 'John Doe',
-  contactInfo: {
-    email: 'johndoe@example.com',
-    phone: '+1 234 567 890',
-    address: '123 Main St, Springfield, IL'
-  },
-  totalDonations: 125000,
-  thisMonthDonations: 15000,
-  thisYearDonations: 95000,
-  recentDonations: [
-    { charity: 'Child Fund', amount: '$100', date: 'August 1, 2024' },
-    { charity: 'School Supplies', amount: '$250', date: 'July 15, 2024' }
-  ],
-  recentTransactions: [
-    { date: '2024-08-01', amount: '$100', charity: 'Child Fund' },
-    { date: '2024-07-15', amount: '$250', charity: 'School Supplies' }
-  ]
-};
+// Define interfaces for your data types
+interface User {
+  id: number;
+  // Add other user properties as needed
+}
 
-const donationData = {
-  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
-  datasets: [
-    {
-      label: 'Donation Trends',
-      data: [12000, 15000, 18000, 21000, 25000, 30000, 35000, 20000], // Data including August
-      borderColor: '#28a745',
-      backgroundColor: 'rgba(40, 167, 69, 0.2)',
-      borderWidth: 2,
-    },
-  ],
-};
+interface Donation {
+  id: number;
+  donation_amount: number;
+  created_at: string;
+  cause_id: number;
+  // Add other donation properties as needed
+}
 
 const Dashboard: React.FC = () => {
-  const [] = useState(donorData.contactInfo);
-  const [] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [donationHistory, setDonationHistory] = useState<Donation[]>([]);
+  const [token] = useState<string | null>(localStorage.getItem("token"));
 
+  // Fetch current user
+  useEffect(() => {
+    async function fetchCurrentUser() {
+      try {
+        if (!token) throw new Error("No token found in local storage");
 
+        const response = await fetch("http://localhost:5000/current_user", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok)
+          throw new Error(`Failed to fetch user data: ${response.statusText}`);
+
+        const data: User = await response.json();
+        setUser(data);
+      } catch (error) {
+        console.error("Error fetching current user:", error);
+      }
+    }
+
+    fetchCurrentUser();
+  }, [token]);
+
+  // Fetch donations
+  useEffect(() => {
+    const fetchDonations = async () => {
+      try {
+        if (!user || !token) return;
+
+        const response = await fetch(
+          `http://127.0.0.1:5000/donor/${user.id}/donations`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (response.ok) {
+          const data: { donations: Donation[] } = await response.json();
+          setDonationHistory(data.donations);
+        } else {
+          console.error("Failed to fetch donations", response.status);
+        }
+      } catch (error) {
+        console.error("Error fetching donations", error);
+      }
+    };
+
+    fetchDonations();
+  }, [user, token]);
+
+  // Calculate donation metrics
+  const calculateMetrics = () => {
+    const now = new Date();
+    const thisMonth = now.getMonth();
+    const thisYear = now.getFullYear();
+
+    const totalDonations = donationHistory.reduce((sum, donation) => 
+      sum + donation.donation_amount, 0);
+
+    const thisMonthDonations = donationHistory
+      .filter(donation => {
+        const donationDate = new Date(donation.created_at);
+        return donationDate.getMonth() === thisMonth && 
+               donationDate.getFullYear() === thisYear;
+      })
+      .reduce((sum, donation) => sum + donation.donation_amount, 0);
+
+    const thisYearDonations = donationHistory
+      .filter(donation => {
+        const donationDate = new Date(donation.created_at);
+        return donationDate.getFullYear() === thisYear;
+      })
+      .reduce((sum, donation) => sum + donation.donation_amount, 0);
+
+    return { totalDonations, thisMonthDonations, thisYearDonations };
+  };
+
+  // Prepare chart data
+  const prepareChartData = () => {
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const monthlyData = new Array(12).fill(0);
+
+    donationHistory.forEach(donation => {
+      const date = new Date(donation.created_at);
+      const month = date.getMonth();
+      monthlyData[month] += donation.donation_amount;
+    });
+
+    return {
+      labels: months,
+      datasets: [{
+        label: 'Donation Trends',
+        data: monthlyData,
+        borderColor: '#28a745',
+        backgroundColor: 'rgba(40, 167, 69, 0.2)',
+        borderWidth: 2,
+      }],
+    };
+  };
+
+  const metrics = calculateMetrics();
+  const chartData = prepareChartData();
 
   return (
-    <div 
-    style={{ backgroundImage: `url(${worldImage})` }}>
-    <div className="dashboard">
-      {/* Dashboard Title */}
-      <header className="dashboard-header">
-        <h1>Donor Dashboard</h1>
-        <div className="header-icons">
-          <span className="notification-icon">🔔</span>
-          <span className="options-icon">⋮</span>
-        </div>
-      </header>
-
-      {/* Overview Cards */}
-      <div className="card-row">
-        
-
-        {/* This Month */}
-        <div className="card overview-card this-month-card">
-          <h2>This Month</h2>
-          <p className="amount">${donorData.thisMonthDonations.toLocaleString()}</p>
-          <div className="trend">
-            <span className="trend-icon">📉</span>
-            <span className="trend-percentage">-23.5%</span>
+    <div style={{ backgroundImage: `url(${worldImage})` }}>
+      <div className="dashboard">
+        <header className="dashboard-header">
+          <h1>Donor Dashboard</h1>
+          <div className="header-icons">
+            <span className="notification-icon">🔔</span>
+            <span className="options-icon">⋮</span>
           </div>
-          <Line data={donationData} />
-        </div>
+        </header>
 
-        {/* Wrapper for centering "This Year" */}
-        <div className="card-wrapper">
-          <div className="card overview-card this-year-card">
-            <h2>This Year</h2>
-            <p className="amount">${donorData.thisYearDonations.toLocaleString()}</p>
-            <div className="trend">
-              <span className="trend-icon">📈</span>
-              <span className="trend-percentage">+19.3%</span>
+        <div className="card-row">
+          <div className="card overview-card this-month-card">
+            <h2>This Month</h2>
+            <p className="amount">${metrics.thisMonthDonations.toLocaleString()}</p>
+            <Line data={chartData} />
+          </div>
+
+          <div className="card-wrapper">
+            <div className="card overview-card this-year-card">
+              <h2>This Year</h2>
+              <p className="amount">${metrics.thisYearDonations.toLocaleString()}</p>
+              <Line data={chartData} />
             </div>
-            <Line data={donationData} />
           </div>
-    
+
+          <div className="card overview-card total-donations-card">
+            <h2>Total Donations</h2>
+            <p className="amount">${metrics.totalDonations.toLocaleString()}</p>
+            <Line data={chartData} />
+          </div>
         </div>
 
-        {/* Total Donations */}
-        <div className="card overview-card total-donations-card">
-          <h2>Total Donations</h2>
-          <p className="amount">${donorData.totalDonations.toLocaleString()}</p>
-          <div className="trend">
-            <span className="trend-icon">📈</span>
-            <span className="trend-percentage">+6.9%</span>
-          </div>
-          <Line data={donationData} />
+        <div className="card recent-transactions-card">
+          <h2>Recent Transactions</h2>
+          <ul>
+            {donationHistory.slice(0, 5).map((donation) => (
+              <li key={donation.id} className="recent-transaction-item">
+                Donated ${donation.donation_amount.toFixed(2)} to Cause #{donation.cause_id} on{' '}
+                {new Date(donation.created_at).toLocaleDateString()}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
-
-      {/* Recent Transactions */}
-      <div className="card recent-transactions-card">
-        <h2>Recent Transactions</h2>
-        <ul>
-          {donorData.recentTransactions.map((transaction, index) => (
-            <li key={index} className="recent-transaction-item">
-              Donated {transaction.amount} to {transaction.charity} on {transaction.date}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
     </div>
   );
 };
 
 export default Dashboard;
-
-// import React, { useState, useEffect } from 'react';
-// import { Line } from 'react-chartjs-2';
-// import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-// import '../../styles/donor/Dashboard.css'; 
-// import '../../App.css';
-// import worldImage from "../../assets/world2.jpg";
-
-// ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
-
-// const Dashboard: React.FC = () => {
-//   const [donorData, setDonorData] = useState(null);
-//   const [loading, setLoading] = useState(true);
-
-//   useEffect(() => {
-//     // Fetch donor data from your API
-//     const fetchDonorData = async () => {
-//       try {
-//         const response = await fetch('http://localhost:5000/donor/donations'); // Replace with your actual API endpoint
-//         const data = await response.json();
-//         setDonorData(data);
-//       } catch (error) {
-//         console.error('Error fetching donor data:', error);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchDonorData();
-//   }, []);
-
-//   if (loading) {
-//     return <div>Loading...</div>;
-//   }
-
-//   const hasDonations = donorData && donorData.totalDonations > 0;
-
-//   // Set donation data for charts
-//   const donationData = {
-//     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
-//     datasets: [
-//       {
-//         label: 'Donation Trends',
-//         data: donorData ? donorData.donationTrends : [0, 0, 0, 0, 0, 0, 0, 0], // Placeholder if no data
-//         borderColor: '#28a745',
-//         backgroundColor: 'rgba(40, 167, 69, 0.2)',
-//         borderWidth: 2,
-//       },
-//     ],
-//   };
-
-//   return (
-//     <div style={{ backgroundImage: `url(${worldImage})` }}>
-//       <div className="dashboard">
-//         {/* Dashboard Title */}
-//         <header className="dashboard-header">
-//           <h1>Donor Dashboard</h1>
-//           <div className="header-icons">
-//             <span className="notification-icon">🔔</span>
-//             <span className="options-icon">⋮</span>
-//           </div>
-//         </header>
-
-//         {/* Overview Cards */}
-//         <div className="card-row">
-//           {/* Conditional Rendering for Donations */}
-//           {!hasDonations ? (
-//             <button className="donate-now-button" style={{ backgroundColor: 'orange' }}>
-//               Donate Now to Begin
-//             </button>
-//           ) : (
-//             <>
-//               {/* This Month */}
-//               <div className="card overview-card this-month-card">
-//                 <h2>This Month</h2>
-//                 <p className="amount">${donorData.thisMonthDonations.toLocaleString()}</p>
-//                 <div className="trend">
-//                   <span className="trend-icon">📉</span>
-//                   <span className="trend-percentage">-23.5%</span>
-//                 </div>
-//                 <Line data={donationData} />
-//               </div>
-
-//               {/* Wrapper for centering "This Year" */}
-//               <div className="card-wrapper">
-//                 <div className="card overview-card this-year-card">
-//                   <h2>This Year</h2>
-//                   <p className="amount">${donorData.thisYearDonations.toLocaleString()}</p>
-//                   <div className="trend">
-//                     <span className="trend-icon">📈</span>
-//                     <span className="trend-percentage">+19.3%</span>
-//                   </div>
-//                   <Line data={donationData} />
-//                 </div>
-//               </div>
-
-//               {/* Total Donations */}
-//               <div className="card overview-card total-donations-card">
-//                 <h2>Total Donations</h2>
-//                 <p className="amount">${donorData.totalDonations.toLocaleString()}</p>
-//                 <div className="trend">
-//                   <span className="trend-icon">📈</span>
-//                   <span className="trend-percentage">+6.9%</span>
-//                 </div>
-//                 <Line data={donationData} />
-//               </div>
-//             </>
-//           )}
-//         </div>
-
-//         {/* Recent Transactions */}
-//         {hasDonations && (
-//           <div className="card recent-transactions-card">
-//             <h2>Recent Transactions</h2>
-//             <ul>
-//               {donorData.recentTransactions.map((transaction, index) => (
-//                 <li key={index} className="recent-transaction-item">
-//                   Donated {transaction.amount} to {transaction.charity} on {transaction.date}
-//                 </li>
-//               ))}
-//             </ul>
-//           </div>
-//         )}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Dashboard;

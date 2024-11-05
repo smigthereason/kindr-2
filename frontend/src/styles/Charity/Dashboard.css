@@ -1,0 +1,159 @@
+.dashboard {
+    background-color: #29221D; 
+    position: relative;
+    right: 1.5vw;
+    color: #ffffff;
+    padding: 20px;
+    display: flex;
+    width: 78vw;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 260px;
+    margin-top: 20px;
+    border-radius: 1%;
+  }
+  
+  .dashboard-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .dashboard-header h1 {
+    font-size: 30px;
+    margin: 0;
+  }
+  
+  .header-icons {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .notification-icon, .options-icon {
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .card-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    justify-content: center; /* Center the items horizontally */
+    margin-bottom: 30px; /* Space between card-row and Recent Transactions */
+  }
+  
+  .card {
+    background: #382f29;
+    border-radius: 8px;
+    padding: 20px;
+    width: 100%;
+    max-width: 360px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    flex: 1 1 auto;
+  }
+  
+  .amount {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .trend {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+  }
+  
+  .trend-icon {
+    font-size: 18px;
+    margin-right: 5px;
+  }
+  
+  .trend-percentage {
+    font-size: 14px;
+  }
+  
+  .card-wrapper {
+    display: flex;
+    justify-content: center; /* Center the "This Year" card */
+  }
+  
+  .recent-transactions-card {
+    background: #382f29;
+    border-radius: 8px;
+    padding: 20px;
+    width: 100vw;
+    max-width: 600px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  }
+  
+  .recent-transactions-card ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .recent-transaction-item {
+    background: #201c19;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+  }
+  
+  /* Media Query for mobile styles */
+  @media (max-width: 768px) {
+    .dashboard {
+      flex-direction: column; /* Stack elements vertically */
+      margin-left: 0; /* Remove left margin for smaller screens */
+      width: 100vw; /* Full width on smaller screens */
+      background-color: transparent;
+    }
+  
+    .dashboard-header {
+      flex-direction: column; /* Stack header elements */
+      align-items: flex-start; 
+    }
+    .dashboard-header h1{
+      position: relative;
+      top: 4vh;
+    }
+  
+    .header-icons {
+      justify-content: flex-end; /* Align icons to the right */
+      width: 100%; /* Full width for header icons */
+    }
+  
+    .card-row {
+      flex-direction: column; /* Stack cards vertically */
+      align-items: center; /* Center cards */
+    }
+  
+    .card {
+      width: 90%; /* Take 90% width for cards */
+      max-width: none; /* Remove max-width to allow full usage of space */
+    }
+  
+    .recent-transactions-card {
+      width: 90%; /* Full width for recent transactions card */
+      max-width: none; /* Allow card to take full width */
+    }
+  }
+  
+  @media (min-width:1920px) {
+    .dashboard {
+      position: relative;
+      left: 5vw;;
+      height: 100vh;
+      padding: 20px;
+      display: flex;
+      width: 78vw;
+      flex-direction: column;
+      align-items: center;
+      margin-left: 260px;
+      margin-top: 20px;
+      border-radius: 1%;
+    }
+  }

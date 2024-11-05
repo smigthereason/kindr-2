@@ -9,11 +9,11 @@
 //   id: number;
 //   first_name: string;
 //   last_name: string;
-//   title:string;
-//   description:string,
-//   category:string,
+//   title: string;
+//   description: string;
+//   category: string;
 //   image: string;
-//   amount: string;
+//   amount: number; // assuming `amount` is numeric for calculations
 //   document: string;
 // }
 
@@ -27,7 +27,6 @@
 
 //   const fetchCharities = async () => {
 //     try {
-//       // const response = await axios.get("https://backend-kindr.onrender.com/charity");
 //       const response = await axios.get("http://localhost:5000/charity");
 //       setCharities(response.data.charity);
 //     } catch (err) {
@@ -35,6 +34,8 @@
 //       console.error("Error fetching charities:", err);
 //     }
 //   };
+
+//   console.log(charities)
 
 //   return (
 //     <section
@@ -51,11 +52,11 @@
 //               <div className="text-red-500 text-center mb-4">{error}</div>
 //             )}
 //             <ScrollArea className="w-[95vh] xl:w-full whitespace-nowrap rounded-md z-10">
-//               <div className="flex flex-col sm:flex-row relative gap-6"> {/* Flex direction adjusted here */}
+//               <div className="flex flex-col sm:flex-row relative gap-6">
 //                 {charities.map((charity) => (
 //                   <div
 //                     key={charity.id}
-//                     className="w-full sm:w-1/3 shadow rounded-lg overflow-hidden mb-4 sm:mb-0" // Adjust width for smaller screens
+//                     className="w-full sm:w-1/3 shadow rounded-lg overflow-hidden mb-4 sm:mb-0"
 //                   >
 //                     <img
 //                       src={`http://localhost:5000/${charity.image}`}
@@ -63,24 +64,27 @@
 //                       alt={`${charity.first_name} ${charity.last_name}`}
 //                     />
 //                     <div className="relative -top-5 p-4 mx-3 bg-secondary z-10 border-white/50 border-2">
-//                       <span className="bg-white/20 text-accent w-fit rounded-md px-2 py-1 font-semibold text-sm">
-//                         {charity.category}
-//                       </span>
+//                       {charity.category && (
+//                         <span className="bg-white/20 text-accent w-fit rounded-md px-2 py-1 font-semibold text-sm">
+//                           {charity.category}
+//                         </span>
+//                       )}
 //                       <h3 className="mt-3 font-bold text-md pb-4">
-//                         {charity.title}
+//                         {charity.title ?? "No title available"}
 //                       </h3>
 //                       <p className="text-sm text-white/80">
-//                         {charity.description}
+//                         {charity.description ?? "No description available"}
 //                       </p>
-//                       <div className="">
-//                         <Progress value={5} />{" "}
-//                         {/* You might want to calculate this */}
+//                       <div className="mt-4">
+//                         {/* Assuming a fixed goal amount for demonstration purposes */}
+//                         <Progress value={(charity.amount / 10000) * 100} />{" "}
+//                         {/* Replace 10000 with actual goal if available */}
 //                       </div>
 //                       <div className="flex flex-row mt-4 gap-10 items-center pb-4 border-b border-white/50">
 //                         <div className="text-sm text-white/40">
 //                           <p>Amount</p>
 //                           <p className="text-[16px] text-white/60">
-//                             ${charity.amount}
+//                             ${charity.amount.toLocaleString()}
 //                           </p>
 //                         </div>
 //                       </div>
@@ -117,6 +121,7 @@ import { Button } from "../../components/ui/button";
 import { Progress } from "../../components/ui/progress";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import worldImage from "../../assets/world2.jpg";
+import DonateModal from "./DonorModal"; // Import the modal
 
 interface Charity {
   id: number;
@@ -126,13 +131,15 @@ interface Charity {
   description: string;
   category: string;
   image: string;
-  amount: number; // assuming `amount` is numeric for calculations
+  amount: number;
   document: string;
 }
 
 const Fetch: React.FC = () => {
   const [charities, setCharities] = useState<Charity[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedCharityId, setSelectedCharityId] = useState<number | null>(null);
 
   useEffect(() => {
     fetchCharities();
@@ -148,7 +155,23 @@ const Fetch: React.FC = () => {
     }
   };
 
-  console.log(charities)
+  const handleDonateClick = (charityId: number) => {
+    setSelectedCharityId(charityId);
+    setIsModalOpen(true);
+  };
+
+  const handleDonate = async (amount: number) => {
+    if (!selectedCharityId) return;
+    try {
+      await axios.post(`http://localhost:5000/charity/${selectedCharityId}/donate`, {
+        amount,
+      });
+      // Re-fetch the charities to update donation amounts after a successful donation
+      fetchCharities();
+    } catch (err) {
+      console.error("Error processing donation:", err);
+    }
+  };
 
   return (
     <section
@@ -164,12 +187,12 @@ const Fetch: React.FC = () => {
             {error && (
               <div className="text-red-500 text-center mb-4">{error}</div>
             )}
-            <ScrollArea className="w-[95vh] xl:w-full whitespace-nowrap rounded-md z-10">
+            <ScrollArea className="w-[80vh] xl:w-full  whitespace-nowrap rounded-md z-10">
               <div className="flex flex-col sm:flex-row relative gap-6">
                 {charities.map((charity) => (
                   <div
                     key={charity.id}
-                    className="w-full sm:w-1/3 shadow rounded-lg overflow-hidden mb-4 sm:mb-0"
+                    className="w-[50vh] sm:w-1/3 shadow rounded-lg overflow-hidden mb-4 sm:mb-0"
                   >
                     <img
                       src={`http://localhost:5000/${charity.image}`}
@@ -189,9 +212,7 @@ const Fetch: React.FC = () => {
                         {charity.description ?? "No description available"}
                       </p>
                       <div className="mt-4">
-                        {/* Assuming a fixed goal amount for demonstration purposes */}
-                        <Progress value={(charity.amount / 10000) * 100} />{" "}
-                        {/* Replace 10000 with actual goal if available */}
+                        <Progress value={(charity.amount / 10000) * 100} />
                       </div>
                       <div className="flex flex-row mt-4 gap-10 items-center pb-4 border-b border-white/50">
                         <div className="text-sm text-white/40">
@@ -212,6 +233,12 @@ const Fetch: React.FC = () => {
                             View Document
                           </Button>
                         </a>
+                        <Button
+                          onClick={() => handleDonateClick(charity.id)}
+                          className="bg-green-500 hover:bg-green-600"
+                        >
+                          Donate
+                        </Button>
                       </div>
                     </div>
                   </div>
@@ -221,6 +248,13 @@ const Fetch: React.FC = () => {
             </ScrollArea>
           </div>
         </div>
+        {isModalOpen && selectedCharityId && (
+          <DonateModal
+            charityId={selectedCharityId}
+            onClose={() => setIsModalOpen(false)}
+            onDonate={handleDonate}
+          />
+        )}
       </div>
     </section>
   );

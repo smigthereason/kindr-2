@@ -2,14 +2,25 @@ import React, { useEffect, useState } from "react";
 import "../../styles/donor/DonationHistory.css";
 import worldImage from "../../assets/world2.jpg";
 
+// Define interfaces for the data structures
+interface User {
+  id: number;
+  // Add other user properties as needed
+}
 
+interface Donation {
+  id: number;
+  cause_id: number;
+  donation_amount: number;
+  created_at: string;
+  // Add other donation properties as needed
+}
 
 const DonationHistory: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
-  const [donationData, setDonationData] = useState([]);
-  const [token] = useState<string | null>(
-    localStorage.getItem("token")
-  );
+  const [donationData, setDonationData] = useState<Donation[]>([]);
+  const [token] = useState<string | null>(localStorage.getItem("token"));
+
   useEffect(() => {
     async function fetchCurrentUser() {
       try {
@@ -37,7 +48,6 @@ const DonationHistory: React.FC = () => {
     fetchCurrentUser();
   }, [token]);
 
-  // Fetch donations for the logged-in user
   useEffect(() => {
     const fetchDonations = async () => {
       try {
@@ -55,9 +65,8 @@ const DonationHistory: React.FC = () => {
         );
 
         if (response.ok) {
-          const data = await response.json();
+          const data: { donations: Donation[] } = await response.json();
           setDonationData(data.donations);
-          // Assume API returns donations in this structure
         } else {
           console.error("Failed to fetch donations", response.status);
         }
@@ -68,7 +77,9 @@ const DonationHistory: React.FC = () => {
 
     fetchDonations();
   }, [user, token]);
+
   console.log(donationData.length);
+  
   return (
     <>
       {donationData.length === 0 ? (
@@ -97,7 +108,10 @@ const DonationHistory: React.FC = () => {
                 </div>
               ))}
             </div>
-            <button className="donation-button">See More</button>
+            {/* <button className="donation-button">See More</button> */}
+          {donationData.length > 4 && 
+          <button className="donation-button">See More</button>
+          }
           </div>
         </div>
       )}
