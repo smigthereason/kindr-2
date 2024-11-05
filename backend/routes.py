@@ -126,6 +126,53 @@ def validate_token():
     else:
         return jsonify({'message': 'User not found'}), 404
 
+@app.route('/update-password', methods=['PATCH'])
+@jwt_required()
+def update_profile():
+    current_user = get_jwt_identity()
+    logging.debug(f"PATCH /profile called for user: {current_user}")
+
+    user = User.query.filter_by(id=current_user).first()
+    if not user:
+        return jsonify({'message': 'User not found'}), 404
+
+    data = request.get_json()
+    logging.debug(f"Request data: {data}")
+
+
+    if 'email' in data:
+        user.email = data['email']
+    if 'currentPassword' in data and 'newPassword' in data and 'confirmPassword' in data:
+        if not bcrypt.check_password_hash(user.password, data['currentPassword']):
+            return jsonify({'message': 'Current password is incorrect'}), 400
+        if data['newPassword'] != data['confirmPassword']:
+            return jsonify({'message': 'New passwords do not match'}), 400
+        user.password = bcrypt.generate_password_hash(data['newPassword']).decode('utf-8')
+
+    db.session.commit()
+
+    return jsonify({'message': 'Profile updated successfully'})
+@app.route('/update-account', methods=['PATCH'])
+@jwt_required()
+def update_account():
+    current_user = get_jwt_identity()
+    logging.debug(f"PATCH /update-account called for user: {current_user}")
+
+    user = User.query.filter_by(id=current_user).first()
+    if not user:
+        return jsonify({'message': 'User not found'}), 404
+
+    data = request.get_json()
+    logging.debug(f"Request data: {data}")
+
+    if 'username' in data:
+        user.username = data['username']
+    if 'email' in data:
+        user.email = data['email']
+
+    db.session.commit()
+
+    return jsonify({'message': 'Account information updated successfully'}), 200
 @app.route('/donate', methods=['POST'])
 @jwt_required()  # Require the user to be logged in
 def donate():

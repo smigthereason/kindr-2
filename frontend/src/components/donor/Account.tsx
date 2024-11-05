@@ -1,53 +1,73 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../styles/donor/Account.css";
 import defaultAvatar from "../../assets/man.png";
 
 const Account: React.FC = () => {
   const [profileImage] = useState<string | ArrayBuffer | null>(null);
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [token] = useState<string | null>(localStorage.getItem("token"));
 
-  // const handleSaveChanges = () => {
-  //   // Implement save logic here
-  //   console.log('Profile updated with:', { profileImage, preferredGender });
-  // };
+  useEffect(() => {
+    async function fetchCurrentUser() {
+      try {
+        if (!token) throw new Error("No token found in local storage");
+
+        const response = await fetch("http://localhost:5000/current_user", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) throw new Error("Failed to fetch user data");
+
+        const data = await response.json();
+        setUsername(data.username);
+        setEmail(data.email);
+      } catch (error) {
+        console.error("Error fetching current user:", error);
+      }
+    }
+
+    fetchCurrentUser();
+  }, [token]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setMessage("");
+
+    try {
+      if (!token) throw new Error("No token found in local storage");
+
+      const response = await fetch("http://127.0.0.1:5000/update-account", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ username, email }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        setMessage("Account information updated successfully");
+      } else {
+        setMessage(data.message || "An error occurred");
+      }
+    } catch (error) {
+      console.error("Error updating account information:", error);
+      setMessage("Failed to update account. Please try again.");
+    }
+  };
+
   return (
     <div className="account-container">
       <div className="account-inner">
         <h2 className="title">Account Settings</h2>
-        <form className="form">
-          {/* <div className="form-group">
-            <label className="label" htmlFor="country">
-              Pick Your Country
-            </label>
-            <div className="select-container">
-              <select className="select" id="country" required>
-                <option>Choose...</option>
-                <option>Kenya</option>
-                <option>Tanzania</option>
-                <option>Uganda</option>
-                <option>Ethiopia</option>
-                <option>Rwanda</option>
-                <option>Burundi</option>
-                <option>South Africa</option>
-                <option>Nigeria</option>
-                <option>Other</option>
-              </select>
-            </div>
-          </div> */}
-          {/* <div className="form-group">
-            <label className="label" htmlFor="language">
-              Preferred Language
-            </label>
-            <div className="select-container">
-              <select className="select" id="language" required>
-                <option>Choose...</option>
-                <option>English</option>
-                <option>French</option>
-                <option>Spanish</option>
-              </select>
-            </div>
-          </div> */}
-          {/* <div className="line"></div> */}
+        <form className="form" onSubmit={handleSubmit}>
           <div className="personal-info">
             <h2 className="section-title">Personal Info:</h2>
             <div className="profile-photo-section">
@@ -57,27 +77,32 @@ const Account: React.FC = () => {
                   alt="Current Profile"
                 />
               </div>
-              {/* <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-              /> */}
             </div>
 
             <div className="form-group">
               <label className="label" htmlFor="username">
                 Username
               </label>
-              <input className="input" id="username" type="text" required />
+              <input
+                className="input"
+                id="username"
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
             </div>
 
-            <div className="mb-4">
-              <span className="block text-sm font-medium mb-2">Email</span>
+            <div className="form-group">
+              <label className="label" htmlFor="email">
+                Email
+              </label>
               <input
+                className="input"
+                id="email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full p-2 border rounded"
                 required
               />
             </div>
@@ -87,6 +112,7 @@ const Account: React.FC = () => {
                 Save Changes
               </button>
             </div>
+            {message && <p className="message">{message}</p>}
           </div>
         </form>
       </div>
