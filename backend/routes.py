@@ -317,9 +317,63 @@ def get_contacts():
 def allowed_file(filename, allowed_extensions):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions
 
+# @app.route('/charity', methods=['POST'])
+# def add_charity():
+#     data = request.form.to_dict()
+#     print("Received data:", data)
+
+#     # Handle image file upload
+#     image_file = request.files.get('image')
+#     if image_file and allowed_file(image_file.filename, ALLOWED_IMAGE_EXTENSIONS):
+#         image_filename = secure_filename(image_file.filename)
+#         image_path = os.path.join(UPLOAD_FOLDER, 'images', image_filename)
+#         image_file.save(image_path)
+#     else:
+#         return jsonify({"message": "Invalid image format"}), 400
+
+#     # Handle document file upload
+#     document_file = request.files.get('document')
+#     if document_file and allowed_file(document_file.filename, ALLOWED_DOCUMENT_EXTENSIONS):
+#         document_filename = secure_filename(document_file.filename)
+#         document_path = os.path.join(UPLOAD_FOLDER, 'documents', document_filename)
+#         document_file.save(document_path)
+#     else:
+#         return jsonify({"message": "Invalid document format"}), 400
+
+#     user_id = data.get('user_id')
+#     if not user_id:
+#         return jsonify({'error': 'User ID is required'}), 400
+
+#     # Create a new Charity record in the database
+#     new_charity = Charity(
+#         first_name=data.get('first_name'),
+#         last_name=data.get('last_name'),
+#         category=data.get('category'),
+#         title=data.get('title'),
+#         description=data.get('description'),
+#         image=image_path,  # Store the image file path
+#         amount=data.get('amount'),
+#         email=data.get('email'),
+#         created_at=datetime.utcnow(),
+#         updated_at=datetime.utcnow(),
+#         user_id=user_id, 
+#         document=document_path # Store the document file path
+#     )
+#     db.session.add(new_charity)
+#     db.session.commit()
+
+#     return jsonify({"message": "Charity added successfully"}), 201
+
 @app.route('/charity', methods=['POST'])
 def add_charity():
     data = request.form.to_dict()
+    print("Received data:", data)  # Log the incoming data
+
+    # Validate required fields
+    required_fields = ['first_name', 'last_name', 'title', 'description', 'category', 'email', 'amount', 'user_id']
+    for field in required_fields:
+        if field not in data:
+            return jsonify({'error': f'{field} is required'}), 400
 
     # Handle image file upload
     image_file = request.files.get('image')
@@ -350,18 +404,19 @@ def add_charity():
         category=data.get('category'),
         title=data.get('title'),
         description=data.get('description'),
-        image=image_path,  # Store the image file path
-        amount=data.get('amount'),
+        image=image_path,
+        amount=int(data.get('amount')),  # Ensure amount is an integer
         email=data.get('email'),
         created_at=datetime.utcnow(),
         updated_at=datetime.utcnow(),
-        user_id=user_id, 
-        document=document_path # Store the document file path
+        user_id=user_id,
+        document=document_path
     )
     db.session.add(new_charity)
     db.session.commit()
 
     return jsonify({"message": "Charity added successfully"}), 201
+
 
 @app.route('/charity', methods=['GET'])
 def get_charity():

@@ -1,6 +1,6 @@
 .account-container {
   background-color: #29221D;
-  box-shadow: 0 6px 8px rgba(212, 198, 198, 0.418);
+  box-shadow: 0 6px 8px rgba(212, 198, 198, 0);
   padding-top: 2rem;
   max-width: 100vw;
   position: relative;
@@ -10,7 +10,7 @@
 }
 
 .line {
-  background-color: #cbd5e0;
+  /* background-color: #cbd5e0; */
   height: 2px;
   margin-bottom: 2rem;
 }
