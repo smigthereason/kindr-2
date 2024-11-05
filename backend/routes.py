@@ -406,17 +406,100 @@ def delete_charity(id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@app.route('/payment', methods=['POST'])
-def add_payment():
-    data = request.json
-    new_payment = Payment(
-        amount=data.get('amount'),
-        email=data['email'],
+# @app.route('/payment', methods=['POST'])
+# def add_payment():
+#     data = request.json
+#     new_payment = Payment(
+#         amount=data.get('amount'),
+#         email=data['email'],
       
-    )
-    db.session.add(new_payment)
-    db.session.commit()
-    return jsonify({"message": "Payment added successfully"}), 201
+#     )
+#     db.session.add(new_payment)
+#     db.session.commit()
+#     return jsonify({"message": "Payment added successfully"}), 201
+# @app.route('/payment', methods=['POST'])
+# @jwt_required()
+# def add_payment():
+#     data = request.json
+#     print("Received payment data:", data)  # Debug: Log received data
+
+#     # Retrieve the email of the logged-in user
+#     user_email = get_jwt_identity()  # Assuming your JWT identity is set as the user's email
+#     print("Authenticated user's email:", user_email)  # Debug: Log user's email
+
+#     # Create a new payment entry with the provided amount and logged-in user's email
+#     new_payment = Payment(
+#         amount=data.get('amount'),
+#         email=user_email,
+#     )
+
+#     try:
+#         db.session.add(new_payment)
+#         db.session.commit()
+#         print("Payment added to the database:", new_payment)  # Debug: Log successful DB addition
+#         return jsonify({"message": "Payment added successfully"}), 201
+#     except Exception as e:
+#         db.session.rollback()
+#         print("Error adding payment to the database:", e)  # Debug: Log any errors during DB commit
+#         return jsonify({"message": "Failed to add payment"}), 500
+# from flask_jwt_extended import get_jwt
+# def create_token(user):
+#     access_token = create_access_token(
+#         identity=user.id,  # Keep user ID as the main identity
+#         additional_claims={"email": user.email}  # Add email as an additional claim
+#     )
+#     return access_token
+# @app.route('/payment', methods=['POST'])
+# @jwt_required()
+# def add_payment():
+#     data = request.json
+#     print("Received payment data:", data)
+#     # Retrieve the email from JWT custom claims
+#     jwt_data = get_jwt()
+#     user_email = jwt_data.get("email")
+#     print("Authenticated user's email:", user_email)
+
+#     # Create a new payment entry
+#     new_payment = Payment(
+#         amount=data.get('amount'),
+#         email=user_email,
+#     )
+
+#     try:
+#         db.session.add(new_payment)
+#         db.session.commit()
+#         print("Payment added to the database:", new_payment)
+#         return jsonify({"message": "Payment added successfully"}), 201
+#     except Exception as e:
+#         db.session.rollback()
+#         print("Error adding payment to the database:", e)
+#         return jsonify({"message": "Failed to add payment"}), 500
+@app.route('/payment', methods=['POST'])
+def handle_payment():
+    try:
+        data = request.get_json()
+        
+        # Extract amount and email
+        amount = data.get('amount')
+        username= data.get('username')
+        email = data.get('email')
+        
+        if not email or not amount or not username:
+            return jsonify({"error": "Amount and email are required"}), 400
+
+        print("Received payment data:", data)
+        
+        # Add to database (adjust this according to your ORM setup)
+        payment = Payment(amount=amount, email=email,username=username)
+        db.session.add(payment)
+        db.session.commit()
+
+        return jsonify({"message": "Payment recorded successfully"}), 200
+
+    except Exception as e:
+        db.session.rollback()
+        print(f"Error adding payment to the database: {e}")
+        return jsonify({"error": "Failed to process payment"}), 500
 
 @app.route('/payment', methods=['GET'])
 def get_payment():
@@ -425,6 +508,9 @@ def get_payment():
         {
             'email': payment.email,
             'amount': payment.amount,
+            "username":payment.username,
+            "created_at":payment.created_at
+            
           
         }
         for payment in payment

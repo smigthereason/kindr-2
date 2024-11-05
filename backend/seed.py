@@ -141,7 +141,8 @@ def create_payments():
     for _ in range(3):
         payment = Payment(
             amount=random.randint(10, 500),
-            email=fake.email()
+            email=fake.email(),
+            username=fake.last_name(),
         )
         payments.append(payment)
 

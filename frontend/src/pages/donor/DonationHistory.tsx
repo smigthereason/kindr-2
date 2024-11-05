@@ -78,8 +78,6 @@ const DonationHistory: React.FC = () => {
     fetchDonations();
   }, [user, token]);
 
-  console.log(donationData.length);
-  
   return (
     <>
       {donationData.length === 0 ? (
@@ -95,7 +93,7 @@ const DonationHistory: React.FC = () => {
               {donationData.map((donation) => (
                 <div key={donation.id} className="transaction-item">
                   <div className="transaction-details">
-                    <h4>Cause ID: {donation.cause_id}</h4>
+                    <h4>Purpose: {donation.cause_id}</h4>
                     <p>
                       <strong>Amount:</strong> $
                       {donation.donation_amount.toFixed(2)}
@@ -109,9 +107,9 @@ const DonationHistory: React.FC = () => {
               ))}
             </div>
             {/* <button className="donation-button">See More</button> */}
-          {donationData.length > 4 && 
-          <button className="donation-button">See More</button>
-          }
+            {donationData.length > 4 && (
+              <button className="donation-button">See More</button>
+            )}
           </div>
         </div>
       )}

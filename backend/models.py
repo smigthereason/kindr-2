@@ -114,4 +114,7 @@ class Payment(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)   
     amount = db.Column(db.Integer, nullable=True)
-    email = db.Column(db.String(120), nullable=False)  # Changed to String(120) for consistency
+    email = db.Column(db.String(120), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    username = db.Column(db.String(50), nullable=False)
+    # Changed to String(120) for consistency

@@ -282,21 +282,19 @@ const Dashboard: React.FC = () => {
       try {
         if (!user || !token) return;
 
-        const response = await fetch(
-          `http://127.0.0.1:5000/charity/${user.id}/donations`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await fetch(`http://127.0.0.1:5000/payment`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         if (!response.ok) throw new Error("Failed to fetch charity donations");
 
         const data = await response.json();
-        setDonationHistory(data.donations);
+
+        setDonationHistory(data.charity);
       } catch (error) {
         console.error("Error fetching charity donations:", error);
       }
@@ -310,27 +308,27 @@ const Dashboard: React.FC = () => {
     const thisMonth = now.getMonth();
     const thisYear = now.getFullYear();
 
-    const totalDonations = donationHistory.reduce(
-      (sum, donation) => sum + donation.donation_amount,
+    const totalDonations = donationHistory?.reduce(
+      (sum, donation) => sum + donation.amount,
       0
     );
 
     const thisMonthDonations = donationHistory
-      .filter((donation) => {
+      ?.filter((donation) => {
         const donationDate = new Date(donation.created_at);
         return (
           donationDate.getMonth() === thisMonth &&
           donationDate.getFullYear() === thisYear
         );
       })
-      .reduce((sum, donation) => sum + donation.donation_amount, 0);
+      .reduce((sum, donation) => sum + donation.amount, 0);
 
     const thisYearDonations = donationHistory
       .filter((donation) => {
         const donationDate = new Date(donation.created_at);
         return donationDate.getFullYear() === thisYear;
       })
-      .reduce((sum, donation) => sum + donation.donation_amount, 0);
+      .reduce((sum, donation) => sum + donation.amount, 0);
 
     return { totalDonations, thisMonthDonations, thisYearDonations };
   };
@@ -415,10 +413,9 @@ const Dashboard: React.FC = () => {
         <div className="card recent-transactions-card">
           <h2>Recent Donations</h2>
           <ul>
-            {donationHistory.slice(0, 5).map((donation) => (
+            {donationHistory?.slice(0, 5).map((donation) => (
               <li key={donation.id} className="recent-transaction-item">
-                Donated ${donation.donation_amount.toFixed(2)} to{" "}
-                {donation.charity_title} on{" "}
+                Donation ${donation.amount.toFixed(2)} by {donation.username} on{" "}
                 {new Date(donation.created_at).toLocaleDateString()}
               </li>
             ))}
