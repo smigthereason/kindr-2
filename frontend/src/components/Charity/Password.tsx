@@ -19,7 +19,7 @@ const Password: React.FC = () => {
       try {
         if (!token) throw new Error("No token found in local storage");
 
-        const response = await fetch("http://localhost:5000/current_user", {
+        const response = await fetch("https://kind-backend.onrender.com/current_user", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -56,7 +56,7 @@ const Password: React.FC = () => {
 
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("http://127.0.0.1:5000/update-password", {
+      const response = await fetch("https://kind-backend.onrender.com/update-password", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

@@ -30,7 +30,7 @@ const DonateModal: React.FC<DonateModalProps> = ({
       }
 
       try {
-        const response = await fetch("http://localhost:5000/current_user", {
+        const response = await fetch("https://kind-backend.onrender.com/current_user", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -70,7 +70,7 @@ const DonateModal: React.FC<DonateModalProps> = ({
       if (!token || !email)
         throw new Error("User is not authenticated or email missing");
 
-      const response = await fetch(`http://localhost:5000/payment`, {
+      const response = await fetch(`https://kind-backend.onrender.com/payment`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

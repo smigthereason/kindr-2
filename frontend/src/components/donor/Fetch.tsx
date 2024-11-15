@@ -147,7 +147,7 @@ const Fetch: React.FC = () => {
 
   const fetchCharities = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/charity");
+      const response = await axios.get("https://kind-backend.onrender.com/charity");
       setCharities(response.data.charity);
     } catch (err) {
       setError("Failed to fetch charities. Please try again later.");
@@ -163,7 +163,7 @@ const Fetch: React.FC = () => {
   const handleDonate = async (amount: number) => {
     if (!selectedCharityId) return;
     try {
-      await axios.post(`http://localhost:5000/charity/${selectedCharityId}/donate`, {
+      await axios.post(`https://kind-backend.onrender.com/charity/${selectedCharityId}/donate`, {
         amount,
       });
       // Re-fetch the charities to update donation amounts after a successful donation

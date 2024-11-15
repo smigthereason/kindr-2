@@ -39,7 +39,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onLogout }) => {
       try {
         if (!token) throw new Error("No token found in local storage");
 
-        const response = await fetch("http://localhost:5000/current_user", {
+        const response = await fetch("https://kind-backend.onrender.com/current_user", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

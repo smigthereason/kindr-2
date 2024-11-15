@@ -1,5 +1,4 @@
 import "../../styles/donor/DonationHistory.css";
-import worldImage from "../../assets/world2.jpg";
 import { useEffect, useState } from "react";
 
 // Define interfaces for the data structures
@@ -20,7 +19,7 @@ const DonationHistory: React.FC = () => {
   const [donationData, setDonationData] = useState<Donation[]>([]);
   useEffect(() => {
     const fetchCharityDonations = async () => {
-      const response = await fetch(`http://127.0.0.1:5000/payment`, {
+      const response = await fetch(`https://kind-backend.onrender.com/payment`, {
         method: "GET",
       });
       const data = await response.json();
