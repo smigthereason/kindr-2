@@ -1,6 +1,7 @@
 import Hero from "@/components/Home/Hero";
 import Charities from "@/components/Home/Charities";
 import Stories from "@/components/Home/Stories";
+import map from "../assets/world2.jpg";
 // import { Button } from "@/components/ui/button";
 // import { Input } from "@/components/ui/input";
 
@@ -8,7 +9,13 @@ const Home = () => {
   return (
     <section className="h-full">
       <div className="container mx-auto ">
-      <div className="absolute z-10 hero-bg h-[800px] w-[100vw] right-0"></div>
+      <div className="absolute z-0 h-[800px] w-[100vw] right-0">
+      <img
+              className="absolute h-[800px] w-[100vw] z-10"
+              src={map}
+              alt="map"
+            />
+      </div>
         <Hero />
         <Charities />
         <Stories />

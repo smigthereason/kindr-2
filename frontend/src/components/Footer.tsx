@@ -1,6 +1,7 @@
 import React from "react";
 // import { Link } from "react-router-dom";
 import { HashLink as Link } from 'react-router-hash-link';
+import logo from "../assets/logo.png";
 
 const Footer: React.FC = () => {
   return (
@@ -11,7 +12,7 @@ const Footer: React.FC = () => {
           <div className="w-full sm:w-1/2 md:w-1/5 mb-6 md:mb-0 flex justify-center md:justify-start">
             <img
               className="h-auto w-48"
-              src="/src/assets/logo.png"
+              src={logo}
               alt="Kind Logo"
             />
           </div>
