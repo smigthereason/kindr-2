@@ -116,9 +116,9 @@ const DonationHistory: React.FC = () => {
     fetchCharityDonations();
   }, []);
 
-  // Render nothing if there are no donations
+  // Check if there are no donations and return null to render nothing
   if (donationData.length === 0) {
-    return null; // or return <></> to render nothing
+    return <p>No donations available</p>; // You can render a message if you want, or just return null to show nothing
   }
 
   return (
@@ -157,5 +157,6 @@ const DonationHistory: React.FC = () => {
 };
 
 export default DonationHistory;
+
 
 
