@@ -108,7 +108,7 @@ const Partner = () => {
               </p>
             </div>
             <div className="flex flex-col xl:flex-row items-center justify-around gap- xl:gap-0">
-              <div className="bg-stone-700 py-8 px-10 rounded-lg flex flex-col items-center justify-center h-[300px] w-[350px] z-10 mb-8">
+              <div className="bg-stone-700 py-8 px-10 rounded-lg flex flex-col items-center justify-center h-[300px] w-[350px] z-10">
                 <h2 className="text-4xl mb-7 text-center text-white/80">
                   Become a Partner
                 </h2>
