@@ -246,7 +246,7 @@ const Login: React.FC<LoginProps> = ({ setUser }) => {
                 >
                   <option value="donor">Donor</option>
                   <option value="charity">Charity Organization</option>
-                  <option value="admin">Admin</option>
+{/*                   <option value="admin">Admin</option> */}
                 </select>
               </div>
               <div className="input-container">
