@@ -68,7 +68,9 @@ const AddDonation: React.FC = () => {
           throw new Error("No token found in local storage");
         }
 
-        const response = await fetch("http://localhost:5000/current_user", {
+        // const response = await fetch("http://localhost:5000/current_user", {
+        const response = await fetch("https://kind-backend.onrender.com/current_user", {
+
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -103,7 +105,8 @@ const AddDonation: React.FC = () => {
       }
 
       const response = await axios.post(
-        "http://127.0.0.1:5000/donate",
+        // "http://127.0.0.1:5000/donate",
+        "https://kind-backend.onrender.com/donate",
         {
           first_name: firstName,
           last_name: lastName,
