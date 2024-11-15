@@ -1,12 +1,11 @@
 // import React, { useState, useEffect, ChangeEvent } from "react";
-// import { useNavigate } from "react-router-dom";
+// import { useNavigate, Link } from "react-router-dom";
 // import "../styles/Login.css";
 // import Logo from "../assets/logo.png";
 // import AOS from "aos";
 // import "aos/dist/aos.css";
 // import axios from "axios";
 // import { FaPowerOff } from "react-icons/fa";
-// import { Link } from "react-router-dom";
 
 // interface User {
 //   role: "charity" | "donor" | "admin";
@@ -29,12 +28,7 @@
 //   setUser: (user: User | null) => void;
 // }
 
-// type SetDataFunction = React.Dispatch<
-//   React.SetStateAction<LoginData | SignupData>
-// >;
-
 // const Login: React.FC<LoginProps> = ({ setUser }) => {
-//   const [, setActiveCard] = useState<"login" | "signup">("login");
 //   const [showSignup, setShowSignup] = useState(false);
 //   const [loginData, setLoginData] = useState<LoginData>({
 //     email: "",
@@ -61,8 +55,10 @@
 //     try {
 //       const response = await axios.post(
 //         "http://localhost:5000/login",
-//         // "https://backend-kindr.onrender.com/login",
-//         { email: loginData.email, password: loginData.password },
+//         {
+//           email: loginData.email,
+//           password: loginData.password,
+//         },
 //         { withCredentials: true }
 //       );
 
@@ -73,15 +69,13 @@
 //         const user: User = { role: userType };
 //         setUser(user);
 
-//         if (userType === "donor") {
-//           navigate("/donor/dashboard");
-//         } else if (userType === "charity") {
-//           navigate("/charity/dashboard");
-//         } else if (userType === "admin") {
-//           navigate("/admin/admin-dashboard");
-//         } else {
-//           setError("Unknown user type");
-//         }
+//         navigate(
+//           userType === "donor"
+//             ? "/donor/dashboard"
+//             : userType === "charity"
+//             ? "/charity/dashboard"
+//             : "/admin/admin-dashboard"
+//         );
 //       } else {
 //         setError("Login failed: Unexpected response from server");
 //       }
@@ -103,36 +97,29 @@
 //     }
 
 //     try {
-//       const response = await axios.post(
-//         "http://localhost:5000/users",
-//         // "https://backend-kindr.onrender.com/users",
-//         {
-//           username: signupData.username,
-//           email: signupData.email,
-//           password: signupData.password,
-//           user_type: signupData.userType,
-//         }
-//       );
+//       const response = await axios.post("http://localhost:5000/users", {
+//         username: signupData.username,
+//         email: signupData.email,
+//         password: signupData.password,
+//         user_type: signupData.userType,
+//       });
 
 //       if (response.data.user_id) {
 //         localStorage.setItem("token", response.data.token);
 
+//         // Auto-login after sign-up
+//         await handleLogin(new Event("submit"));
+
 //         const user: User = { role: signupData.userType };
 //         setUser(user);
 
-//         switch (signupData.userType) {
-//           case "donor":
-//             navigate("/donor/dashboard");
-//             break;
-//           case "charity":
-//             navigate("/charity/dashboard");
-//             break;
-//           case "admin":
-//             navigate("/admin/admin-dashboard");
-//             break;
-//           default:
-//             setError("Unknown user type");
-//         }
+//         navigate(
+//           signupData.userType === "donor"
+//             ? "/donor/dashboard"
+//             : signupData.userType === "charity"
+//             ? "/charity/dashboard"
+//             : "/admin/admin-dashboard"
+//         );
 //       } else {
 //         setError("Signup successful, but login failed. Please try logging in.");
 //       }
@@ -146,34 +133,14 @@
 
 //   const handleChange = (
 //     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-//     setData: SetDataFunction,
 //     isSignup: boolean = false
 //   ) => {
 //     const { name, value } = e.target;
-//     setData((prevData) => {
-//       if (isSignup) {
-//         return {
-//           ...(prevData as SignupData),
-//           [name]: value,
-//         };
-//       } else {
-//         return {
-//           ...(prevData as LoginData),
-//           [name]: value,
-//         };
-//       }
-//     });
-//   };
-
-//   const selectCard = (card: "login" | "signup") => {
-//     setActiveCard(card);
-//     if (card === "signup") {
-//       setShowSignup(true);
+//     if (isSignup) {
+//       setSignupData((prevData) => ({ ...prevData, [name]: value }));
+//     } else {
+//       setLoginData((prevData) => ({ ...prevData, [name]: value }));
 //     }
-//   };
-
-//   const closeSignup = () => {
-//     setShowSignup(false);
 //   };
 
 //   return (
@@ -199,9 +166,7 @@
 //                   id="email"
 //                   name="email"
 //                   value={loginData.email}
-//                   onChange={(e) =>
-//                     handleChange(e, setLoginData as SetDataFunction, false)
-//                   }
+//                   onChange={(e) => handleChange(e)}
 //                   required
 //                 />
 //               </div>
@@ -212,9 +177,7 @@
 //                   id="password"
 //                   name="password"
 //                   value={loginData.password}
-//                   onChange={(e) =>
-//                     handleChange(e, setLoginData as SetDataFunction, false)
-//                   }
+//                   onChange={(e) => handleChange(e)}
 //                   required
 //                 />
 //               </div>
@@ -231,7 +194,7 @@
 //             <h4>Don't have an account? Join us today!</h4>
 //             <button
 //               className="option-button"
-//               onClick={() => selectCard("signup")}
+//               onClick={() => setShowSignup(true)}
 //             >
 //               Create an Account
 //             </button>
@@ -241,7 +204,10 @@
 //       {showSignup && (
 //         <div className="signup-modal" data-aos="fade-in">
 //           <div className="signup-content">
-//             <button className="close-button" onClick={closeSignup}>
+//             <button
+//               className="close-button"
+//               onClick={() => setShowSignup(false)}
+//             >
 //               <FaPowerOff size={28} />
 //             </button>
 //             <h2>Sign Up</h2>
@@ -253,9 +219,7 @@
 //                   id="new-username"
 //                   name="username"
 //                   value={signupData.username}
-//                   onChange={(e) =>
-//                     handleChange(e, setSignupData as SetDataFunction, true)
-//                   }
+//                   onChange={(e) => handleChange(e, true)}
 //                   required
 //                 />
 //               </div>
@@ -266,9 +230,7 @@
 //                   id="new-email"
 //                   name="email"
 //                   value={signupData.email}
-//                   onChange={(e) =>
-//                     handleChange(e, setSignupData as SetDataFunction, true)
-//                   }
+//                   onChange={(e) => handleChange(e, true)}
 //                   required
 //                 />
 //               </div>
@@ -278,14 +240,11 @@
 //                   id="userType"
 //                   name="userType"
 //                   value={signupData.userType}
-//                   onChange={(e) =>
-//                     handleChange(e, setSignupData as SetDataFunction, true)
-//                   }
+//                   onChange={(e) => handleChange(e, true)}
 //                   required
 //                 >
 //                   <option value="donor">Donor</option>
 //                   <option value="charity">Charity Organization</option>
-//                   {/* <option value="admin">Admin</option> */}
 //                 </select>
 //               </div>
 //               <div className="input-container">
@@ -295,9 +254,7 @@
 //                   id="new-password"
 //                   name="password"
 //                   value={signupData.password}
-//                   onChange={(e) =>
-//                     handleChange(e, setSignupData as SetDataFunction, true)
-//                   }
+//                   onChange={(e) => handleChange(e, true)}
 //                   required
 //                 />
 //               </div>
@@ -308,9 +265,7 @@
 //                   id="confirm-password"
 //                   name="confirmPassword"
 //                   value={signupData.confirmPassword}
-//                   onChange={(e) =>
-//                     handleChange(e, setSignupData as SetDataFunction, true)
-//                   }
+//                   onChange={(e) => handleChange(e, true)}
 //                   required
 //                 />
 //               </div>
@@ -434,9 +389,7 @@ const Login: React.FC<LoginProps> = ({ setUser }) => {
       if (response.data.user_id) {
         localStorage.setItem("token", response.data.token);
 
-        // Auto-login after sign-up
-        await handleLogin(new Event("submit"));
-
+        // Simulate login after signup
         const user: User = { role: signupData.userType };
         setUser(user);
 
@@ -572,6 +525,7 @@ const Login: React.FC<LoginProps> = ({ setUser }) => {
                 >
                   <option value="donor">Donor</option>
                   <option value="charity">Charity Organization</option>
+                  <option value="admin">Admin</option>
                 </select>
               </div>
               <div className="input-container">
